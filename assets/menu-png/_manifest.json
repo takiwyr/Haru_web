@@ -1,0 +1,385 @@
+{
+ "combo-sashimi": {
+  "label": "COMBO SASHIMI",
+  "count": 9,
+  "codes": [
+   "SEB",
+   "SED",
+   "SETA",
+   "SETC",
+   "SETE",
+   "SETF",
+   "SETG",
+   "SETH",
+   "SETT"
+  ]
+ },
+ "combo-sushi": {
+  "label": "COMBO SUSHI",
+  "count": 5,
+  "codes": [
+   "SET1",
+   "SET2",
+   "SET3",
+   "SET4",
+   "SET5"
+  ]
+ },
+ "dessert-drink": {
+  "label": "DESSERT DRINK",
+  "count": 44,
+  "codes": [
+   "BE01",
+   "BE02",
+   "BE03",
+   "DE01",
+   "DE02",
+   "DE03",
+   "DE04",
+   "DE05",
+   "DE06",
+   "DE07",
+   "DE08",
+   "DE09",
+   "DE10",
+   "DR01",
+   "DR02",
+   "DR03",
+   "DR04",
+   "DR05",
+   "PC01",
+   "PC02",
+   "PC03",
+   "PC04",
+   "PC05",
+   "PC06",
+   "PC07",
+   "PC08",
+   "PC09",
+   "PC10",
+   "PC11",
+   "PC12",
+   "PC13",
+   "PC14",
+   "PC15",
+   "PC16",
+   "PC17",
+   "PC18",
+   "PC19",
+   "PC20",
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06"
+  ]
+ },
+ "grilled": {
+  "label": "GRILLED",
+  "count": 24,
+  "codes": [
+   "B01",
+   "B02",
+   "B03",
+   "B04",
+   "B05",
+   "B06",
+   "B07",
+   "B08",
+   "B09",
+   "B10",
+   "B11",
+   "B12",
+   "B13",
+   "B14",
+   "B15",
+   "B16",
+   "B17",
+   "B18",
+   "B19",
+   "B20",
+   "B21",
+   "B22",
+   "B23",
+   "B24"
+  ]
+ },
+ "gunkan": {
+  "label": "GUNKAN",
+  "count": 10,
+  "codes": [
+   "G01",
+   "G02",
+   "G03",
+   "G04",
+   "G05",
+   "G06",
+   "G07",
+   "G08",
+   "G09",
+   "G10"
+  ]
+ },
+ "hot-dish": {
+  "label": "HOT DISH",
+  "count": 4,
+  "codes": [
+   "D01",
+   "D02",
+   "D03",
+   "D04"
+  ]
+ },
+ "hotpot": {
+  "label": "HOTPOT",
+  "count": 9,
+  "codes": [
+   "H01",
+   "H02",
+   "H03",
+   "H04",
+   "H05",
+   "H06",
+   "H07",
+   "mì udon",
+   "ramen"
+  ]
+ },
+ "khai-vi": {
+  "label": "KHAI VỊ",
+  "count": 17,
+  "codes": [
+   "A01",
+   "A02",
+   "A03",
+   "A04",
+   "A05",
+   "A06",
+   "A07",
+   "A08",
+   "A09",
+   "A10",
+   "A11",
+   "A12",
+   "A13",
+   "A14",
+   "A15",
+   "A16",
+   "A17"
+  ]
+ },
+ "maki": {
+  "label": "MAKI",
+  "count": 10,
+  "codes": [
+   "M01",
+   "M02",
+   "M03",
+   "M04",
+   "M05",
+   "M06",
+   "M07",
+   "M08",
+   "M09",
+   "M10"
+  ]
+ },
+ "nigiri": {
+  "label": "NIGIRI",
+  "count": 25,
+  "codes": [
+   "N01",
+   "N02",
+   "N03",
+   "N04",
+   "N05",
+   "N06",
+   "N07",
+   "N08",
+   "N09",
+   "N10",
+   "N11",
+   "N12",
+   "N13",
+   "N14",
+   "N15",
+   "N16",
+   "N17",
+   "N18",
+   "N19",
+   "N20",
+   "N21",
+   "N22",
+   "N23",
+   "N24",
+   "N25"
+  ]
+ },
+ "noodle": {
+  "label": "NOODLE",
+  "count": 11,
+  "codes": [
+   "PA01",
+   "PA02",
+   "RA01",
+   "RA02",
+   "RA03",
+   "RA04",
+   "U01",
+   "U02",
+   "U03",
+   "U04",
+   "U05"
+  ]
+ },
+ "rice": {
+  "label": "RICE",
+  "count": 13,
+  "codes": [
+   "K01",
+   "K02",
+   "K03",
+   "K04",
+   "K05",
+   "K06",
+   "K07",
+   "K08",
+   "K09",
+   "K10",
+   "K11",
+   "K12",
+   "K13"
+  ]
+ },
+ "rice-roll": {
+  "label": "RICE ROLL",
+  "count": 19,
+  "codes": [
+   "R01",
+   "R02",
+   "R03",
+   "R04",
+   "R05",
+   "R06",
+   "R07",
+   "R08",
+   "R09",
+   "R10",
+   "R11",
+   "R12",
+   "R13",
+   "R14",
+   "R15",
+   "R16",
+   "R17",
+   "R18",
+   "R19"
+  ]
+ },
+ "salad": {
+  "label": "SALAD",
+  "count": 7,
+  "codes": [
+   "SA01",
+   "SA02",
+   "SA03",
+   "SA04",
+   "SA05",
+   "SA06",
+   "SA07"
+  ]
+ },
+ "sashimi": {
+  "label": "SASHIMI",
+  "count": 34,
+  "codes": [
+   "S01",
+   "S02",
+   "S03",
+   "S04",
+   "S05",
+   "S06",
+   "S07",
+   "S08",
+   "S09",
+   "S10",
+   "S11",
+   "S12",
+   "S13",
+   "S14",
+   "S15",
+   "S16",
+   "S17",
+   "S18",
+   "S19",
+   "S20",
+   "S21",
+   "S22",
+   "S23",
+   "S24",
+   "S25",
+   "S26",
+   "S27",
+   "S28",
+   "S29",
+   "SH01",
+   "SH02",
+   "SH03",
+   "SH04",
+   "SH05"
+  ]
+ },
+ "soup": {
+  "label": "SOUP",
+  "count": 7,
+  "codes": [
+   "L01",
+   "L02",
+   "L03",
+   "L04",
+   "L05",
+   "L06",
+   "L07"
+  ]
+ },
+ "temaki": {
+  "label": "TEMAKI",
+  "count": 3,
+  "codes": [
+   "TE01",
+   "TE02",
+   "TE03"
+  ]
+ },
+ "tempura": {
+  "label": "TEMPURA",
+  "count": 9,
+  "codes": [
+   "T01",
+   "T02",
+   "T03",
+   "T04",
+   "T05",
+   "T06",
+   "T07",
+   "T08",
+   "T09"
+  ]
+ },
+ "teppan-yaki": {
+  "label": "TEPPAN YAKI",
+  "count": 9,
+  "codes": [
+   "E01",
+   "E02",
+   "E03",
+   "E04",
+   "E05",
+   "E06",
+   "E07",
+   "E08",
+   "E09"
+  ]
+ }
+}

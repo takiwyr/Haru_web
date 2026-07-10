@@ -1,0 +1,20 @@
+# ==== Nguồn nặng / ảnh gốc — KHÔNG đẩy lên repo ====
+raw/
+PN/
+Q7/
+
+# Archive & file thiết kế gốc
+*.zip
+*.ai
+*.psd
+
+# Ảnh logo gốc rời ở thư mục gốc (đã xuất bản vào assets/logo)
+/*.png
+
+# Dữ liệu tạm
+VHN.json
+
+# Hệ thống
+.DS_Store
+Thumbs.db
+desktop.ini
