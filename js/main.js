@@ -12,12 +12,11 @@
 
   /* ---------- BRANCHES (mã khớp booking-availability.gs) ---------- */
   const BRANCHES = [
-    { code: 'PN',  name: 'Phú Nhuận',          area: 'Q. Phú Nhuận' },
     { code: 'PXL', name: 'Phan Xích Long',      area: 'Q. Phú Nhuận' },
     { code: 'LVS', name: 'Lê Văn Sỹ',           area: 'Quận 3' },
     { code: 'NTP', name: 'Nguyễn Tri Phương',   area: 'Quận 10' },
     { code: 'NTT', name: 'Nguyễn Thị Thập',     area: 'Quận 7' },
-    { code: 'Q7',  name: 'Nguyễn Lương Bằng',   area: 'Quận 7' }
+    { code: 'NTH', name: 'Nguyễn Thái Học',     area: 'Quận 1' }
   ];
   /* Nếu đã deploy Web App /exec của booking-availability.gs, dán URL vào đây
      để form kiểm tra tình trạng bàn theo khung giờ. Để '' nếu chưa có. */

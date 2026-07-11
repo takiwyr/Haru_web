@@ -754,7 +754,7 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
   color:#78756E;margin-bottom:8px}
 .fc-val{color:#D5D2CB;font-size:14px;font-family:var(--sans);font-weight:300}
 .foot-hotline{display:block;text-decoration:none}
-.foot-hotline .fh-num{display:block;font-family:var(--serif);font-size:26px;line-height:1;color:var(--shu);
+.foot-hotline .fh-num{display:block;font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.2;color:var(--shu);
   transition:opacity .3s}
 .foot-hotline:hover .fh-num{opacity:.78}
 
