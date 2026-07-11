@@ -766,12 +766,7 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 .socials a:hover{border-color:var(--shu);color:#fff;background:var(--shu);transform:translateY(-4px)}
 
 /* thành viên của — dải logo hệ thống, kiểu Phổ Đình */
-.foot-members{margin-top:clamp(52px,5.4vw,80px);padding-top:clamp(34px,3.4vw,46px);
-  border-top:1px solid rgba(236,227,208,.1);position:relative;z-index:2;
-  display:flex;align-items:center;gap:clamp(26px,3.6vw,58px);flex-wrap:wrap}
-.fm-label{display:flex;align-items:center;gap:9px;flex:none;
-  font-family:var(--util);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8C897F}
-.fm-label::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--shu);flex:none}
+.foot-brand .fm-logos{margin-top:clamp(30px,3.4vw,48px)}
 .fm-logos{display:flex;align-items:center;gap:clamp(30px,4vw,60px);flex-wrap:wrap}
 .fm-logo{width:auto;opacity:.62;transition:opacity .45s var(--e-out),transform .45s var(--e-out)}
 .fm-logo:hover{opacity:1;transform:translateY(-3px)}
