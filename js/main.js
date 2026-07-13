@@ -160,6 +160,18 @@
     });
   }
 
+  /* ---------- SPACES accordion (rê chuột mở, chạm để mở trên mobile) ---------- */
+  const accordion = document.getElementById('spaceAccordion');
+  if (accordion) {
+    const panels = [...accordion.querySelectorAll('.spanel')];
+    const open = p => { panels.forEach(x => x.classList.toggle('is-open', x === p)); };
+    panels.forEach(p => {
+      if (!isTouch) p.addEventListener('mouseenter', () => open(p));
+      p.addEventListener('click', () => open(p));
+    });
+    if (!isTouch) accordion.addEventListener('mouseleave', () => open(panels[0]));
+  }
+
   /* ---------- TIME slots + date min ---------- */
   const timeSelect = document.getElementById('timeSelect');
   const SLOTS = ['11:00', '11:30', '12:00', '12:30', '13:00', '17:00', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
@@ -184,8 +196,9 @@
       const dir = el.getAttribute('data-reveal');
       const from = { opacity: 0 };
       const ease = 'power3.out';
-      if (dir === 'left')       { from.x = -46; }
-      else if (dir === 'right') { from.x = 46;  }
+      const dist = parseFloat(el.getAttribute('data-reveal-dist')) || 46;
+      if (dir === 'left')       { from.x = -dist; }
+      else if (dir === 'right') { from.x = dist;  }
       else if (dir === 'down')  { from.y = -40; }
       else if (dir === 'zoom')  { from.scale = 0.96; }
       else                      { from.y = 30; }
