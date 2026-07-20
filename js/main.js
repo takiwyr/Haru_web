@@ -94,39 +94,9 @@
   });
   addEventListener('scroll', () => { if (drawer.classList.contains('open')) closeDrawer(); }, { passive: true });
 
-  /* ---------- CUSTOM CURSOR + magnetic ---------- */
-  if (!isTouch) {
-    const dot = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    const label = document.getElementById('cursorLabel');
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-    addEventListener('mousemove', (e) => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-    });
-    (function ring_raf() {
-      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-      requestAnimationFrame(ring_raf);
-    })();
-    document.querySelectorAll('[data-cursor]').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        ring.classList.add('hover');
-        label.textContent = el.getAttribute('data-cursor') || '';
-      });
-      el.addEventListener('mouseleave', () => { ring.classList.remove('hover'); label.textContent = ''; });
-    });
-    // magnetic buttons
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const r = btn.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width / 2) * 0.28;
-        const y = (e.clientY - r.top - r.height / 2) * 0.4;
-        btn.style.transform = `translate(${x}px,${y}px)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-    });
-  }
+  /* ---------- CUSTOM CURSOR + magnetic — ĐÃ GỠ ----------
+     Phong cách Ryo là tĩnh: bỏ con trỏ tuỳ biến và hiệu ứng nam châm cho nút.
+     Các thuộc tính data-cursor còn lại trong HTML giờ vô hại. */
 
   /* ---------- BUILD branch chips / select / footer ---------- */
   const chips = document.getElementById('branchChips');
@@ -152,7 +122,7 @@
     }
   });
   // re-bind cursor for freshly created chips
-  if (!isTouch) {
+  if (!isTouch && document.getElementById('cursorRing')) {
     const ring = document.getElementById('cursorRing'), label = document.getElementById('cursorLabel');
     document.querySelectorAll('.chip[data-cursor]').forEach(el => {
       el.addEventListener('mouseenter', () => { ring.classList.add('hover'); label.textContent = 'Bản đồ'; });
@@ -447,6 +417,78 @@
   }
   if (branchSel) branchSel.addEventListener('change', loadAvailability);
 
+  /* ---------- ĐẶT BÀN 2 BƯỚC (theo web.pdf) ----------
+     Bước 1 tìm bàn → còn bàn thì mở bước 2 (điền thông tin), hết bàn thì
+     cảnh báo + gợi ý khung giờ trống gần nhất.
+     CHƯA CÓ BACKEND: tình trạng bàn đang được GIẢ LẬP ở hàm checkAvailability()
+     bên dưới (khung giờ cao điểm cuối tuần = kín). Khi có API thật, chỉ cần
+     thay thân hàm đó bằng một lời gọi fetch — phần UI không phải sửa gì. */
+  const step1 = document.getElementById('bkStep1');
+  const step2 = document.getElementById('bkStep2');
+  const bkFind = document.getElementById('bkFind');
+  const bkBack = document.getElementById('bkBack');
+  const bkAlert = document.getElementById('bkAlert');
+  const bkSuggest = document.getElementById('bkSuggest');
+  const bkRecap = document.getElementById('bkRecap');
+  const PEAK = ['18:30', '19:00', '19:30'];   // khung giờ hay kín
+
+  function readStep1() {
+    return {
+      branch: branchSel ? branchSel.value : '',
+      date: dateInput ? dateInput.value : '',
+      time: timeSelect ? timeSelect.value : '',
+      guests: +(document.getElementById('rvGuests') || {}).value || 0
+    };
+  }
+  // GIẢ LẬP: cuối tuần + khung giờ cao điểm + nhóm trên 6 khách ⇒ báo kín bàn.
+  function checkAvailability(q) {
+    const day = new Date(q.date + 'T00:00:00').getDay();   // 0 CN, 6 T7
+    const weekend = day === 0 || day === 6;
+    return !(weekend && PEAK.includes(q.time) && q.guests > 6);
+  }
+  // các khung giờ còn trống gần nhất quanh giờ đã chọn
+  function suggestSlots(q) {
+    const i = SLOTS.indexOf(q.time);
+    return SLOTS
+      .map((t, j) => ({ t, d: Math.abs(j - i) }))
+      .filter(o => o.d > 0 && checkAvailability({ ...q, time: o.t }))
+      .sort((a, b) => a.d - b.d).slice(0, 4).map(o => o.t);
+  }
+  function showStep(n) {
+    if (!step1 || !step2) return;
+    step1.hidden = n !== 1; step2.hidden = n !== 2;
+    step1.classList.toggle('is-active', n === 1);
+    step2.classList.toggle('is-active', n === 2);
+    if (lenis) lenis.scrollTo(document.getElementById('reserve'), { offset: -70, duration: .8 });
+  }
+  if (bkFind) {
+    bkFind.addEventListener('click', () => {
+      const q = readStep1();
+      if (!q.branch || !q.date || !q.time || !q.guests) {
+        msg.className = 'form-msg err'; msg.textContent = 'Vui lòng chọn chi nhánh, ngày, giờ và số khách.'; return;
+      }
+      msg.className = 'form-msg'; msg.textContent = '';
+      if (checkAvailability(q)) {
+        bkAlert.hidden = true;
+        const bName = (BRANCHES.find(b => b.code === q.branch) || {}).name || q.branch;
+        bkRecap.innerHTML = '<b>' + esc(String(q.guests)) + ' người</b><span></span><b>' +
+          esc(q.date.split('-').reverse().join('-')) + '</b><span></span><b>' + esc(q.time) +
+          '</b><span></span>Haru ' + esc(bName);
+        showStep(2);
+      } else {
+        bkSuggest.innerHTML = '';
+        suggestSlots(q).forEach(t => {
+          const b = document.createElement('button');
+          b.type = 'button'; b.className = 'bk-slot'; b.textContent = t;
+          b.addEventListener('click', () => { timeSelect.value = t; bkAlert.hidden = true; bkFind.click(); });
+          bkSuggest.appendChild(b);
+        });
+        bkAlert.hidden = false;
+      }
+    });
+  }
+  if (bkBack) bkBack.addEventListener('click', () => { showStep(1); });
+
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -471,6 +513,7 @@
           '</b> lúc <b>' + esc(data.time) + ' ngày ' + esc(data.date) + '</b> đã được ghi nhận. Haru sẽ gọi xác nhận qua ' + esc(data.phone) + '.';
         form.reset();
         if (dateInput) { const d = new Date(); dateInput.min = d.toISOString().split('T')[0]; }
+        showStep(1);
       } catch (err) {
         msg.className = 'form-msg err';
         msg.textContent = 'Có lỗi xảy ra. Vui lòng gọi hotline 1900 555 506 để đặt bàn.';
