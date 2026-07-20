@@ -15,20 +15,22 @@
   --paper-3:#1E1E21;        /* card / khối nhấn nhẹ */
   --sumi:#F2F1ED;           /* chữ — trắng ngà trung tính */
   --sumi-soft:#CFCEC9;      /* heading phụ */
-  /* ACCENT — BẠC LẠNH. Trước đây là vàng đồng #D8B06A dùng ở 60 chỗ; cộng với
-     kho ảnh vốn được grade tungsten (đo được hue 29–53°) thì cả trang đọc ra
-     một khối vàng, không còn chỗ nào để mắt nghỉ.
-     Bạc phải LẠNH (hue ~215, sat rất thấp ~.05) chứ không được là trắng: chữ
-     thường đã là --sumi #F2F1ED trắng ngà TRUNG TÍNH rồi, nếu accent cũng trắng
-     thì không còn gì phân biệt đâu là nét nhấn. Chênh lệch NHIỆT ĐỘ màu — bạc
-     lạnh trên nền chữ trắng ấm — đủ để accent đọc ra là kim loại, đồng thời
-     tương phản hue với phần ấm còn sót của ảnh.
-     Tên biến giữ --shu/--gold-* để không phải sửa 60 chỗ gọi. */
-  --shu:#DCE1E9;            /* bạc accent — nét kẻ, số, kanji, chi tiết */
-  --shu-deep:#8E97A6;       /* bạc sâu — hover / fill */
-  --gold-line:rgba(220,225,233,.55);  /* nét sóng, hairline bạc */
-  --gold-glow:rgba(220,225,233,.22);  /* quầng sáng quanh chi tiết bạc */
-  --on-gold:#101318;        /* chữ trên nền bạc đặc (không dùng #000) */
+  /* ACCENT — TÁCH LÀM HAI. Trước đây một màu vàng đồng duy nhất chạy cả 60 chỗ
+     gọi: vừa là chữ, vừa là hairline, vừa là sóng nami lặp ở 4 mục, vừa là chữ
+     Hán watermark cỡ đại. Vàng không sai — SỐ LƯỢNG mới sai. Cùng một sắc mà
+     phủ khắp mọi lớp thì không còn là nhấn nhá nữa, nó thành tông nền.
+     Nay chia theo VAI TRÒ:
+     - --shu vàng đồng: chỉ dành cho CHỮ và ký tự — eyebrow, số thứ tự, ngày,
+       hotline, kanji nhỏ, nút CTA. Toàn những thứ mắt đọc, diện tích bé.
+     - --gold-line/--gold-glow bạc trung tính: mọi thứ KẺ và VIỀN — hairline,
+       sóng nami, border card, quầng sáng. Đây mới là phần chiếm diện tích lớn
+       và lặp lại nhiều, để nó vô sắc thì vàng ở chữ mới nổi lên được.
+     Tên biến giữ nguyên để không phải sửa 60 chỗ gọi. */
+  --shu:#D8B06A;            /* vàng đồng — CHỮ, số, kanji, CTA */
+  --shu-deep:#A08B60;       /* vàng sâu — hover / fill */
+  --gold-line:rgba(220,225,233,.42);  /* nét kẻ / viền — bạc trung tính */
+  --gold-glow:rgba(220,225,233,.18);  /* quầng sáng quanh nét kẻ */
+  --on-gold:#17120B;        /* chữ trên nền vàng đặc (không dùng #000) */
 
   /* PANEL KEM — nửa giấy của nhịp đen/kem kiểu Ryo.
      Trước là trắng xám trung tính (#F2F1EC) nên đọc ra "nền trắng".
@@ -71,17 +73,23 @@
      saturate hạ độ rực, hue-rotate âm kéo trục vàng-cam về phía trung tính.
      Đây là NÚM CHỈNH DUY NHẤT: sửa ở đây là đổi đồng loạt mọi ảnh nền.
      Về 'saturate(1) hue-rotate(0deg)' là quay lại tông ảnh gốc. */
-  /* Bản cũ saturate(.8) hue-rotate(-6deg) là QUÁ NHẸ để có tác dụng: xoay 6°
-     không kéo nổi hue 34° ra khỏi vùng vàng, và .8 vẫn để sat ~0.6-0.7.
-     Đo lại 20 ảnh đang hiển thị: hue 29–53°, sat 0.55–0.86, và 60–95% pixel mỗi
-     ảnh là pixel CÓ MÀU — tức gần như trọn khung hình ám vàng.
-     KHÔNG dùng hue-rotate. Đã thử -14deg và hỏng: hue-rotate xoay TOÀN BỘ bánh
-     xe màu chứ không chỉ vùng vàng, nên mái ngói xám-ấm của hero biến thành
-     xanh teal và cá hồi ngả hồng. Nó không phân biệt được "vàng cần bớt" với
-     "màu thật của món ăn".
-     Hạ bão hoà thì đúng bản chất hơn: vàng nhạt đi theo đúng tỉ lệ mà không có
-     màu nào bị đổi sang màu khác. contrast bù lại độ nét mất khi giảm sat. */
-  --img-cool:saturate(.45) contrast(1.12);
+  /* KHÔNG lọc màu ảnh nữa — ảnh giữ nguyên tông gốc của nhiếp ảnh gia.
+     Đã thử hai bản và bỏ cả hai:
+     - hue-rotate(-14deg): hỏng hẳn. hue-rotate xoay TOÀN BỘ bánh xe màu chứ
+       không riêng vùng vàng, nên mái ngói xám-ấm của hero thành xanh teal và
+       cá hồi ngả hồng. Nó không phân biệt "vàng cần bớt" với "màu thật của món".
+     - saturate(.45): không đổi sắc màu nào, nhưng món ăn xuống xám, mất đúng
+       cái độ tươi làm người ta thèm — với trang nhà hàng thì đó là mất mát lớn
+       hơn cái được. Tông ấm của ảnh nay đã được cân bằng bằng cách khác: nền
+       đen tuyền, khối kem trung tính, và nét kẻ bạc vô sắc.
+     Giữ biến này (giá trị none) làm NÚM CHỈNH DUY NHẤT phòng khi cần grade lại
+     đồng loạt — mọi ảnh nền đều gọi qua đây.
+     Giá trị phải là saturate(1) chứ KHÔNG được là none: biến này luôn nằm cuối
+     một chuỗi kiểu 'brightness(1.04) contrast(1.12) var(--img-cool)', mà none
+     không phải một hàm filter hợp lệ trong chuỗi — nó làm hỏng cả khai báo và
+     ảnh sẽ mất luôn brightness/contrast đứng trước. saturate(1) là phép đồng
+     nhất, không đổi gì cả. */
+  --img-cool:saturate(1);
 
   --e-out:cubic-bezier(.16,1,.3,1);
   --e-io:cubic-bezier(.65,.05,.36,1);
@@ -184,9 +192,9 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
    Trang này không hề có vòng focus nào ngoài mấy ô input, nên người dùng bàn
    phím bấm Tab là mất dấu hoàn toàn. Dùng :focus-visible (không phải :focus)
    để chuột bấm vẫn sạch, chỉ bàn phím mới thấy vòng.
-   Vòng HAI LỚP, và KHÔNG được dùng var(--shu): accent nay là bạc sáng #DCE1E9,
-   đặt lên khối kem #F0EFEB thì tỉ lệ tương phản ~1.1:1 — vòng biến mất đúng
-   như lỗi nút Đặt bàn đã sửa trước đây. Lớp trong sáng + lớp ngoài tối đặc:
+   Vòng HAI LỚP, và KHÔNG được dùng var(--shu): accent là vàng đồng #D8B06A,
+   đặt lên khối kem #F0EFEB chỉ được ~1.9:1 — vòng gần như biến mất, đúng loại
+   lỗi nút Đặt bàn đã sửa trước đây. Lớp trong sáng + lớp ngoài tối đặc:
    trên nền đen lớp sáng bắt mắt, trên nền kem lớp tối bắt mắt. Nền nào cũng
    còn ít nhất một lớp đọc được. */
 :where(a,button,input,select,textarea,[tabindex]):focus-visible{
@@ -223,7 +231,7 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
   transition:color .5s var(--e-out),border-color .5s var(--e-out),background .5s var(--e-out)}
 .btn.nav-book::before{background:var(--shu);border-radius:999px}
 .btn.nav-book .dot{width:6px;height:6px;border-radius:50%;background:var(--shu);flex:none;
-  box-shadow:0 0 0 0 rgba(220,225,233,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
+  box-shadow:0 0 0 0 rgba(216,176,106,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
 .btn.nav-book:hover{color:var(--on-gold);border-color:var(--shu)}
 .btn.nav-book:hover .dot{background:var(--on-gold);box-shadow:0 0 0 4px rgba(22,17,12,.16)}
 
@@ -393,7 +401,7 @@ header.scrolled{padding:14px 0}
 .hero-plate{display:flex;align-items:center;gap:16px;margin-bottom:16px}
 .hero-plate .seal{flex:0 0 auto;width:44px;height:44px;display:grid;place-items:center;
   background:var(--shu);color:var(--on-gold);font-family:var(--mincho);font-size:22px;
-  box-shadow:0 8px 22px -8px rgba(220,225,233,.7);border-radius:3px}
+  box-shadow:0 8px 22px -8px rgba(216,176,106,.7);border-radius:3px}
 .hero .jp-greet{font-family:var(--mincho);font-size:clamp(15px,1.6vw,19px);
   color:var(--sumi-soft);letter-spacing:.3em;display:flex;align-items:center;gap:16px}
 .hero .jp-greet::before{content:"";width:44px;height:1px;background:var(--sumi-soft);opacity:.6}
