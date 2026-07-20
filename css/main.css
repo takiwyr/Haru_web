@@ -439,37 +439,46 @@ header.scrolled{padding:14px 0}
   font-size:14px;color:var(--sumi-soft)}
 .hero-tate::after{content:"";display:block;width:1px;height:80px;background:var(--line);margin:22px auto 0}
 @media (max-width:900px){.hero-tate{display:none}}
-/* Chỉ dấu cuộn: hai mũi chevron, không chữ.
+/* Chỉ dấu cuộn: một mũi chevron mảnh trong vòng hairline, không chữ.
    Bản cũ là chữ "Cuộn" + một vạch dọc chạy lên xuống. Chữ ở đây là thừa —
    mũi tên chúc xuống đã nói đúng một việc đó rồi, mà lại còn phải dịch khi
    thêm ngôn ngữ. SVG vẽ mũi quay PHẢI rồi xoay 90° bằng CSS: dựng theo trục
-   ngang thì toạ độ dễ đọc, còn xoay là việc của trình duyệt. */
+   ngang thì toạ độ dễ đọc, còn xoay là việc của trình duyệt.
+   Đã bỏ bản hai mũi stroke 3.6 vì đọc ra quá thô: nét dày cỡ đó là ngôn ngữ
+   của nút bấm ứng dụng, lạc hẳn giữa một trang mà mọi đường kẻ khác đều là
+   hairline 1px. Một mũi, nét 1.5, đầu bo tròn — cùng họ với phần còn lại. */
 .scroll-cue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;
-  display:grid;place-items:center;width:56px;height:56px;
+  display:grid;place-items:center;width:46px;height:46px;
   /* KHÔNG đặt opacity ở đây. Bản trước để .75 trên chính thẻ bọc, mà opacity là
      thuộc tính nhân cả cụm: đĩa tối .40 x .75 chỉ còn ~.30, đè lên nền cát sáng
      của hero thì gần như không hạ được gì, và nét trắng cũng bị mờ theo. Ai cần
      mờ thì tự mờ — nhịp thở nằm trong keyframes của riêng svg. */
   color:var(--sumi);transition:transform .35s var(--e-out)}
-/* Đĩa tối sau nút — CÙNG cách đã sửa cho nút Đặt bàn. Hero là ảnh và ảnh đổi
-   sau mỗi lượt slide: nét trắng rơi trúng cái đĩa sứ sáng ở giữa khung thì gần
-   như tàng hình, mà không đoán trước được lượt nào sẽ sáng. drop-shadow không
-   đủ — nó chỉ viền quanh nét chứ không hạ nền. */
+/* Nền sau nút — CÙNG cách đã sửa cho nút Đặt bàn. Hero là ảnh và ảnh đổi sau
+   mỗi lượt slide: nét trắng rơi trúng cái đĩa sứ sáng hay nền cát thì gần như
+   tàng hình, mà không đoán trước được lượt nào sẽ sáng. drop-shadow không đủ —
+   nó chỉ viền quanh nét chứ không hạ nền.
+   Nhưng đĩa đặc .52 thì lại nặng. Nay hạ xuống .26 và thêm viền hairline: vòng
+   viền tự nó đã tách nút khỏi ảnh bằng HÌNH, nên phần nền chỉ cần đủ dịu vùng
+   ngay dưới nét chứ không phải là một mảng đen. */
 .scroll-cue::before{content:"";position:absolute;inset:0;border-radius:50%;
-  background:rgba(9,9,11,.52);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  transition:background .35s var(--e-out)}
-.scroll-cue:hover::before{background:rgba(9,9,11,.62)}
+  background:rgba(9,9,11,.26);border:1px solid rgba(240,239,237,.30);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:background .35s var(--e-out),border-color .35s var(--e-out)}
+.scroll-cue:hover::before{background:rgba(9,9,11,.44);border-color:rgba(240,239,237,.55)}
 .scroll-cue svg{position:relative;z-index:1;
-  width:23px;height:44px;transform:rotate(90deg);overflow:visible;
-  fill:none;stroke:currentColor;stroke-width:3.6;stroke-linecap:square;stroke-linejoin:miter;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.55));   /* hero là ảnh, nét trắng cần tách khỏi vùng sáng */
-  animation:scCue 2s var(--e-io) infinite}
+  width:11px;height:20px;transform:rotate(90deg);overflow:visible;
+  fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.6));   /* hero là ảnh, nét mảnh cần tách khỏi vùng sáng */
+  animation:scCue 2.4s var(--e-io) infinite}
 .scroll-cue:hover{transform:translateX(-50%) translateY(4px)}
-/* nhịp trôi xuống rồi tan — mời cuộn chứ không giật sự chú ý */
+/* nhịp trôi xuống rồi lùi lại — mời cuộn chứ không giật sự chú ý.
+   Biên độ nhỏ hơn bản cũ và sàn opacity cao hơn: nét đã mảnh, nếu còn nhoè tới
+   .45 nữa thì có lúc gần như không thấy gì. */
 @keyframes scCue{
-  0%{transform:rotate(90deg) translateX(-5px);opacity:.65}
-  45%{transform:rotate(90deg) translateX(0);opacity:1}
-  100%{transform:rotate(90deg) translateX(6px);opacity:.45}}
+  0%{transform:rotate(90deg) translateX(-3px);opacity:.7}
+  45%{transform:rotate(90deg) translateX(2px);opacity:1}
+  100%{transform:rotate(90deg) translateX(-3px);opacity:.7}}
 @media (prefers-reduced-motion:reduce){.scroll-cue svg{animation:none}}
 
 /* ---------- SECTION SHELL ---------- */
