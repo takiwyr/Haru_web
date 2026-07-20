@@ -23,9 +23,12 @@
   --gold-glow:rgba(216,176,106,.28);  /* quầng sáng quanh chi tiết vàng */
   --on-gold:#14110C;        /* chữ trên nền vàng đặc (không dùng #fff) */
 
-  /* PANEL KEM — nửa giấy của nhịp đen/kem kiểu Ryo */
-  --cream:#F2F1EC;
-  --cream-2:#E6E5DF;
+  /* PANEL KEM — nửa giấy của nhịp đen/kem kiểu Ryo.
+     Trước là trắng xám trung tính (#F2F1EC) nên đọc ra "nền trắng".
+     Nay là tông giấy dó/washi: ngà ấm, hơi ngả vàng nhạt — nền trắng duy
+     nhất của trang thành một mặt GIẤY, tương phản chất liệu với phần đen tuyền. */
+  --cream:#F7F1E1;
+  --cream-2:#EDE5D0;
   --ink:#131315;            /* chữ chính trên nền kem */
   --ink-soft:#46464A;       /* body text trên nền kem */
   --ink-line:rgba(19,19,21,.16);
@@ -883,6 +886,15 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
    ============================================================ */
 :root{
   --gold-ink:#8A6526;   /* vàng đủ tối để đọc được TRÊN nền kem */
+
+  /* CHẤT GIẤY — chỉ đổi mã màu thôi thì mặt nền vẫn phẳng như sơn.
+     Hai lớp chồng nhau mới ra chất giấy dó:
+       --paper-grain  nhiễu mịn (feTurbulence) = thớ giấy, li ti khắp mặt
+       --paper-fiber  sợi và đốm thưa = xơ giấy lẫn trong bột, thứ làm
+                      mắt đọc ra "giấy thủ công" chứ không phải giấy in
+     Cả hai vẽ bằng SVG data-URI nên không tốn thêm request nào. */
+  --paper-grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='220' height='220' filter='url(%23g)' opacity='.28'/></svg>");
+  --paper-fiber:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><g stroke='%23A08B60' stroke-width='.9' stroke-linecap='round' fill='none' opacity='.55'><path d='M22 40l11 5'/><path d='M118 24l-8 6'/><path d='M243 61l7-6'/><path d='M300 130l-9 3'/><path d='M64 148l6 7'/><path d='M186 172l10-4'/><path d='M28 236l8 6'/><path d='M142 268l-9 4'/><path d='M262 244l5 8'/><path d='M312 292l-7 5'/><path d='M96 92l7 6'/><path d='M206 108l-6 7'/><path d='M154 320l9-5'/><path d='M40 300l-6 6'/></g><g fill='%23857152' opacity='.4'><circle cx='58' cy='150' r='1'/><circle cx='224' cy='36' r='.9'/><circle cx='166' cy='210' r='1.1'/><circle cx='288' cy='188' r='.8'/><circle cx='84' cy='262' r='1'/><circle cx='320' cy='84' r='.9'/><circle cx='12' cy='110' r='.8'/><circle cx='198' cy='300' r='1'/><circle cx='250' cy='142' r='.8'/><circle cx='130' cy='60' r='.9'/></g></svg>");
 }
 
 /* ---- KHỐI CHIA ĐÔI: nửa ảnh tối full-bleed · nửa panel giấy kem ---- */
@@ -895,8 +907,20 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 /* đảo bên: ảnh sang phải */
 .band.split.reverse .split-media{order:2}
 
-.split-panel{background:var(--cream);color:var(--ink);display:flex;align-items:center;
+.split-panel{position:relative;background:var(--cream);color:var(--ink);display:flex;align-items:center;
   padding:clamp(52px,6.6vw,116px) clamp(30px,5vw,88px)}
+/* lớp chất giấy phủ toàn panel. multiply để thớ giấy ĂN vào màu nền thay vì
+   nằm đè lên như một tấm film xám; hai background-size lệch nhau (340 / 220)
+   nên hai lớp không bao giờ lặp trùng chu kỳ — mắt không thấy ô vuông tile.
+   Thêm quầng tối rất nhẹ ở mép để tờ giấy có độ cong, không bẹt như sơn. */
+.split-panel::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:var(--paper-fiber),var(--paper-grain),
+    radial-gradient(120% 100% at 50% 42%, transparent 54%, rgba(150,128,88,.13) 100%);
+  background-size:340px 340px,220px 220px,100% 100%;
+  /* nhiễu là xám vô sắc: multiply nặng tay sẽ HẠ độ ấm của giấy xuống xám.
+     .42 là mức còn thấy chất mà chưa ăn mất sắc ngà. */
+  mix-blend-mode:multiply;opacity:.42}
+.split-inner{position:relative;z-index:1}
 /* cột trái = kanji dọc làm dấu; cột phải = nội dung */
 .split-inner{width:100%;max-width:560px;display:grid;
   grid-template-columns:clamp(50px,4.8vw,76px) 1fr;gap:clamp(18px,2.8vw,44px);align-items:start}
