@@ -6,15 +6,15 @@
 
 /* ---------- TOKENS ---------- */
 :root{
-  /* PHỔ ĐÌNH STYLE — giấy tối ám nâu ấm (washi tối) · chữ kem · đỏ son · brush + mây khói */
-  /* Bậc sắc độ nới rộng so với bản cũ: trước đây 4 mặt phẳng nằm trong khoảng
-     #0B → #24 nên nhìn phẳng lì và bị chê "tối". Vẫn là nâu đen, chỉ tăng
-     khoảng cách giữa các bậc để mắt đọc được lớp lang. */
-  --paper:#1A1611;          /* nền chính — giấy tối ám nâu ấm (card/hover) */
-  --paper-2:#221C15;        /* band xen kẽ */
-  --paper-3:#2F2619;        /* card / khối nhấn nhẹ */
-  --sumi:#F3EBDA;           /* chữ — kem ấm (thay trắng ngà lạnh) */
-  --sumi-soft:#D6CBB2;      /* heading phụ */
+  /* TÔNG ĐEN TUYỀN — bản trước ám nâu vàng (#1A1611 gốc hue ~35°) nên cả trang
+     đọc ra "vàng ấm". Nay các mặt phẳng nền về xám trung tính gần như vô sắc;
+     hơi ấm chỉ còn giữ lại ở CHI TIẾT vàng đồng (--shu) để làm nhấn nhá.
+     Bậc sắc độ vẫn nới rộng như cũ để trang không phẳng lì. */
+  --paper:#141416;          /* nền chính — đen trung tính (card/hover) */
+  --paper-2:#1C1C1F;        /* band xen kẽ */
+  --paper-3:#26262A;        /* card / khối nhấn nhẹ */
+  --sumi:#F2F1ED;           /* chữ — trắng ngà trung tính */
+  --sumi-soft:#CFCEC9;      /* heading phụ */
   /* ACCENT — VÀNG ĐỒNG (kiểu Ryo): dùng cho nét kẻ mảnh, số, kanji, chi tiết.
      Tên biến giữ --shu để không phải sửa 51 chỗ; giá trị nay là gold foil. */
   --shu:#D8B06A;            /* vàng đồng accent — sáng hơn để bắt sáng trên nền tối */
@@ -24,16 +24,16 @@
   --on-gold:#14110C;        /* chữ trên nền vàng đặc (không dùng #fff) */
 
   /* PANEL KEM — nửa giấy của nhịp đen/kem kiểu Ryo */
-  --cream:#F2EDE0;
-  --cream-2:#E9E1CF;
-  --ink:#16130E;            /* chữ chính trên nền kem */
-  --ink-soft:#4A443A;       /* body text trên nền kem */
-  --ink-line:rgba(22,19,14,.16);
-  --stone:#ADA290;          /* caption, meta — xám ấm */
-  --stone-2:#8A8070;
-  --line:rgba(243,235,218,0.20);   /* hairline ấm */
-  --line-2:rgba(243,235,218,0.09);
-  --ink-block:#0C0A07;      /* khối đen ấm sâu nhất (footer, signature) */
+  --cream:#F2F1EC;
+  --cream-2:#E6E5DF;
+  --ink:#131315;            /* chữ chính trên nền kem */
+  --ink-soft:#46464A;       /* body text trên nền kem */
+  --ink-line:rgba(19,19,21,.16);
+  --stone:#A5A4A0;          /* caption, meta — xám trung tính */
+  --stone-2:#7E7D79;
+  --line:rgba(242,241,237,0.20);   /* hairline trung tính */
+  --line-2:rgba(242,241,237,0.09);
+  --ink-block:#08080A;      /* khối đen sâu nhất (footer, signature) */
 
   /* Heading trộn Việt+Latin. Font mincho Nhật (Shippori/Noto Serif JP) có
      unicode-range thiếu vài codepoint tiếng Việt (ề U+1EC1) → browser fallback
@@ -202,7 +202,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:900;padding:26px 0;
   background:transparent;transition:padding .5s var(--e-out);}
 /* scrim gradient rất nhẹ để logo + 3 gạch luôn đọc được trên ảnh sáng — KHÔNG phải thanh bar */
 header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:linear-gradient(180deg, rgba(11,9,6,.42) 0%, rgba(11,9,6,.16) 52%, transparent 100%);
+  background:linear-gradient(180deg, rgba(9,9,11,.42) 0%, rgba(9,9,11,.16) 52%, transparent 100%);
   opacity:0;transition:opacity .5s}
 header.scrolled::before{opacity:1}
 header.scrolled{padding:14px 0}
@@ -282,7 +282,7 @@ header.scrolled{padding:14px 0}
 .hero-photo::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   mix-blend-mode:soft-light;
   background:radial-gradient(52% 46% at 56% 52%,
-    rgba(255,240,210,.8) 0%,rgba(255,240,210,.3) 44%,transparent 74%)}
+    rgba(255,251,243,.8) 0%,rgba(255,251,243,.3) 44%,transparent 74%)}
 /* SLIDESHOW ảnh chạy luân phiên (crossfade + Ken Burns nhẹ) kiểu Phổ Đình */
 .hero-slides{position:absolute;inset:0}
 /* ảnh đã grade sẵn (tối/ấm/vignette) → CSS chỉ cần phóng nhẹ, không hạ sáng nhiều */
@@ -307,15 +307,17 @@ header.scrolled{padding:14px 0}
 /* hạt phim + light-leak nhẹ phủ toàn hero → gắn kết "1 cuộn phim" */
 .hero-grain{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:overlay;opacity:.5;
   background:
-    radial-gradient(70% 50% at 12% 8%, rgba(201,161,92,.16), transparent 60%),
-    radial-gradient(60% 60% at 92% 96%, rgba(255,190,120,.10), transparent 60%)}
+    /* light-leak: giữ MỘT vệt vàng nhạt làm chất phim, vệt còn lại đổi sang
+       trắng trung tính — hai vệt cam cũ là nguồn ám vàng rõ nhất ở hero */
+    radial-gradient(70% 50% at 12% 8%, rgba(214,178,112,.10), transparent 60%),
+    radial-gradient(60% 60% at 92% 96%, rgba(226,228,236,.09), transparent 60%)}
 /* hero giờ chỉ còn ẢNH — scrim tối giản: hơi tối mép trên (để logo/3 gạch đọc rõ)
    + vignette nhẹ quanh viền cho ảnh có chiều sâu, KHÔNG đè tối giữa khung */
 .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
-    linear-gradient(0deg, rgba(13,9,6,.40) 0%, transparent 24%),
-    linear-gradient(180deg, rgba(13,9,6,.46) 0%, transparent 24%),
-    radial-gradient(96% 76% at 50% 56%, rgba(13,9,6,.34) 0%, rgba(13,9,6,.08) 44%, transparent 72%)}
+    linear-gradient(0deg, rgba(10,10,12,.40) 0%, transparent 24%),
+    linear-gradient(180deg, rgba(10,10,12,.46) 0%, transparent 24%),
+    radial-gradient(96% 76% at 50% 56%, rgba(10,10,12,.34) 0%, rgba(10,10,12,.08) 44%, transparent 72%)}
 /* watermark 春 khổng lồ chìm sau chữ */
 .hero-wm{position:absolute;z-index:1;right:2%;top:2%;pointer-events:none;user-select:none;
   font-family:var(--brush);line-height:.7;font-size:clamp(240px,40vw,680px);
@@ -453,9 +455,9 @@ header.scrolled{padding:14px 0}
 .sig-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
     /* feather mép TRÊN + DƯỚI → ảnh tan vào nền ink-block, không còn đường cắt cứng */
-    linear-gradient(180deg, var(--ink-block) 0%, rgba(11,9,6,.86) 7%, rgba(11,9,6,.45) 16%, transparent 30%, transparent 72%, rgba(11,9,6,.62) 90%, var(--ink-block) 100%),
-    linear-gradient(100deg, rgba(11,9,6,.94) 0%, rgba(11,9,6,.82) 26%, rgba(11,9,6,.42) 50%, rgba(11,9,6,.12) 72%, rgba(11,9,6,.5) 100%),
-    radial-gradient(120% 90% at 80% 60%, transparent 40%, rgba(11,9,6,.55) 100%)}
+    linear-gradient(180deg, var(--ink-block) 0%, rgba(9,9,11,.86) 7%, rgba(9,9,11,.45) 16%, transparent 30%, transparent 72%, rgba(9,9,11,.62) 90%, var(--ink-block) 100%),
+    linear-gradient(100deg, rgba(9,9,11,.94) 0%, rgba(9,9,11,.82) 26%, rgba(9,9,11,.42) 50%, rgba(9,9,11,.12) 72%, rgba(9,9,11,.5) 100%),
+    radial-gradient(120% 90% at 80% 60%, transparent 40%, rgba(9,9,11,.55) 100%)}
 /* kanji thư pháp vẽ nét bằng clip-path khi cuộn */
 .sig-kanji{position:absolute;z-index:2;right:clamp(-14px,-1vw,-6px);bottom:clamp(-40px,-4vw,-20px);
   font-family:var(--brush-jp);line-height:.72;color:var(--shu);
@@ -502,9 +504,9 @@ header.scrolled{padding:14px 0}
 /* màn phủ: feather mép trên+dưới tan vào nền ink-block + tối trái cho chữ đọc rõ */
 .cine-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
-    linear-gradient(180deg, var(--ink-block) 0%, rgba(11,9,6,.86) 7%, rgba(11,9,6,.42) 16%, transparent 32%, transparent 70%, rgba(11,9,6,.6) 90%, var(--ink-block) 100%),
-    linear-gradient(100deg, rgba(11,9,6,.93) 0%, rgba(11,9,6,.82) 26%, rgba(11,9,6,.44) 52%, rgba(11,9,6,.12) 74%, rgba(11,9,6,.5) 100%),
-    radial-gradient(120% 90% at 78% 60%, transparent 42%, rgba(11,9,6,.52) 100%)}
+    linear-gradient(180deg, var(--ink-block) 0%, rgba(9,9,11,.86) 7%, rgba(9,9,11,.42) 16%, transparent 32%, transparent 70%, rgba(9,9,11,.6) 90%, var(--ink-block) 100%),
+    linear-gradient(100deg, rgba(9,9,11,.93) 0%, rgba(9,9,11,.82) 26%, rgba(9,9,11,.44) 52%, rgba(9,9,11,.12) 74%, rgba(9,9,11,.5) 100%),
+    radial-gradient(120% 90% at 78% 60%, transparent 42%, rgba(9,9,11,.52) 100%)}
 .cine-kanji{position:absolute;z-index:2;right:clamp(-14px,-1vw,-6px);bottom:clamp(-40px,-4vw,-20px);
   font-family:var(--brush-jp);line-height:.72;color:var(--shu);
   font-size:clamp(240px,40vw,620px);opacity:.16;pointer-events:none;
@@ -533,7 +535,7 @@ header.scrolled{padding:14px 0}
 .cine-inner .stat .n{font-family:var(--display);font-size:clamp(30px,3.4vw,46px);color:#FBFAF7;line-height:1}
 .cine-inner .stat .l{font-family:var(--util);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#B7AF9F;margin-top:8px}
 .cine-inner .cine-btn{margin-top:24px}
-.cine .pillar{background:rgba(11,9,6,.42);border:1px solid rgba(236,227,208,.15);
+.cine .pillar{background:rgba(9,9,11,.42);border:1px solid rgba(236,227,208,.15);
   backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border-radius:2px;padding:26px 22px}
 .cine .pillar .num{color:var(--shu);font-family:var(--brush);font-size:38px;line-height:1;margin-bottom:12px;opacity:.92}
 .cine .pillar h3{color:#FBFAF7;font-family:var(--serif);font-size:clamp(17px,1.3vw,20px);margin-bottom:9px;font-weight:400}
@@ -568,10 +570,10 @@ header.scrolled{padding:14px 0}
 .spanel::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   mix-blend-mode:soft-light;opacity:0;transition:opacity .9s var(--e-out);
   background:radial-gradient(56% 48% at 50% 42%,
-    rgba(255,240,210,.95) 0%,rgba(255,240,210,.4) 42%,transparent 74%)}
+    rgba(255,251,243,.95) 0%,rgba(255,251,243,.4) 42%,transparent 74%)}
 .spanel.is-open::before{opacity:1}
 .spanel::after{content:"";position:absolute;inset:0;z-index:2;
-  background:linear-gradient(to top,rgba(11,9,6,.82) 0%,rgba(11,9,6,.24) 46%,rgba(11,9,6,.46) 100%);
+  background:linear-gradient(to top,rgba(9,9,11,.82) 0%,rgba(9,9,11,.24) 46%,rgba(9,9,11,.46) 100%);
   transition:background .7s var(--e-out)}
 /* nhãn dọc khi thu gọn */
 .spanel-vtitle{position:absolute;left:50%;bottom:28px;transform:translateX(-50%) rotate(180deg);
@@ -594,7 +596,7 @@ header.scrolled{padding:14px 0}
 /* trạng thái mở */
 .spanel.is-open{flex-grow:5.6}
 .spanel.is-open .spanel-img{transform:scale(1);filter:brightness(1) contrast(1.04) saturate(1.03)}
-.spanel.is-open::after{background:linear-gradient(to top,rgba(11,9,6,.9) 0%,rgba(11,9,6,.12) 56%,rgba(11,9,6,.14) 100%)}
+.spanel.is-open::after{background:linear-gradient(to top,rgba(9,9,11,.9) 0%,rgba(9,9,11,.12) 56%,rgba(9,9,11,.14) 100%)}
 .spanel.is-open .spanel-vtitle,.spanel.is-open .spanel-vno{opacity:0}
 .spanel.is-open .spanel-caption{opacity:1;transform:none}
 .branch-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:48px;position:relative;z-index:2}
@@ -813,7 +815,7 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
   .sig-photo img{object-position:64% 44%}
   .sig-inner{max-width:none}
   .sig-veil{background:
-    linear-gradient(0deg, rgba(11,9,6,.96) 0%, rgba(11,9,6,.7) 34%, rgba(11,9,6,.28) 62%, rgba(11,9,6,.6) 100%)}
+    linear-gradient(0deg, rgba(9,9,11,.96) 0%, rgba(9,9,11,.7) 34%, rgba(9,9,11,.28) 62%, rgba(9,9,11,.6) 100%)}
   .sig-inner .eyebrow{margin-bottom:18px}
   .sig-kanji{opacity:.12;font-size:56vw}
   .sig-steam{left:44%;bottom:32%}
@@ -821,7 +823,7 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
   .cine-pin{height:auto;min-height:auto;padding:110px 0 74px}
   .cine-photo img{transform:scale(1.05)}
   .cine-veil{background:
-    linear-gradient(0deg, rgba(11,9,6,.96) 0%, rgba(11,9,6,.72) 30%, rgba(11,9,6,.4) 60%, rgba(11,9,6,.66) 100%)}
+    linear-gradient(0deg, rgba(9,9,11,.96) 0%, rgba(9,9,11,.72) 30%, rgba(9,9,11,.4) 60%, rgba(9,9,11,.66) 100%)}
   .cine-inner,.cine-inner.wide{max-width:none}
   .cine-kanji{opacity:.12;font-size:56vw}
   .cine .pillars{grid-template-columns:1fr;gap:12px;margin-top:26px}
@@ -834,7 +836,7 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
   .space-accordion{flex-direction:column;height:auto;gap:14px}
   .spanel{flex:none;height:clamp(220px,42vh,300px)}
   .spanel-img{transform:scale(1);filter:brightness(.92) contrast(1.06) saturate(1.02)}
-  .spanel::after{background:linear-gradient(to top,rgba(11,9,6,.9) 0%,rgba(11,9,6,.18) 60%,rgba(11,9,6,.22) 100%)}
+  .spanel::after{background:linear-gradient(to top,rgba(9,9,11,.9) 0%,rgba(9,9,11,.18) 60%,rgba(9,9,11,.22) 100%)}
   .spanel-vtitle,.spanel-vno{display:none}
   .spanel-caption{opacity:1;transform:none;width:100%;max-width:560px}
   .spanel-caption h3{white-space:normal}
@@ -967,7 +969,7 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 
 /* ---- HEADER trên nền kem: scrim đậm hơn + logo/3 gạch có bóng để luôn đọc được ---- */
 header.scrolled::before{
-  background:linear-gradient(180deg, rgba(11,9,6,.66) 0%, rgba(11,9,6,.3) 54%, transparent 100%)}
+  background:linear-gradient(180deg, rgba(9,9,11,.66) 0%, rgba(9,9,11,.3) 54%, transparent 100%)}
 .burger span{filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 .brand img{filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
 /* ảnh trong khối chia đôi: tối & trầm hơn cho khớp tông Ryo */
@@ -980,11 +982,13 @@ header.scrolled::before{
    Gradient để dạng rgba() nên lớp noise phía dưới vẫn ánh lên.
    ============================================================ */
 :root{
-  --bg-dark:#0B0806;                 /* 1. Dark Background */
-  /* glow mạnh hơn hẳn: đây là nguồn "điểm sáng" duy nhất của toàn nền,
-     để .15/.12 thì gần như không thấy nên cả trang đọc ra một mảng đen phẳng */
-  --glow-a:rgba(216,176,106,.26);    /* 4. Glow — vàng đồng ấm */
-  --glow-b:rgba(184,140,66,.20);
+  --bg-dark:#0A0A0C;                 /* 1. Dark Background — đen trung tính */
+  /* Glow là nguồn "điểm sáng" duy nhất của nền — vẫn cần mạnh để trang không
+     phẳng, nhưng hai quầng vàng đồng cũ (.26/.20) chính là thứ nhuộm vàng cả
+     trang. Nay: một quầng vàng NHẸ giữ chất ấm sang trọng + một quầng trắng
+     trung tính lo phần "sáng", nên trang sáng lên mà không ám vàng. */
+  --glow-a:rgba(216,176,106,.13);    /* 4. Glow — vàng đồng, chỉ còn gợi ý */
+  --glow-b:rgba(226,228,236,.09);    /* quầng trắng trung tính — nâng sáng vô sắc */
 }
 
 /* 1 + 2 — nền đen ấm phủ hạt giấy tĩnh, cố định khi cuộn */
@@ -1004,9 +1008,11 @@ body::before{
     radial-gradient(46vw 42vw at 16% 10%, var(--glow-a), transparent 62%),
     radial-gradient(54vw 48vw at 86% 80%, var(--glow-b), transparent 66%),
     /* 3. GRADIENT — trong mờ để lộ noise bên dưới. Hạ opacity so với bản đầu:
-       phủ .86–.94 đều tay khiến glow bị dập tắt và trang mất chiều sâu. */
+       phủ .86–.94 đều tay khiến glow bị dập tắt và trang mất chiều sâu.
+       Màu đổi từ nâu (46,35,22) sang xám trung tính — đây là lớp phủ toàn trang
+       nên hue của nó quyết định tông tổng thể. */
     radial-gradient(126% 86% at 50% 0%,
-      rgba(46,35,22,.62) 0%, rgba(24,18,12,.70) 52%, rgba(11,8,6,.88) 100%);
+      rgba(42,42,47,.62) 0%, rgba(22,22,25,.70) 52%, rgba(9,9,11,.88) 100%);
   background-repeat:no-repeat;
   animation:bgGlowDrift 34s ease-in-out infinite alternate;
   will-change:background-position;
@@ -1049,11 +1055,11 @@ body::before{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   mix-blend-mode:soft-light;
   background:radial-gradient(58% 54% at var(--spot-x,50%) var(--spot-y,46%),
-    rgba(255,240,210,.92) 0%,rgba(255,240,210,.38) 40%,transparent 72%)}
+    rgba(255,251,243,.92) 0%,rgba(255,251,243,.38) 40%,transparent 72%)}
 .s3-media::after,.split-media::after,.sig-photo::after,.cine-photo::after{
   content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   background:radial-gradient(80% 74% at var(--spot-x,50%) var(--spot-y,46%),
-    transparent 40%,rgba(9,7,5,.30) 76%,rgba(9,7,5,.58) 100%)}
+    transparent 40%,rgba(8,8,10,.30) 76%,rgba(8,8,10,.58) 100%)}
 /* sig/cine đã có màn phủ riêng (.sig-veil/.cine-veil z:1) lo phần tối cho chữ đọc rõ,
    nên ở đây chỉ giữ lớp nâng sáng, bỏ vignette để không chồng tối hai lần */
 .sig-photo::after,.cine-photo::after{display:none}
