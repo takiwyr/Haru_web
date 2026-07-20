@@ -12,20 +12,16 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+Display:ital,wght@0,400;0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+Display:ital,wght@0,400;0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Font Nhật cho hoa văn kanji. text= subset đúng 20 glyph đang dùng nên tải rất nhẹ;
+     unicode-range chỉ phủ CJK nên không bao giờ chạm vào chữ Việt. -->
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Yuji+Syuku&text=%E3%82%8A%E4%BA%88%E4%BA%8B%E4%BE%BF%E5%91%B3%E5%AD%97%E5%B1%B1%E6%98%A5%E6%B8%8B%E6%BC%A2%E7%89%A9%E7%A9%BA%E7%B0%A1%E7%B4%84%E7%B4%A0%E8%89%AF%E8%AA%9E%E9%96%93%E9%A3%9F%E9%A3%B2&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/graded/hero/concept-harumarch2-copy.webp" fetchpriority="high">
-<link rel="stylesheet" href="css/main.css?v=88">
+<link rel="stylesheet" href="css/main.css?v=109">
 </head>
 <body id="top">
 
-<!-- ===== CÁNH HOA ANH ĐÀO — tinh thần mùa xuân Haru ===== -->
-<div class="sakura" aria-hidden="true">
-  <i class="p1"></i><i class="p2"></i><i class="p3"></i><i class="p4"></i><i class="p5"></i><i class="p6"></i><i class="p7"></i>
-</div>
-
-<!-- ===== CUSTOM CURSOR ===== -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"><span class="label" id="cursorLabel"></span></div>
+<!-- Sakura bay + custom cursor đã gỡ: tinh thần Ryo là TĨNH, không chuyển động thừa. -->
 
 <!-- ===== PRELOADER ===== -->
 <div class="preloader" id="preloader">
@@ -56,8 +52,8 @@
 <div class="drawer" id="drawer">
   <a href="#story">Câu chuyện</a>
   <a href="#menu">Thực đơn</a>
-  <a href="#philosophy">Triết lý</a>
-  <a href="#spaces">Không gian</a>
+  <a href="#philosophy">Giá trị cốt lõi</a>
+  <a href="chi-nhanh.html">Chi nhánh</a>
   <a href="#news">Tin tức</a>
   <a href="#reserve">Đặt bàn ngay</a>
   <div class="drawer-lang" role="group" aria-label="Ngôn ngữ">
@@ -94,152 +90,132 @@
   <div class="scroll-ind"><span>Cuộn</span></div>
 </section>
 
-<!-- ===== STORY — cinematic pinned scene ===== -->
-<section class="band cine" id="story">
-  <div class="cine-pin">
-    <div class="cine-photo" data-cine-photo>
-      <img src="assets/graded/space/ntp-a-69.webp" alt="Không gian ấm cúng bên khung cửa nguyệt tại Haru Sushi" loading="lazy">
-    </div>
-    <div class="cine-veil" aria-hidden="true"></div>
-    <div class="cine-fade" aria-hidden="true" data-cine-fade></div>
-    <div class="wrap cine-copy">
-      <div class="cine-inner">
-        <h2 class="h-lg" data-cine-line>Haru Story</h2>
-        <p class="cine-sub" data-cine-line>Mùa xuân Nhật Bản nở rộ giữa lòng Sài Gòn</p>
-        <p data-cine-line>Trong tiếng Nhật, <b>Haru</b> nghĩa là <i>Mùa Xuân</i> — mùa của khởi đầu tươi mới, của trăm hoa đua nở, của nguồn thực phẩm dồi dào và tinh khôi nhất.</p>
-        <p data-cine-line>Haru Sushi ra đời để trở thành một “Mùa Xuân” trong lòng thực khách — nơi khởi đầu cho những cuộc gặp gỡ và trải nghiệm ẩm thực trọn vẹn.</p>
-        <a href="#menu" class="btn ghost-light" data-cine-line data-cursor>Khám phá thực đơn <span class="arw">→</span></a>
+<!-- ===== STORY — khối chia đôi: ảnh tối · panel giấy kem (Ryo) ===== -->
+<section class="band split" id="story">
+  <div class="split-media">
+    <img src="assets/graded/space/ntp-a-69.webp" alt="Không gian ấm cúng bên khung cửa nguyệt tại Haru Sushi" loading="lazy">
+  </div>
+  <div class="split-panel">
+    <div class="split-inner">
+      <div class="kanji-mark" aria-hidden="true">
+        <span class="km-char">春</span>
+        <span class="km-note">Haru<br>Mùa xuân</span>
+      </div>
+      <div class="split-body">
+        <h2 class="h-md" data-reveal>Câu chuyện Haru</h2>
+        <p class="h-sub" data-reveal>Mùa xuân Nhật Bản nở rộ giữa lòng Sài Gòn</p>
+        <p data-reveal>Trong tiếng Nhật, <b>Haru</b> nghĩa là <i>Mùa Xuân</i> — mùa của khởi đầu tươi mới, của trăm hoa đua nở, của nguồn thực phẩm dồi dào và tinh khôi nhất.</p>
+        <p data-reveal>Haru Sushi ra đời để trở thành một “Mùa Xuân” trong lòng thực khách — nơi khởi đầu cho những cuộc gặp gỡ và trải nghiệm ẩm thực trọn vẹn.</p>
+        <a href="#menu" class="btn" data-reveal>Khám phá thực đơn <span class="arw">→</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== PHILOSOPHY — cinematic pinned scene ===== -->
-<section class="band cine" id="philosophy">
-  <div class="cine-pin">
-    <div class="cine-photo" data-cine-photo>
-      <img src="assets/graded/space/ntp-a-53.webp" alt="Phòng riêng ấm cúng với tranh tường sơn thủy tại Haru Sushi" loading="lazy">
+<!-- ===== OUR STORY — 3 khối so le đánh số (theo web.pdf) ===== -->
+<section class="band story3" id="philosophy">
+  <span class="band-kanji" aria-hidden="true">物語</span>
+  <div class="wrap"><div class="nami" aria-hidden="true"></div>
+    <div class="sec-head">
+      <span class="eyebrow center" data-reveal>Our Story</span>
+      <h2 class="h-md" data-split>Ba điều làm nên | một mùa xuân</h2>
     </div>
-    <div class="cine-veil" aria-hidden="true"></div>
-    <div class="cine-fade" aria-hidden="true" data-cine-fade></div>
-    <div class="wrap cine-copy">
-      <div class="cine-inner wide">
-        <span class="eyebrow" data-cine-line>Triết lý Haru</span>
-        <h2 class="h-md" data-cine-line>Ba điều làm nên một mùa xuân</h2>
-        <div class="pillars">
-          <div class="pillar" data-cine-line><h3>Không gian an tĩnh</h3><p>Kiến trúc Nhật Bản truyền thống — cửa nguyệt, sân thiền, hồ cá koi — riêng tư và ấm cúng cho mọi buổi gặp gỡ.</p></div>
-          <div class="pillar" data-cine-line><h3>Nguyên liệu tươi mới</h3><p>Hải sản nhập mới mỗi ngày từ Việt Nam, Nhật Bản &amp; Na Uy — tinh khiết, đúng mùa, trọn vị.</p></div>
-          <div class="pillar" data-cine-line><h3>Dịch vụ tận tâm</h3><p>Đội ngũ chuyên nghiệp, chu đáo trong từng chi tiết — omotenashi đúng tinh thần hiếu khách Nhật.</p></div>
+
+    <article class="s3-item" data-reveal>
+      <div class="s3-media imgmask"><img src="assets/graded/space/pn-a-100.webp" alt="Nhân viên Haru trong trang phục kimono đón khách bên sân thiền" loading="lazy" data-mask-img></div>
+      <div class="s3-copy">
+        <span class="s3-no">01</span>
+        <h3>Đội ngũ nhân viên</h3>
+        <p>Chu đáo trong từng chi tiết nhỏ — omotenashi đúng tinh thần hiếu khách Nhật. Từ lời chào ở cửa đến lát sashimi cuối cùng, mỗi khoảnh khắc đều được chăm chút.</p>
+      </div>
+    </article>
+
+    <article class="s3-item reverse" data-reveal>
+      <div class="s3-media imgmask"><img src="assets/graded/space/ntp-a-28.webp" alt="Sảnh Haru với cầu thang gỗ và cây bonsai" loading="lazy" data-mask-img></div>
+      <div class="s3-copy">
+        <span class="s3-no">02</span>
+        <h3>Không gian</h3>
+        <p>Cửa nguyệt, sân thiền, hồ cá koi và những bức bích họa núi Phú Sĩ — kiến trúc Nhật Bản truyền thống, riêng tư và ấm cúng cho mọi buổi gặp gỡ.</p>
+        <a class="s3-more" href="chi-nhanh.html">Xem tiếp <span class="arw" aria-hidden="true">→</span><small>đến trang chi nhánh</small></a>
+      </div>
+    </article>
+
+    <article class="s3-item" data-reveal>
+      <div class="s3-media imgmask"><img src="assets/graded/hero/concept-harumarch1-copy.webp" alt="Sashimi cá hồi tươi mới trong ngày tại Haru" loading="lazy" data-mask-img></div>
+      <div class="s3-copy">
+        <span class="s3-no">03</span>
+        <h3>Nguyên liệu</h3>
+        <p>Hải sản nhập mới mỗi ngày từ Việt Nam, Nhật Bản &amp; Na Uy — tinh khiết, đúng mùa, trọn vị. Không giữ qua đêm, không đánh đổi độ tươi.</p>
+      </div>
+    </article>
+
+    <div class="stat-row" data-reveal>
+      <div class="stat"><div class="n" data-count="200" data-suffix="+">0</div><div class="l">Món ăn</div></div>
+      <div class="stat"><div class="n" data-count="3" data-pad="2">0</div><div class="l">Quốc gia nguyên liệu</div></div>
+      <div class="stat"><div class="n" data-count="5" data-pad="2">0</div><div class="l">Chi nhánh</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MENU — trang thực đơn in ấn: panel kem · ảnh tối lớn (Ryo) ===== -->
+<section class="band split reverse menu-sec" id="menu">
+  <div class="split-media">
+    <img src="assets/graded/hero/concept-sushi-haru-35350-copy1-copy.webp" alt="Khay sushi và sashimi Haru bày nghệ thuật" loading="lazy">
+  </div>
+  <div class="split-panel">
+    <div class="split-inner">
+      <div class="kanji-mark" aria-hidden="true">
+        <span class="km-char">食<br>事</span>
+        <span class="km-note">Shokuji<br>Thực đơn</span>
+      </div>
+      <div class="split-body">
+        <h2 class="h-md" data-reveal>Thực đơn</h2>
+        <p class="h-sub" data-reveal>Hơn 200 món — mỗi món một câu chuyện</p>
+        <ul class="mlist">
+          <li data-reveal>
+            <div class="mi-head"><h3>Thuyền Sashimi thượng hạng</h3><span class="mi-rule"></span><span class="mi-tag">Sashimi</span></div>
+            <p>Tuyển chọn cá tươi nhập mới mỗi ngày, thái tay từng lát trên đá lạnh.</p>
+          </li>
+          <li data-reveal>
+            <div class="mi-head"><h3>Lẩu Dashi trứ danh</h3><span class="mi-rule"></span><span class="mi-tag">Nabe</span></div>
+            <p>Nước dùng dashi ninh trong, rau củ &amp; hải sản dọn nồi gang.</p>
+          </li>
+          <li data-reveal>
+            <div class="mi-head"><h3>Ramen Chashu</h3><span class="mi-rule"></span><span class="mi-tag">Ramen</span></div>
+            <p>Xá xíu áp chảo, trứng lòng đào, nước hầm công phu.</p>
+          </li>
+          <li data-reveal>
+            <div class="mi-head"><h3>Tempura tôm giòn</h3><span class="mi-rule"></span><span class="mi-tag">Tempura</span></div>
+            <p>Tôm tẩm bột chiên giòn tơi, chấm sốt trứng muối.</p>
+          </li>
+          <li data-reveal>
+            <div class="mi-head"><h3>Sushi cuộn cá hồi</h3><span class="mi-rule"></span><span class="mi-tag">Maki</span></div>
+            <p>Maki cá hồi tươi cuộn tay, dọn trên đĩa men ngọc.</p>
+          </li>
+          <li data-reveal>
+            <div class="mi-head"><h3>Mì Ý sốt cay hải sản</h3><span class="mi-rule"></span><span class="mi-tag">Pasta</span></div>
+            <p>Sốt cà chua cay nồng, phủ tôm áp chảo thơm lừng.</p>
+          </li>
+        </ul>
+        <div class="menu-cta" data-reveal>
+          <a class="menu-full" href="#">
+            <span>Xem trọn thực đơn</span>
+            <span class="arw" aria-hidden="true">→</span>
+          </a>
         </div>
-        <div class="stat-row" data-cine-line>
-          <div class="stat"><div class="n" data-count="200" data-suffix="+">0</div><div class="l">Món ăn</div></div>
-          <div class="stat"><div class="n" data-count="3" data-pad="2">0</div><div class="l">Quốc gia nguyên liệu</div></div>
-          <div class="stat"><div class="n" data-count="5" data-pad="2">0</div><div class="l">Chi nhánh</div></div>
-        </div>
+        <p class="menu-note" data-reveal>Giá tham khảo tại nhà hàng · thực đơn đầy đủ hơn 200 món</p>
+        <div class="nami on-cream" aria-hidden="true"></div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ===== SPACES / branches ===== -->
-<section class="band spaces" id="spaces">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow center" data-reveal>Không gian</span>
-      <p class="lead" data-reveal>Cửa nguyệt, sân thiền, hồ cá koi và những bức bích họa núi Phú Sĩ — trải nghiệm đích thực trên toàn hệ thống chi nhánh tại Sài Gòn.</p>
-    </div>
-    <div class="space-accordion" id="spaceAccordion" data-reveal>
-      <article class="spanel is-open" data-cursor="Xem">
-        <img class="spanel-img" src="assets/graded/space/ntt-a-109.webp" alt="Sân vườn và hồ cá koi trong khuôn viên Haru" loading="lazy">
-        <span class="spanel-vno">01</span>
-        <span class="spanel-vtitle">Sân vườn &amp; hồ cá koi</span>
-        <div class="spanel-caption"><span class="spanel-no">01</span><h3>Sân vườn &amp; hồ cá koi</h3><p>Hồ koi, cầu đá và tiếng nước — một khoảng thở tĩnh giữa lòng phố.</p></div>
-      </article>
-      <article class="spanel" data-cursor="Xem">
-        <img class="spanel-img" src="assets/graded/space/pn-a-30.webp" alt="Mặt tiền chi nhánh Haru Sushi" loading="lazy">
-        <span class="spanel-vno">02</span>
-        <span class="spanel-vtitle">Mặt tiền chi nhánh</span>
-        <div class="spanel-caption"><span class="spanel-no">02</span><h3>Mặt tiền chi nhánh</h3><p>Kiến trúc mái dốc, ánh đèn ấm dẫn lối vào không gian Haru.</p></div>
-      </article>
-      <article class="spanel" data-cursor="Xem">
-        <img class="spanel-img" src="assets/graded/space/ntt-a-85-1.webp" alt="Phòng riêng với cửa sổ tròn kiểu Nhật" loading="lazy">
-        <span class="spanel-vno">03</span>
-        <span class="spanel-vtitle">Phòng cửa nguyệt</span>
-        <div class="spanel-caption"><span class="spanel-no">03</span><h3>Phòng cửa nguyệt</h3><p>Ô cửa tròn kiểu Nhật, riêng tư và ấm cúng cho buổi gặp thân mật.</p></div>
-      </article>
-      <article class="spanel" data-cursor="Xem">
-        <img class="spanel-img" src="assets/graded/space/lvs-a-45.webp" alt="Hiên trà thắp đèn lồng về đêm" loading="lazy">
-        <span class="spanel-vno">04</span>
-        <span class="spanel-vtitle">Hiên trà đèn lồng</span>
-        <div class="spanel-caption"><span class="spanel-no">04</span><h3>Hiên trà đèn lồng</h3><p>Đèn lồng thắp về đêm, ấm cúng như một góc phố nhỏ Kyoto.</p></div>
-      </article>
-      <article class="spanel" data-cursor="Xem">
-        <img class="spanel-img" src="assets/graded/space/ntp-a-28.webp" alt="Cầu thang sảnh với cây bonsai" loading="lazy">
-        <span class="spanel-vno">05</span>
-        <span class="spanel-vtitle">Sảnh &amp; bonsai</span>
-        <div class="spanel-caption"><span class="spanel-no">05</span><h3>Sảnh &amp; bonsai</h3><p>Cầu thang gỗ, bonsai xanh — nghi thức đón khách theo tinh thần Nhật.</p></div>
-      </article>
-      <article class="spanel" data-cursor="Xem">
-        <img class="spanel-img" src="assets/graded/space/lvs-a-68.webp" alt="Phòng riêng ấm cúng với tranh cá ngừ" loading="lazy">
-        <span class="spanel-vno">06</span>
-        <span class="spanel-vtitle">Phòng riêng ấm cúng</span>
-        <div class="spanel-caption"><span class="spanel-no">06</span><h3>Phòng riêng ấm cúng</h3><p>Tranh cá ngừ, ánh sáng dịu — dành cho những bữa tiệc riêng tư.</p></div>
-      </article>
-    </div>
-    <div class="branch-chips" id="branchChips" data-reveal></div>
-  </div>
-</section>
-
-<!-- ===== MENU — thực đơn in editorial ===== -->
-<section class="band menu-sec" id="menu">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow center" data-reveal>Thực đơn Haru</span>
-      <h2 class="h-md" data-split>Hơn 200 món — mỗi món một câu chuyện</h2>
-      <p class="lead" data-reveal>Từ những lát sashimi tươi rói mang trọn vị biển khơi, đến nồi lẩu Dashi ấm nồng trứ danh.</p>
-    </div>
-    <div class="menu-rows">
-      <a class="mrow" href="#reserve" data-cursor="Đặt">
-        <div class="mrow-media" data-reveal="left" data-reveal-dist="150"><span class="mrow-glow" aria-hidden="true"></span><img src="assets/menu-png/combo-sashimi/SETE.webp" alt="Thuyền Sashimi cá ngừ thượng hạng" loading="lazy"></div>
-        <div class="mrow-body" data-reveal="right" data-reveal-dist="80"><span class="mrow-no">01 — Sashimi</span><h3>Thuyền Sashimi thượng hạng</h3><p>Tuyển chọn cá tươi nhập mới mỗi ngày, thái tay từng lát trên đá lạnh.</p><span class="mrow-more">Đặt món <span class="arw">→</span></span></div>
-      </a>
-      <a class="mrow" href="#reserve" data-cursor="Đặt">
-        <div class="mrow-media" data-reveal="right" data-reveal-dist="150"><span class="mrow-glow" aria-hidden="true"></span><img src="assets/menu-png/hotpot/H06.webp" alt="Lẩu Dashi Haru" loading="lazy"></div>
-        <div class="mrow-body" data-reveal="left" data-reveal-dist="80"><span class="mrow-no">02 — Nabe</span><h3>Lẩu Dashi trứ danh</h3><p>Nước dùng dashi ninh trong, rau củ &amp; hải sản dọn nồi gang.</p><span class="mrow-more">Đặt món <span class="arw">→</span></span></div>
-      </a>
-      <a class="mrow" href="#reserve" data-cursor="Đặt">
-        <div class="mrow-media" data-reveal="left" data-reveal-dist="150"><span class="mrow-glow" aria-hidden="true"></span><img src="assets/menu-png/noodle/RA01.webp" alt="Ramen Chashu" loading="lazy"></div>
-        <div class="mrow-body" data-reveal="right" data-reveal-dist="80"><span class="mrow-no">03 — Ramen</span><h3>Ramen Chashu</h3><p>Xá xíu áp chảo, trứng lòng đào, nước hầm công phu.</p><span class="mrow-more">Đặt món <span class="arw">→</span></span></div>
-      </a>
-      <a class="mrow" href="#reserve" data-cursor="Đặt">
-        <div class="mrow-media" data-reveal="right" data-reveal-dist="150"><span class="mrow-glow" aria-hidden="true"></span><img src="assets/menu-png/tempura/T01.webp" alt="Tempura tôm" loading="lazy"></div>
-        <div class="mrow-body" data-reveal="left" data-reveal-dist="80"><span class="mrow-no">04 — Tempura</span><h3>Tempura tôm giòn</h3><p>Tôm tẩm bột chiên giòn tơi, chấm sốt trứng muối.</p><span class="mrow-more">Đặt món <span class="arw">→</span></span></div>
-      </a>
-      <a class="mrow" href="#reserve" data-cursor="Đặt">
-        <div class="mrow-media" data-reveal="left" data-reveal-dist="150"><span class="mrow-glow" aria-hidden="true"></span><img src="assets/menu-png/maki/M02.webp" alt="Sushi cuộn cá hồi" loading="lazy"></div>
-        <div class="mrow-body" data-reveal="right" data-reveal-dist="80"><span class="mrow-no">05 — Maki</span><h3>Sushi cuộn cá hồi</h3><p>Maki cá hồi tươi cuộn tay, dọn trên đĩa men ngọc.</p><span class="mrow-more">Đặt món <span class="arw">→</span></span></div>
-      </a>
-      <a class="mrow" href="#reserve" data-cursor="Đặt">
-        <div class="mrow-media" data-reveal="right" data-reveal-dist="150"><span class="mrow-glow" aria-hidden="true"></span><img src="assets/menu-png/noodle/PA01.webp" alt="Mì Ý hải sản" loading="lazy"></div>
-        <div class="mrow-body" data-reveal="left" data-reveal-dist="80"><span class="mrow-no">06 — Pasta</span><h3>Mì Ý sốt cay hải sản</h3><p>Sốt cà chua cay nồng, phủ tôm áp chảo thơm lừng.</p><span class="mrow-more">Đặt món <span class="arw">→</span></span></div>
-      </a>
-    </div>
-    <div class="menu-cta" data-reveal>
-      <a class="menu-full" href="#" data-cursor="Xem">
-        <span>Xem trọn thực đơn</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-    </div>
-    <p class="menu-note" data-reveal>Giá tham khảo tại nhà hàng · thực đơn đầy đủ hơn 200 món</p>
-  </div>
-</section>
-
 <!-- ===== DRINKS marquee ===== -->
 <section class="band drinks" id="drinks" style="padding-bottom:clamp(70px,9vw,120px)">
-  <div class="wrap">
+  <span class="band-kanji" aria-hidden="true">飲物</span>
+  <div class="wrap"><div class="nami" aria-hidden="true"></div>
     <div class="sec-head">
       <span class="eyebrow center" data-reveal>Đồ uống &amp; tráng miệng</span>
-      <h2 class="h-md" data-split>Nhấp một ngụm mùa xuân</h2>
+      <h2 class="h-md" data-split>Nhấp một ngụm | mùa xuân</h2>
     </div>
   </div>
   <div class="marquee" id="marquee">
@@ -262,30 +238,56 @@
 
 <!-- ===== RESERVATION ===== -->
 <section class="band reserve" id="reserve">
-  <div class="wrap">
+  <span class="band-kanji" aria-hidden="true">予約</span>
+  <div class="wrap"><div class="nami" aria-hidden="true"></div>
     <div class="reserve-grid">
       <div class="rv-invite" data-reveal="left">
         <span class="eyebrow">Đặt bàn</span>
         <h2 class="h-md">Lưu một buổi tối<br>cho riêng bạn</h2>
       </div>
-      <form class="form" id="bookingForm" data-reveal="right">
-        <div class="field full"><label for="branchSelect">Chi nhánh *</label>
-          <select name="branch" id="branchSelect" required autocomplete="off"><option value="">Chọn chi nhánh gần bạn</option></select>
-        </div>
-        <div class="frow-3">
-          <div class="field"><label for="dateInput">Ngày *</label><input name="date" type="date" id="dateInput" required autocomplete="off"></div>
-          <div class="field"><label for="timeSelect">Giờ *</label>
-            <select name="time" id="timeSelect" required autocomplete="off"><option value="">Chọn giờ</option></select>
+      <form class="form" id="bookingForm" data-reveal="right" novalidate>
+
+        <!-- BƯỚC 1 — tìm bàn -->
+        <div class="bk-step is-active" id="bkStep1" data-step="1">
+          <div class="bk-steps" aria-hidden="true"><span class="is-on">01 Tìm bàn</span><span>02 Thông tin</span></div>
+          <div class="field full"><label for="branchSelect">Chi nhánh *</label>
+            <select name="branch" id="branchSelect" autocomplete="off"><option value="">Chọn chi nhánh gần bạn</option></select>
           </div>
-          <div class="field"><label for="rvGuests">Số khách *</label><input id="rvGuests" name="guests" type="number" min="1" value="2" required autocomplete="off"></div>
+          <div class="frow-3">
+            <div class="field"><label for="dateInput">Ngày *</label><input name="date" type="date" id="dateInput" autocomplete="off"></div>
+            <div class="field"><label for="timeSelect">Giờ *</label>
+              <select name="time" id="timeSelect" autocomplete="off"><option value="">Chọn giờ</option></select>
+            </div>
+            <div class="field"><label for="rvGuests">Số khách *</label><input id="rvGuests" name="guests" type="number" min="1" max="30" value="2" autocomplete="off"></div>
+          </div>
+          <button class="btn book-submit" type="button" id="bkFind" data-cursor><span class="dot" aria-hidden="true"></span>Tìm bàn <span class="arw">→</span></button>
+
+          <!-- hết bàn: cảnh báo + gợi ý khung giờ khác -->
+          <div class="bk-alert" id="bkAlert" hidden>
+            <p class="bk-alert-t">Khung giờ này đã kín bàn.</p>
+            <p class="bk-alert-d">Haru gợi ý vài khung giờ còn trống gần nhất — bấm để chọn nhanh:</p>
+            <div class="bk-suggest" id="bkSuggest"></div>
+          </div>
         </div>
-        <div class="fgrid">
-          <div class="field"><label for="rvName">Họ và tên *</label><input id="rvName" name="name" required placeholder="Nguyễn Văn A" autocomplete="name"></div>
-          <div class="field"><label for="rvPhone">Số điện thoại *</label><input id="rvPhone" name="phone" type="tel" required placeholder="09xx xxx xxx" autocomplete="tel"></div>
-          <div class="field full"><label for="rvEmail">Email</label><input id="rvEmail" name="email" type="email" placeholder="email@example.com" autocomplete="email"></div>
-          <div class="field full"><label for="rvNote">Lưu ý cho quán</label><textarea id="rvNote" name="note" rows="2" placeholder="Dịp đặc biệt, vị trí ưa thích, yêu cầu riêng..." autocomplete="off"></textarea></div>
+
+        <!-- BƯỚC 2 — điền thông tin -->
+        <div class="bk-step" id="bkStep2" data-step="2" hidden>
+          <div class="bk-steps" aria-hidden="true"><span>01 Tìm bàn</span><span class="is-on">02 Thông tin</span></div>
+          <div class="bk-recap" id="bkRecap"></div>
+          <div class="fgrid">
+            <div class="field"><label for="rvName">Họ và tên *</label><input id="rvName" name="name" placeholder="Nguyễn Văn A" autocomplete="name"></div>
+            <div class="field"><label for="rvPhone">Số điện thoại *</label><input id="rvPhone" name="phone" type="tel" placeholder="09xx xxx xxx" autocomplete="tel"></div>
+            <div class="field full"><label for="rvEmail">Email</label><input id="rvEmail" name="email" type="email" placeholder="email@example.com" autocomplete="email"></div>
+            <div class="field full"><label for="rvNote">Lưu ý cho quán</label><textarea id="rvNote" name="note" rows="2" placeholder="Dịp đặc biệt, vị trí ưa thích, yêu cầu riêng..." autocomplete="off"></textarea></div>
+          </div>
+          <label class="bk-check"><input type="checkbox" name="sms" id="rvSms" checked><span>Nhận thông báo xác nhận qua SMS</span></label>
+          <p class="bk-terms">Bấm xác nhận đồng nghĩa bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> &amp; <a href="#">Chính sách bảo mật</a> của Haru Sushi.</p>
+          <div class="bk-actions">
+            <button class="btn ghost-light" type="button" id="bkBack">← Chọn bàn khác</button>
+            <button class="btn book-submit" type="submit" data-cursor><span class="dot" aria-hidden="true"></span>Xác nhận đặt bàn <span class="arw">→</span></button>
+          </div>
         </div>
-        <button class="btn book-submit" type="submit" data-cursor><span class="dot" aria-hidden="true"></span>Xác nhận <span class="arw">→</span></button>
+
         <div class="form-msg" id="formMsg"></div>
       </form>
     </div>
@@ -294,10 +296,11 @@
 
 <!-- ===== NEWS (washi) ===== -->
 <section class="band news" id="news">
-  <div class="wrap">
+  <span class="band-kanji" aria-hidden="true">便り</span>
+  <div class="wrap"><div class="nami" aria-hidden="true"></div>
     <div class="sec-head">
       <span class="eyebrow center" data-reveal>Tin tức &amp; bài viết</span>
-      <h2 class="h-md" data-split>Có gì mới tại Haru</h2>
+      <h2 class="h-md" data-split>Có gì mới | tại Haru</h2>
     </div>
     <div class="news-cards">
       <article class="ncard" data-reveal data-cursor>
@@ -326,10 +329,12 @@
         <p>Nơi mùa xuân Nhật Bản nở rộ giữa lòng Sài Gòn.</p>
         <div class="socials">
           <a href="#" aria-label="Facebook" data-cursor>f</a>
-          <a href="#" aria-label="Instagram" data-cursor>◎</a>
+          <a href="#" aria-label="Zalo OA" data-cursor>OA</a>
           <a href="#" aria-label="TikTok" data-cursor>♪</a>
+          <a href="#" aria-label="Instagram" data-cursor>◎</a>
         </div>
         <div class="fm-logos" data-reveal>
+          <span class="fm-label">A member of</span>
           <img src="assets/logo/member-dg.webp" alt="DG Group" class="fm-logo fm-dg">
           <img src="assets/logo/member-daebak.webp" alt="Daebak — Taste of Korea" class="fm-logo fm-daebak">
         </div>
@@ -346,13 +351,18 @@
           <span class="fc-label">Hotline</span>
           <span class="fc-val fh-num">1900 555 506</span>
         </a>
+        <a href="tel:0907087779" class="foot-hotline" data-cursor>
+          <span class="fc-val fh-num">0907 087 779</span>
+        </a>
       </div>
     </div>
   </div>
   <div class="foot-bottom">
     <span>© 2025 Haru Sushi. All Rights Reserved.</span>
     <span class="fb-dot" aria-hidden="true"></span>
-    <span>Thiết kế bởi mùa xuân</span>
+    <a href="#">Chính sách bảo mật</a>
+    <span class="fb-dot" aria-hidden="true"></span>
+    <a href="#">Điều khoản dịch vụ</a>
   </div>
   <div class="kawara bottom"></div>
 </footer>
@@ -361,6 +371,6 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=21"></script>
+<script src="js/main.js?v=24"></script>
 </body>
 </html>
