@@ -836,51 +836,66 @@ html{scrollbar-color:#3a3a40 transparent;scrollbar-width:thin}
    trang chìm xuống thay vì bị đóng khung. */
 footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,var(--ink-block) 100%);
   color:#F2F0EC;padding:clamp(76px,9vw,124px) 0 0;position:relative}
-.foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1.05fr;gap:clamp(40px,4.4vw,88px);
-  position:relative;z-index:2}
-.foot-brand{display:flex;flex-direction:column;gap:22px}
-.foot-brand .fb-top{display:flex;align-items:center;gap:14px}
-.foot-brand .fb-top img{width:auto;height:64px}
-.foot-brand p{color:#A19E96;font-size:14px;line-height:1.75;max-width:330px;
-  font-family:var(--sans);font-weight:300}
+/* ---- KHỐI THƯƠNG HIỆU CANH GIỮA ----
+   Bản cũ là lưới ba cột 1.7fr/1fr/1.05fr, logo nằm góc trên-trái cùng ô với
+   tagline, social và cụm logo tập đoàn — bốn thứ khác vai xếp chồng trong một
+   cột, nên cột trái nặng gấp đôi hai cột kia và cả footer đổ về một bên.
+   Tách ra: danh tính (logo + tagline + social) lên giữa, dữ liệu tra cứu xuống
+   dưới. Logo là thứ DUY NHẤT ở trục giữa nên nó tự thành điểm neo. */
+.foot-hero{display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:18px;position:relative;z-index:2}
+.foot-hero .fh-logo{width:auto;height:clamp(60px,6vw,78px)}
+.foot-hero .fh-tag{color:#A19E96;font-size:14px;line-height:1.7;max-width:420px;
+  font-family:var(--sans);font-weight:300;margin:0}
 
-/* heading nhỏ — chấm đỏ dẫn, đồng bộ nav/form/drawer */
-.foot-col h4{display:flex;align-items:center;gap:9px;font-family:var(--util);font-size:10.5px;
-  letter-spacing:.2em;text-transform:uppercase;margin-bottom:22px;color:#8C897F}
-.foot-col h4::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--shu);flex:none}
+/* ---- HÀNG THÔNG TIN ----
+   Vạch ngăn là gradient tắt dần về hai đầu chứ không phải hairline chạy hết bề
+   ngang — cùng cách đã dùng ở .foot-bottom, và cùng lý do: tách được hai khối
+   mà không kẻ một đường thẳng qua trang. */
+.foot-info{position:relative;z-index:2;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:clamp(32px,5vw,90px);flex-wrap:wrap;
+  margin-top:clamp(44px,4.8vw,68px);padding-top:clamp(40px,4.4vw,60px)}
+.foot-info::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0,rgba(236,237,238,.12) 30%,rgba(236,237,238,.12) 70%,transparent 100%)}
 
-/* chi nhánh — danh sách tinh, hover trượt nhẹ */
-/* nhãn cột chi nhánh — cùng khoảng cách đáy với .fc-block ở cột liên hệ để ba cột
-   footer bắt đầu trên cùng một đường ngang */
-.fc-label-col{margin-bottom:16px}
-#footBranches{display:flex;flex-direction:column}
-#footBranches a{position:relative;display:block;width:fit-content;color:#D5D2CB;font-size:14px;
-  font-family:var(--sans);font-weight:300;padding:6px 0;
-  transition:color .3s var(--e-out),padding-left .3s var(--e-out)}
-#footBranches a::before{content:"";position:absolute;left:0;top:50%;width:4px;height:4px;border-radius:50%;
-  background:var(--shu);transform:translateY(-50%) scale(0);transition:transform .3s var(--e-out)}
-#footBranches a:hover{color:var(--sumi);padding-left:14px}
-#footBranches a:hover::before{transform:translateY(-50%) scale(1)}
-
-/* liên hệ */
-.foot-contact{display:flex;flex-direction:column;gap:24px}
+/* Ba dòng nhãn–giá trị dùng CHUNG một cột nhãn: mắt bám vào một mép trái duy
+   nhất rồi quét ngang, gọn hơn hẳn ba khối rời phải nhảy qua nhảy lại. */
+/* flex-basis phải là 0, KHÔNG phải auto. Flexbox quyết định xuống dòng dựa trên
+   basis chứ không dựa trên kích thước sau khi co: với basis auto thì bề ngang tự
+   nhiên của dòng chi nhánh (760px) cộng cụm logo (336) cộng gap (72) = 1168 >
+   1096 của .wrap, thế là cả khối meta bị đẩy xuống hàng dưới và chừa một mảng đen
+   rỗng giữa footer — co lại không cứu được vì lúc đó đã wrap rồi. Basis 0 thì nó
+   nhận phần còn thừa, dòng chi nhánh tự xuống hàng bên trong. */
+.fm-logos{flex:none}
+.foot-meta{flex:1 1 0;min-width:0;max-width:760px;
+  display:grid;grid-template-columns:max-content 1fr;
+  column-gap:clamp(20px,2.6vw,44px);row-gap:14px;align-items:baseline}
 .fc-label{display:block;font-family:var(--util);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:#78756E;margin-bottom:8px}
-.fc-val{color:#D5D2CB;font-size:14px;font-family:var(--sans);font-weight:300}
-.foot-hotline{display:block;text-decoration:none}
-.foot-hotline .fh-num{display:block;font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.2;color:var(--shu);
-  transition:opacity .3s}
-.foot-hotline:hover .fh-num{opacity:.78}
+.foot-meta .fc-label{margin-bottom:0;line-height:1.6}
+.fc-val{color:#D5D2CB;font-size:14px;font-family:var(--sans);font-weight:300;line-height:1.6}
+.fm-sep{color:#5A574F;margin:0 8px}
+.fh-num{color:var(--shu);text-decoration:none;transition:opacity .3s}
+.fh-num:hover{opacity:.78}
+
+/* Chi nhánh xếp ngang, ngăn bằng chấm — năm cái tên ngắn xếp dọc chiếm năm dòng
+   cho một thứ tra trong một giây. Chấm gắn vào ::after của link ĐỨNG TRƯỚC chứ
+   không phải ::before của link đứng sau: nếu để ::before thì khi hàng xuống dòng,
+   chấm đi theo tên mới và mở đầu dòng hai bằng "· Nguyễn Thái Học". */
+#footBranches{display:flex;flex-wrap:wrap;align-items:baseline}
+#footBranches a{color:#D5D2CB;font-size:14px;font-family:var(--sans);font-weight:300;
+  line-height:1.6;text-decoration:none;transition:color .3s var(--e-out)}
+#footBranches a:not(:last-child)::after{content:"·";color:#5A574F;margin:0 8px}
+#footBranches a:hover{color:var(--sumi)}
 
 /* socials — vòng viền kem mảnh, hover đổ đỏ */
-.socials{display:flex;gap:11px;margin-top:8px}
+.socials{display:flex;gap:11px}
 .socials a{width:40px;height:40px;border:1px solid rgba(236,237,238,.18);border-radius:50%;
   display:grid;place-items:center;color:#D5D2CB;font-size:14px;text-decoration:none;
   transition:.45s var(--e-out)}
 .socials a:hover{border-color:var(--shu);color:var(--on-gold);background:var(--shu);transform:translateY(-4px)}
 
 /* thành viên của — dải logo hệ thống, kiểu Phổ Đình */
-.foot-brand .fm-logos{margin-top:clamp(30px,3.4vw,48px)}
 /* gap 60px giữa hai logo đo ra rộng hơn cả bề ngang một logo — hai dấu hiệu thuộc
    CÙNG một tập đoàn mà bị tách ra như hai mục rời. Siết lại còn ~36px cho chúng
    đọc thành một cụm. Opacity .62 trên nền đen là quá chìm để nhận ra thương hiệu;
@@ -891,14 +906,20 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
 .fm-logos{display:flex;align-items:center;column-gap:clamp(22px,2.4vw,36px);row-gap:0;flex-wrap:wrap}
 .fm-logo{width:auto;opacity:.78;transition:opacity .45s var(--e-out),transform .45s var(--e-out)}
 .fm-logo:hover{opacity:1;transform:translateY(-3px)}
-.fm-dg{height:clamp(40px,4.4vw,58px)}
-.fm-daebak{height:clamp(46px,5vw,66px)}
+/* DG là công ty mẹ, Daebak là thương hiệu anh em — trước đây Daebak lại cao hơn
+   (66 vs 58), đọc ra ngược thứ bậc. Đảo lại và nới khoảng cách cho rõ: DG nhỉnh
+   hơn một bậc chứ không áp đảo. */
+.fm-dg{height:clamp(44px,4.8vw,62px)}
+.fm-daebak{height:clamp(34px,3.7vw,48px)}
 
 /* thanh đáy — canh giữa, chấm đỏ ngăn cách */
 /* border-top cũ là hairline kem chạy hết bề ngang — đúng kiểu đường kẻ đang muốn
    bỏ. Thay bằng ::before là một vệt gradient tắt dần về hai đầu: vẫn tách được
    dòng bản quyền khỏi khối trên mà không kẻ hết trang. */
-.foot-bottom{margin-top:clamp(60px,7vw,92px);padding:24px 0;
+/* margin-top hạ từ clamp(60,7vw,92) xuống: hàng thông tin giờ chỉ còn ba dòng
+   thay vì ba cột cao, giữ khoảng cách cũ thì dưới hotline hở ra một mảng đen
+   rỗng gần bằng cả khối footer. */
+.foot-bottom{margin-top:clamp(38px,4vw,58px);padding:24px 0;
   display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;
   color:#78756E;font-family:var(--util);font-size:11.5px;letter-spacing:.08em;
   position:relative;z-index:2}
@@ -975,8 +996,16 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   .fgrid{grid-template-columns:1fr}
   .frow-3{grid-template-columns:1fr 1fr}
   .frow-3 .field:first-child{grid-column:1/-1}
-  .foot-grid{grid-template-columns:1fr 1fr}
-  .foot-grid .foot-brand{grid-column:1/-1}
+  /* Hẹp thì hàng thông tin dựng đứng và canh giữa theo khối logo phía trên —
+     để lệch trái một mình giữa màn hẹp thì nó đọc ra như bị rơi ra khỏi bố cục.
+     Cột nhãn bỏ luôn: 'Chi nhánh' + năm cái tên trên một dòng ngang 400px là
+     không đủ chỗ, nên nhãn về lại nằm trên giá trị. */
+  .foot-info{flex-direction:column;align-items:center;text-align:center;gap:34px}
+  .fm-logos{justify-content:center}
+  .foot-meta{grid-template-columns:1fr;row-gap:6px;justify-items:center}
+  .foot-meta .fc-label{margin-top:14px}
+  .foot-meta .fc-label:first-child{margin-top:0}
+  #footBranches{justify-content:center}
   .story-photo .kanji-side{left:auto;right:-14px;top:-22px;writing-mode:horizontal-tb}
   .spanel{height:clamp(200px,40vh,260px)}
 }
