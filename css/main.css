@@ -15,20 +15,30 @@
   --paper-3:#1E1E21;        /* card / khối nhấn nhẹ */
   --sumi:#F2F1ED;           /* chữ — trắng ngà trung tính */
   --sumi-soft:#CFCEC9;      /* heading phụ */
-  /* ACCENT — VÀNG ĐỒNG (kiểu Ryo): dùng cho nét kẻ mảnh, số, kanji, chi tiết.
-     Tên biến giữ --shu để không phải sửa 51 chỗ; giá trị nay là gold foil. */
-  --shu:#D8B06A;            /* vàng đồng accent — sáng hơn để bắt sáng trên nền tối */
-  --shu-deep:#A17B36;       /* vàng sâu — hover / fill */
-  --gold-line:rgba(216,176,106,.62);  /* nét sóng, hairline vàng */
-  --gold-glow:rgba(216,176,106,.28);  /* quầng sáng quanh chi tiết vàng */
-  --on-gold:#14110C;        /* chữ trên nền vàng đặc (không dùng #fff) */
+  /* ACCENT — BẠC LẠNH. Trước đây là vàng đồng #D8B06A dùng ở 60 chỗ; cộng với
+     kho ảnh vốn được grade tungsten (đo được hue 29–53°) thì cả trang đọc ra
+     một khối vàng, không còn chỗ nào để mắt nghỉ.
+     Bạc phải LẠNH (hue ~215, sat rất thấp ~.05) chứ không được là trắng: chữ
+     thường đã là --sumi #F2F1ED trắng ngà TRUNG TÍNH rồi, nếu accent cũng trắng
+     thì không còn gì phân biệt đâu là nét nhấn. Chênh lệch NHIỆT ĐỘ màu — bạc
+     lạnh trên nền chữ trắng ấm — đủ để accent đọc ra là kim loại, đồng thời
+     tương phản hue với phần ấm còn sót của ảnh.
+     Tên biến giữ --shu/--gold-* để không phải sửa 60 chỗ gọi. */
+  --shu:#DCE1E9;            /* bạc accent — nét kẻ, số, kanji, chi tiết */
+  --shu-deep:#8E97A6;       /* bạc sâu — hover / fill */
+  --gold-line:rgba(220,225,233,.55);  /* nét sóng, hairline bạc */
+  --gold-glow:rgba(220,225,233,.22);  /* quầng sáng quanh chi tiết bạc */
+  --on-gold:#101318;        /* chữ trên nền bạc đặc (không dùng #000) */
 
   /* PANEL KEM — nửa giấy của nhịp đen/kem kiểu Ryo.
      Trước là trắng xám trung tính (#F2F1EC) nên đọc ra "nền trắng".
      Nay là tông giấy dó/washi: ngà ấm, hơi ngả vàng nhạt — nền trắng duy
      nhất của trang thành một mặt GIẤY, tương phản chất liệu với phần đen tuyền. */
-  --cream:#F7F1E1;
-  --cream-2:#EDE5D0;
+  /* #F7F1E1 cũ là ngà ẤM (hue 44°) — chính nó là mảng vàng LỚN NHẤT trang tính
+     theo diện tích, vì khối kem chiếm nửa màn hình. Kéo về giấy trung tính:
+     vẫn là "mặt giấy" chứ không phải trắng phòng thí nghiệm, nhưng hết ngả vàng. */
+  --cream:#F0EFEB;
+  --cream-2:#E4E3DE;
   --ink:#131315;            /* chữ chính trên nền kem */
   --ink-soft:#46464A;       /* body text trên nền kem */
   --ink-line:rgba(19,19,21,.16);
@@ -61,7 +71,17 @@
      saturate hạ độ rực, hue-rotate âm kéo trục vàng-cam về phía trung tính.
      Đây là NÚM CHỈNH DUY NHẤT: sửa ở đây là đổi đồng loạt mọi ảnh nền.
      Về 'saturate(1) hue-rotate(0deg)' là quay lại tông ảnh gốc. */
-  --img-cool:saturate(.8) hue-rotate(-6deg);
+  /* Bản cũ saturate(.8) hue-rotate(-6deg) là QUÁ NHẸ để có tác dụng: xoay 6°
+     không kéo nổi hue 34° ra khỏi vùng vàng, và .8 vẫn để sat ~0.6-0.7.
+     Đo lại 20 ảnh đang hiển thị: hue 29–53°, sat 0.55–0.86, và 60–95% pixel mỗi
+     ảnh là pixel CÓ MÀU — tức gần như trọn khung hình ám vàng.
+     KHÔNG dùng hue-rotate. Đã thử -14deg và hỏng: hue-rotate xoay TOÀN BỘ bánh
+     xe màu chứ không chỉ vùng vàng, nên mái ngói xám-ấm của hero biến thành
+     xanh teal và cá hồi ngả hồng. Nó không phân biệt được "vàng cần bớt" với
+     "màu thật của món ăn".
+     Hạ bão hoà thì đúng bản chất hơn: vàng nhạt đi theo đúng tỉ lệ mà không có
+     màu nào bị đổi sang màu khác. contrast bù lại độ nét mất khi giảm sat. */
+  --img-cool:saturate(.45) contrast(1.12);
 
   --e-out:cubic-bezier(.16,1,.3,1);
   --e-io:cubic-bezier(.65,.05,.36,1);
@@ -163,11 +183,15 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
 /* ---------- FOCUS bàn phím ----------
    Trang này không hề có vòng focus nào ngoài mấy ô input, nên người dùng bàn
    phím bấm Tab là mất dấu hoàn toàn. Dùng :focus-visible (không phải :focus)
-   để chuột bấm vẫn sạch, chỉ bàn phím mới thấy vòng. Vàng --shu + viền tối
-   lót ngoài để vòng đọc được cả trên nền đen lẫn nền kem. */
+   để chuột bấm vẫn sạch, chỉ bàn phím mới thấy vòng.
+   Vòng HAI LỚP, và KHÔNG được dùng var(--shu): accent nay là bạc sáng #DCE1E9,
+   đặt lên khối kem #F0EFEB thì tỉ lệ tương phản ~1.1:1 — vòng biến mất đúng
+   như lỗi nút Đặt bàn đã sửa trước đây. Lớp trong sáng + lớp ngoài tối đặc:
+   trên nền đen lớp sáng bắt mắt, trên nền kem lớp tối bắt mắt. Nền nào cũng
+   còn ít nhất một lớp đọc được. */
 :where(a,button,input,select,textarea,[tabindex]):focus-visible{
-  outline:2px solid var(--shu);outline-offset:3px;border-radius:2px;
-  box-shadow:0 0 0 5px rgba(9,9,11,.55)}
+  outline:2px solid var(--sumi);outline-offset:3px;border-radius:2px;
+  box-shadow:0 0 0 5px rgba(9,9,11,.9)}
 
 /* ---------- BUTTONS ---------- */
 .btn{position:relative;display:inline-flex;align-items:center;gap:11px;
@@ -194,12 +218,12 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
    ~1.03:1, tức là nút biến mất hoàn toàn. Pill tối + blur giữ nút đọc được trên
    MỌI phông phía sau mà không phải kẻ nguyên một thanh bar. */
 .btn.nav-book{gap:9px;padding:12px 24px;border-radius:999px;font-size:11px;letter-spacing:.22em;
-  border:1px solid rgba(236,227,208,.34);color:var(--sumi);
+  border:1px solid rgba(236,237,238,.34);color:var(--sumi);
   background:rgba(9,9,11,.52);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   transition:color .5s var(--e-out),border-color .5s var(--e-out),background .5s var(--e-out)}
 .btn.nav-book::before{background:var(--shu);border-radius:999px}
 .btn.nav-book .dot{width:6px;height:6px;border-radius:50%;background:var(--shu);flex:none;
-  box-shadow:0 0 0 0 rgba(201,161,92,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
+  box-shadow:0 0 0 0 rgba(220,225,233,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
 .btn.nav-book:hover{color:var(--on-gold);border-color:var(--shu)}
 .btn.nav-book:hover .dot{background:var(--on-gold);box-shadow:0 0 0 4px rgba(22,17,12,.16)}
 
@@ -274,7 +298,7 @@ header.scrolled{padding:14px 0}
 .drawer a::before{content:"";position:absolute;left:16px;top:50%;
   width:5px;height:5px;border-radius:50%;background:var(--shu);
   transform:translateY(-50%) scale(0);transition:transform .3s var(--e-out)}
-.drawer a:hover{opacity:1;background:rgba(236,227,208,.05);padding-left:36px}
+.drawer a:hover{opacity:1;background:rgba(236,237,238,.05);padding-left:36px}
 .drawer a:hover::before{transform:translateY(-50%) scale(1)}
 .drawer a:last-of-type{margin-top:8px;color:var(--shu);font-weight:600;
   border-top:1px solid var(--line);border-radius:0 0 10px 10px;padding-top:18px}
@@ -285,8 +309,8 @@ header.scrolled{padding:14px 0}
 .drawer-lang .lang-opt{font-family:var(--util);font-size:11px;letter-spacing:.16em;color:var(--stone);
   background:none;border:0;padding:6px 11px;border-radius:8px;cursor:pointer;
   transition:color .25s var(--e-out),background .25s var(--e-out)}
-.drawer-lang .lang-opt:hover{color:var(--sumi);background:rgba(236,227,208,.05)}
-.drawer-lang .lang-opt.is-active{color:var(--sumi);background:rgba(236,227,208,.06)}
+.drawer-lang .lang-opt:hover{color:var(--sumi);background:rgba(236,237,238,.05)}
+.drawer-lang .lang-opt.is-active{color:var(--sumi);background:rgba(236,237,238,.06)}
 
 /* side reserve rail */
 .rail{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:800;
@@ -317,9 +341,13 @@ header.scrolled{padding:14px 0}
 .hero-slides{position:absolute;inset:0}
 /* ảnh đã grade sẵn (tối/ấm/vignette) → CSS chỉ cần phóng nhẹ, không hạ sáng nhiều */
 .hero-slides .hslide{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;object-position:66% 52%;
-  /* hero giữ NGUYÊN tông ảnh gốc — không áp --img-cool: đây là mảng màu duy nhất
-     được phép rực, làm điểm nhấn mở đầu trên toàn bộ phần còn lại đen tuyền */
-  filter:brightness(1.04) contrast(1.08);opacity:0;transform:scale(1.04);
+  /* Hero TỪNG được miễn trừ --img-cool để làm mảng màu rực mở đầu. Nhưng đo ra
+     hero là ảnh vàng nhất trang (hue 29°, sat .77, 83% pixel có màu) và nó
+     chiếm trọn màn hình đầu tiên — ấn tượng "trang này vàng" hình thành ngay
+     tại đây. Áp cùng bộ lọc như mọi ảnh khác; giữ contrast nhỉnh hơn một chút
+     để hero vẫn là khung hình đậm đà nhất, nhưng bằng SẮC ĐỘ chứ không bằng
+     độ rực của màu vàng. */
+  filter:brightness(1.04) contrast(1.12) var(--img-cool);opacity:0;transform:scale(1.04);
   transition:opacity 1.5s var(--e-out);will-change:opacity,transform}
 .hero-slides .hslide.is-active{opacity:1;transform:scale(1.1);
   transition:opacity 1.5s var(--e-out),transform 8s linear}
@@ -365,7 +393,7 @@ header.scrolled{padding:14px 0}
 .hero-plate{display:flex;align-items:center;gap:16px;margin-bottom:16px}
 .hero-plate .seal{flex:0 0 auto;width:44px;height:44px;display:grid;place-items:center;
   background:var(--shu);color:var(--on-gold);font-family:var(--mincho);font-size:22px;
-  box-shadow:0 8px 22px -8px rgba(201,161,92,.7);border-radius:3px}
+  box-shadow:0 8px 22px -8px rgba(220,225,233,.7);border-radius:3px}
 .hero .jp-greet{font-family:var(--mincho);font-size:clamp(15px,1.6vw,19px);
   color:var(--sumi-soft);letter-spacing:.3em;display:flex;align-items:center;gap:16px}
 .hero .jp-greet::before{content:"";width:44px;height:1px;background:var(--sumi-soft);opacity:.6}
@@ -487,7 +515,7 @@ header.scrolled{padding:14px 0}
 .sig-kanji{position:absolute;z-index:2;right:clamp(-14px,-1vw,-6px);bottom:clamp(-40px,-4vw,-20px);
   font-family:var(--brush-jp);line-height:.72;color:var(--shu);
   font-size:clamp(240px,40vw,620px);opacity:.16;pointer-events:none;
-  -webkit-text-stroke:1px rgba(201,161,92,.28);text-shadow:0 0 80px rgba(161,123,54,.4);
+  -webkit-text-stroke:1px rgba(220,225,233,.28);text-shadow:0 0 80px rgba(142,151,166,.4);
   clip-path:inset(0 100% 0 0);will-change:clip-path}
 /* hơi nóng bốc lên */
 .sig-steam{position:absolute;z-index:2;left:52%;bottom:26%;width:200px;height:260px;
@@ -513,7 +541,7 @@ header.scrolled{padding:14px 0}
 .sig-inner p{color:#CFC7B8;font-size:clamp(15px,1.15vw,17px);line-height:1.65;
   margin-bottom:8px;max-width:44ch}
 .sig-inner .stat-row{display:flex;gap:clamp(28px,3vw,48px);margin:26px 0 24px;flex-wrap:wrap;
-  padding-top:22px;border-top:1px solid rgba(236,227,208,.18)}
+  padding-top:22px;border-top:1px solid rgba(236,237,238,.18)}
 .sig-inner .stat .n{font-family:var(--display);font-size:clamp(34px,3.8vw,52px);color:#FBFAF7;
   font-weight:500;line-height:1}
 .sig-inner .stat .l{font-family:var(--util);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
@@ -535,7 +563,7 @@ header.scrolled{padding:14px 0}
 .cine-kanji{position:absolute;z-index:2;right:clamp(-14px,-1vw,-6px);bottom:clamp(-40px,-4vw,-20px);
   font-family:var(--brush-jp);line-height:.72;color:var(--shu);
   font-size:clamp(240px,40vw,620px);opacity:.16;pointer-events:none;
-  -webkit-text-stroke:1px rgba(201,161,92,.28);text-shadow:0 0 80px rgba(161,123,54,.4);
+  -webkit-text-stroke:1px rgba(220,225,233,.28);text-shadow:0 0 80px rgba(142,151,166,.4);
   clip-path:inset(0 100% 0 0);will-change:clip-path}
 /* lớp chìm về nền tối ở cuối pin → chuyển cảnh đen-sang-đen mượt */
 .cine-fade{position:absolute;inset:0;z-index:4;background:var(--ink-block);opacity:0;pointer-events:none}
@@ -560,7 +588,7 @@ header.scrolled{padding:14px 0}
 .cine-inner .stat .n{font-family:var(--display);font-size:clamp(30px,3.4vw,46px);color:#FBFAF7;line-height:1}
 .cine-inner .stat .l{font-family:var(--util);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#B7AF9F;margin-top:8px}
 .cine-inner .cine-btn{margin-top:24px}
-.cine .pillar{background:rgba(9,9,11,.42);border:1px solid rgba(236,227,208,.15);
+.cine .pillar{background:rgba(9,9,11,.42);border:1px solid rgba(236,237,238,.15);
   backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border-radius:2px;padding:26px 22px}
 .cine .pillar .num{color:var(--shu);font-family:var(--brush);font-size:38px;line-height:1;margin-bottom:12px;opacity:.92}
 .cine .pillar h3{color:#FBFAF7;font-family:var(--serif);font-size:clamp(17px,1.3vw,20px);margin-bottom:9px;font-weight:400}
@@ -640,11 +668,11 @@ header.scrolled{padding:14px 0}
 /* form = card nổi nhẹ trên nền giấy */
 .form{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
   padding:clamp(28px,3.2vw,44px);
-  box-shadow:0 40px 90px -52px rgba(0,0,0,.85), inset 0 1px 0 rgba(236,227,208,.04)}
+  box-shadow:0 40px 90px -52px rgba(0,0,0,.85), inset 0 1px 0 rgba(236,237,238,.04)}
 .form .field input,.form .field select,.form .field textarea{
   transition:background .3s var(--e-out),border-color .3s var(--e-out),box-shadow .3s var(--e-out)}
 .form .field input:focus,.form .field select:focus,.form .field textarea:focus{
-  border-color:rgba(201,161,92,.55);box-shadow:0 0 0 3px rgba(201,161,92,.14)}
+  border-color:rgba(220,225,233,.55);box-shadow:0 0 0 3px rgba(220,225,233,.14)}
 .form h3{font-family:var(--serif);font-weight:400;font-size:24px;margin-bottom:20px;text-align:center}
 .form h3 span{display:block;font-family:var(--mincho);color:var(--stone);font-size:13px;margin-top:6px;letter-spacing:.14em}
 /* các nhóm trường xếp liền mạch, khoảng cách đều — không còn chia bước 01/02 */
@@ -654,15 +682,15 @@ header.scrolled{padding:14px 0}
 .form > .field,.form > .frow-3,.form > .fgrid{margin-bottom:14px}
 .field.full{grid-column:1/-1}
 .field label{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.06em;
-  text-transform:uppercase;color:rgba(236,227,208,.62)}
+  text-transform:uppercase;color:rgba(236,237,238,.62)}
 .field{min-width:0}
 .field input,.field select,.field textarea{width:100%;box-sizing:border-box;
-  background:rgba(236,227,208,.02);border:1px solid var(--line);
+  background:rgba(236,237,238,.02);border:1px solid var(--line);
   border-radius:10px;padding:11px 14px;color:var(--sumi);font-family:var(--sans);font-size:15px;font-weight:400;
   transition:border-color .25s,background .25s;caret-color:var(--shu)}
 .field input,.field select{height:46px}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--shu);
-  background-color:rgba(236,227,208,.045)}
+  background-color:rgba(236,237,238,.045)}
 /* outline:none ở trên đã bị bỏ cho mọi kiểu focus; trả lại vòng cho riêng bàn phím
    (viền đổi màu thôi thì quá mờ để lần theo khi Tab qua 7 ô liên tiếp) */
 .field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{
@@ -676,7 +704,7 @@ header.scrolled{padding:14px 0}
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%239C988F' stroke-width='1.5' stroke-linecap='round'/></svg>");
   background-repeat:no-repeat;background-position:right 13px center;background-size:11px 8px}
 .field select:focus{
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%23D8B06A' stroke-width='1.5' stroke-linecap='round'/></svg>")}
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%23DCE1E9' stroke-width='1.5' stroke-linecap='round'/></svg>")}
 .field select option{background:var(--paper-3);color:var(--sumi)}
 
 /* ---- date: chữ mm/dd/yy nhỏ gọn vừa box hẹp ---- */
@@ -786,7 +814,7 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
 
 /* socials — vòng viền kem mảnh, hover đổ đỏ */
 .socials{display:flex;gap:11px;margin-top:8px}
-.socials a{width:40px;height:40px;border:1px solid rgba(236,227,208,.18);border-radius:50%;
+.socials a{width:40px;height:40px;border:1px solid rgba(236,237,238,.18);border-radius:50%;
   display:grid;place-items:center;color:#D5D2CB;font-size:14px;text-decoration:none;
   transition:.45s var(--e-out)}
 .socials a:hover{border-color:var(--shu);color:var(--on-gold);background:var(--shu);transform:translateY(-4px)}
@@ -815,7 +843,7 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   color:#78756E;font-family:var(--util);font-size:11.5px;letter-spacing:.08em;
   position:relative;z-index:2}
 .foot-bottom::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent 0,rgba(236,227,208,.13) 38%,rgba(236,227,208,.13) 62%,transparent 100%)}
+  background:linear-gradient(90deg,transparent 0,rgba(236,237,238,.13) 38%,rgba(236,237,238,.13) 62%,transparent 100%)}
 .foot-bottom .fb-dot{width:4px;height:4px;border-radius:50%;background:var(--shu);flex:none}
 
 /* ============================================================
@@ -921,7 +949,7 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
                       mắt đọc ra "giấy thủ công" chứ không phải giấy in
      Cả hai vẽ bằng SVG data-URI nên không tốn thêm request nào. */
   --paper-grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='220' height='220' filter='url(%23g)' opacity='.28'/></svg>");
-  --paper-fiber:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><g stroke='%23A08B60' stroke-width='.9' stroke-linecap='round' fill='none' opacity='.55'><path d='M22 40l11 5'/><path d='M118 24l-8 6'/><path d='M243 61l7-6'/><path d='M300 130l-9 3'/><path d='M64 148l6 7'/><path d='M186 172l10-4'/><path d='M28 236l8 6'/><path d='M142 268l-9 4'/><path d='M262 244l5 8'/><path d='M312 292l-7 5'/><path d='M96 92l7 6'/><path d='M206 108l-6 7'/><path d='M154 320l9-5'/><path d='M40 300l-6 6'/></g><g fill='%23857152' opacity='.4'><circle cx='58' cy='150' r='1'/><circle cx='224' cy='36' r='.9'/><circle cx='166' cy='210' r='1.1'/><circle cx='288' cy='188' r='.8'/><circle cx='84' cy='262' r='1'/><circle cx='320' cy='84' r='.9'/><circle cx='12' cy='110' r='.8'/><circle cx='198' cy='300' r='1'/><circle cx='250' cy='142' r='.8'/><circle cx='130' cy='60' r='.9'/></g></svg>");
+  --paper-fiber:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><g stroke='%23A6A5A1' stroke-width='.9' stroke-linecap='round' fill='none' opacity='.55'><path d='M22 40l11 5'/><path d='M118 24l-8 6'/><path d='M243 61l7-6'/><path d='M300 130l-9 3'/><path d='M64 148l6 7'/><path d='M186 172l10-4'/><path d='M28 236l8 6'/><path d='M142 268l-9 4'/><path d='M262 244l5 8'/><path d='M312 292l-7 5'/><path d='M96 92l7 6'/><path d='M206 108l-6 7'/><path d='M154 320l9-5'/><path d='M40 300l-6 6'/></g><g fill='%23888784' opacity='.4'><circle cx='58' cy='150' r='1'/><circle cx='224' cy='36' r='.9'/><circle cx='166' cy='210' r='1.1'/><circle cx='288' cy='188' r='.8'/><circle cx='84' cy='262' r='1'/><circle cx='320' cy='84' r='.9'/><circle cx='12' cy='110' r='.8'/><circle cx='198' cy='300' r='1'/><circle cx='250' cy='142' r='.8'/><circle cx='130' cy='60' r='.9'/></g></svg>");
 }
 
 /* ---- KHỐI CHIA ĐÔI: nửa ảnh tối full-bleed · nửa panel giấy kem ---- */
@@ -1006,7 +1034,7 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
 .nami{position:relative;height:clamp(34px,4vw,54px);pointer-events:none;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%,#000 62%,transparent 100%);
   mask-image:linear-gradient(90deg,transparent 0,#000 38%,#000 62%,transparent 100%);
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='54' viewBox='0 0 300 54'><g fill='none' stroke='%23D8B06A' stroke-width='1' stroke-linecap='round'><path d='M0 16 C 37.5 2, 112.5 2, 150 16 S 262.5 30, 300 16'/><path d='M0 28 C 37.5 14, 112.5 14, 150 28 S 262.5 42, 300 28' opacity='.72'/><path d='M0 40 C 37.5 26, 112.5 26, 150 40 S 262.5 54, 300 40' opacity='.45'/></g></svg>");
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='54' viewBox='0 0 300 54'><g fill='none' stroke='%23DCE1E9' stroke-width='1' stroke-linecap='round'><path d='M0 16 C 37.5 2, 112.5 2, 150 16 S 262.5 30, 300 16'/><path d='M0 28 C 37.5 14, 112.5 14, 150 28 S 262.5 42, 300 28' opacity='.72'/><path d='M0 40 C 37.5 26, 112.5 26, 150 40 S 262.5 54, 300 40' opacity='.45'/></g></svg>");
   background-repeat:repeat-x;background-position:center;background-size:auto 100%;
   /* .55 trên nền tối gần như tàng hình; .78 + quầng vàng mờ để dải sóng thành nhấn nhá thấy được */
   opacity:.62;filter:drop-shadow(0 0 6px var(--gold-glow))}
@@ -1192,7 +1220,7 @@ body::before{
 
 /* cảnh báo hết bàn + gợi ý khung giờ khác */
 .bk-alert{margin-top:24px;padding:22px 24px;border:1px solid var(--gold-line);
-  border-radius:3px;background:rgba(201,161,92,.06)}
+  border-radius:3px;background:rgba(220,225,233,.06)}
 .bk-alert-t{font-family:var(--display);letter-spacing:.1em;text-transform:uppercase;
   font-size:14px;color:var(--shu);margin-bottom:8px}
 .bk-alert-d{font-size:14px;color:var(--sumi-soft)}
