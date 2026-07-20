@@ -338,28 +338,6 @@
       });
     }
 
-    /* ---- DRINKS marquee (infinite, scroll-reactive) ---- */
-    const mTrack = document.getElementById('marqueeTrack');
-    if (mTrack) {
-      // duplicate for seamless loop
-      mTrack.innerHTML += mTrack.innerHTML;
-      let mx = 0, dir = -1, speed = 0.5, half = mTrack.scrollWidth / 2;
-      const refresh = () => { half = mTrack.scrollWidth / 2; };
-      addEventListener('resize', refresh);
-      gsap.ticker.add(() => {
-        mx += dir * speed;
-        if (mx <= -half) mx += half; if (mx > 0) mx -= half;
-        mTrack.style.transform = `translateX(${mx}px)`;
-      });
-      // scroll velocity nudges direction/speed
-      let last = scrollY;
-      addEventListener('scroll', () => {
-        const v = scrollY - last; last = scrollY;
-        speed = Math.min(3, 0.5 + Math.abs(v) * 0.05);
-        if (v !== 0) dir = v > 0 ? -1 : 1;
-      }, { passive: true });
-    }
-
     /* ---- CROSS-FADE ĐIỆN ẢNH giữa các section ----
        Mỗi section mờ + đẩy chiều sâu nhẹ khi vào/ra khỏi khung nhìn (scrub theo cuộn):
        section đang rời mờ dần ở đỉnh trong khi section tới hiện dần từ đáy → hai lớp
@@ -367,7 +345,7 @@
        Vùng giữa GIỮ opacity đầy (đọc rõ). Loại trừ hero & signature (đã có hiệu ứng pin riêng).
        Chỉ desktop (!isTouch) để mượt & tiết kiệm pin trên mobile. */
     if (!isTouch) {
-      gsap.utils.toArray('#menu, #drinks, #spaces, #reserve, #news').forEach(sec => {
+      gsap.utils.toArray('#menu, #spaces, #reserve, #news').forEach(sec => {
         const tl = gsap.timeline({
           scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true }
         });

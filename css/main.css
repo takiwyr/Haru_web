@@ -400,9 +400,14 @@ header.scrolled{padding:14px 0}
   55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
 /* ---------- SECTION SHELL ---------- */
-.band{padding:clamp(110px,15vw,200px) 0;position:relative}
+/* Nhịp CHUNG cho mọi mục. Trước đây .band là 200 còn .band.story3 tự đặt 150 —
+   hai nhịp khác nhau nên khe giữa các mục lúc 300 lúc 400px. Từ khi bỏ mục đồ
+   uống, menu nối thẳng vào đặt bàn: 200 dưới + 200 trên = 400px trống, khe rộng
+   nhất trang và không còn gì đệm vào. Một con số duy nhất cho cả trang thì mọi
+   khe đều đúng 300px, mắt cuộn không thấy chỗ nào hụt hay hẫng. */
+.band{padding:clamp(96px,11vw,150px) 0;position:relative}
 /* band trong suốt → nền đen + khói của html/body hiện xuyên qua toàn site */
-.band.dark-2,.band.washi,.band.menu-sec,.band.drinks,.band.spaces,.band.news{
+.band.dark-2,.band.washi,.band.menu-sec,.band.spaces,.band.news{
   background:transparent}
 /* SIGNATURE = cảnh điện ảnh full-bleed, pin cuộn */
 .band.signature{background:var(--ink-block);color:#F2F0EC;padding:0;overflow:hidden}
@@ -561,18 +566,6 @@ header.scrolled{padding:14px 0}
 .cine .pillar h3{color:#FBFAF7;font-family:var(--serif);font-size:clamp(17px,1.3vw,20px);margin-bottom:9px;font-weight:400}
 .cine .pillar p{color:#C8C0B1;font-size:13.5px;line-height:1.66;margin:0;max-width:none}
 [data-cine-line]{opacity:0;transform:translateY(26px);will-change:transform,opacity}
-
-/* ---------- DRINKS marquee ---------- */
-.marquee{position:relative;overflow:hidden;padding:20px 0;
-  -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-  mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.marquee-track{display:flex;gap:clamp(34px,5vw,80px);width:max-content;align-items:flex-end;will-change:transform}
-.drink-item{text-align:center;flex:0 0 auto}
-.drink-item img{height:clamp(190px,25vw,300px);width:auto;object-fit:contain;
-  filter:drop-shadow(0 18px 26px rgba(20,19,16,.18));transition:transform .5s var(--e-out),filter .6s var(--e-out)}
-.drink-item:hover img{transform:translateY(-12px);filter:drop-shadow(0 26px 34px rgba(201,161,92,.28))}
-.drink-item .cap{margin-top:16px;font-family:var(--util);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--stone)}
 
 /* ---------- SPACES / branches ---------- */
 /* KHÔNG GIAN — accordion panel tương tác: rê/chạm vào panel để mở rộng */
@@ -1106,7 +1099,7 @@ body::before{
 /* ============================================================
    OUR STORY — 3 khối ảnh so le đánh số (theo web.pdf)
    ============================================================ */
-.band.story3{padding:clamp(80px,10vw,150px) 0}
+/* bỏ override padding: .band đã về đúng nhịp 150 chung cho cả trang */
 .s3-item{
   display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
   gap:clamp(28px,5vw,88px);margin-top:clamp(44px,5vw,80px);
