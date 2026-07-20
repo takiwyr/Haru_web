@@ -241,9 +241,16 @@
       });
     });
     /* reservation bg parallax */
+    /* Biên độ đọc từ chính thuộc tính (data-parallax-bg="6"), mặc định 12.
+       Vì sao cần chỉnh riêng: mask làm mờ mép ảnh được vẽ trong HỆ TOẠ ĐỘ CỦA
+       CHÍNH PHẦN TỬ, nên khi phần tử bị dịch xuống thì vùng tan cũng đi theo —
+       nó tụt xuống dưới mép section và bị overflow:hidden cắt phăng, để lộ lại
+       đúng đường kẻ ngang mà mask sinh ra để xoá. Ở hero, dịch 12% = 87px là quá
+       nhiều so với dải tan; hạ xuống 6% thì vùng tan luôn nằm trong khung. */
     gsap.utils.toArray('[data-parallax-bg]').forEach(el => {
-      gsap.fromTo(el, { yPercent: -12 }, {
-        yPercent: 12, ease: 'none',
+      const amt = parseFloat(el.dataset.parallaxBg) || 12;
+      gsap.fromTo(el, { yPercent: -amt }, {
+        yPercent: amt, ease: 'none',
         scrollTrigger: { trigger: el.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true }
       });
     });

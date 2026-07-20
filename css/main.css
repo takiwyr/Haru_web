@@ -345,9 +345,15 @@ header.scrolled{padding:14px 0}
 /* mép dưới hero cũng phải tan vào nền trang: scrim cũ chỉ tối 40% ở đáy nên ảnh
    vẫn kết thúc bằng một đường ngang. Mask ~15% chiều cao cuối cho ảnh trôi hẳn
    vào đen, hero nối liền vào mục kế tiếp thay vì "hết ảnh rồi tới nền". */
+/* Dải tan kết thúc ở 94% chứ không phải 100%: lớp này CÓ parallax, mà mask được
+   vẽ theo hệ toạ độ của chính nó nên khi bị dịch xuống thì đoạn cuối của dải tan
+   trôi xuống dưới mép hero và bị overflow:hidden cắt ngang — alpha lúc đó còn
+   ~.7, tức là đường kẻ quay trở lại y nguyên. Kết thúc sớm ở 94%, cộng với việc
+   hạ biên độ parallax của hero xuống 6% (xem data-parallax-bg trong index.html),
+   thì điểm alpha=0 luôn nằm trong khung dù cuộn tới đâu. */
 .hero-photo{position:absolute;inset:0;z-index:0;overflow:hidden;
-  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 85%,transparent 100%);
-  mask-image:linear-gradient(180deg,#000 0,#000 85%,transparent 100%)}
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 94%);
+  mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 94%)}
 /* quầng sáng chủ thể cho ảnh hero — đặt hơi lệch phải theo object-position 66%
    của .hslide, tức đúng chỗ mâm đồ ăn (xem khối "ĐIỂM SÁNG TRONG ẢNH") */
 .hero-photo::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -1006,56 +1012,74 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   --paper-fiber:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><g stroke='%23A6A5A1' stroke-width='.9' stroke-linecap='round' fill='none' opacity='.55'><path d='M22 40l11 5'/><path d='M118 24l-8 6'/><path d='M243 61l7-6'/><path d='M300 130l-9 3'/><path d='M64 148l6 7'/><path d='M186 172l10-4'/><path d='M28 236l8 6'/><path d='M142 268l-9 4'/><path d='M262 244l5 8'/><path d='M312 292l-7 5'/><path d='M96 92l7 6'/><path d='M206 108l-6 7'/><path d='M154 320l9-5'/><path d='M40 300l-6 6'/></g><g fill='%23888784' opacity='.4'><circle cx='58' cy='150' r='1'/><circle cx='224' cy='36' r='.9'/><circle cx='166' cy='210' r='1.1'/><circle cx='288' cy='188' r='.8'/><circle cx='84' cy='262' r='1'/><circle cx='320' cy='84' r='.9'/><circle cx='12' cy='110' r='.8'/><circle cx='198' cy='300' r='1'/><circle cx='250' cy='142' r='.8'/><circle cx='130' cy='60' r='.9'/></g></svg>");
 }
 
-/* ---- KHỐI CHIA ĐÔI: nửa ảnh tối full-bleed · nửa panel giấy kem ---- */
-.band.split{padding:0;display:grid;grid-template-columns:1fr 1fr;
-  /* bỏ background:var(--cream) ở cấp band: .split-panel đã tự có nền kem rồi, còn
-     nền kem ở đây nằm SAU nửa ảnh — mask ở mép dưới .split-media sẽ để lộ đúng
-     dải kem đó thành một vệt sáng, chứ không phải nền đen của trang như ý đồ. */
-  align-items:stretch;overflow:visible;isolation:isolate;
-  /* Khối kem giáp nền đen là chỗ tương phản mạnh nhất trang, không thể "làm mờ"
-     mà không mất luôn ý đồ tấm giấy. Nhưng cạnh CỨNG là do nền đen hai bên phẳng
-     lì. Đổ một quầng sáng lớn tràn lên/xuống để vùng đen quanh khối được nâng
-     lên: mắt đọc ra một tấm giấy ĐANG ĐƯỢC RỌI SÁNG, không phải hình chữ nhật
-     dán vào. Không dùng border nên không thêm đường kẻ nào. */
-  box-shadow:0 -90px 150px -70px rgba(247,241,225,.30),
-             0  90px 150px -70px rgba(247,241,225,.30)}
-/* .split-media / .split-panel vẫn phải tự cắt ảnh và lớp giấy của mình, vì
-   overflow của band đã mở ra cho quầng sáng thoát */
-.band.split>.split-media,.band.split>.split-panel{overflow:hidden}
-/* Nguyên tắc chung của trang: KHÔNG một đường nào được chạy trọn bề ngang.
-   Khối kem buộc phải cắt thẳng (chữ đen nằm trên nó, không thể fade), nhưng
-   nửa trái là ảnh — cho ảnh tan vào đen ở mép dưới thì cạnh ngang chỉ còn dài
-   nửa trang, mắt đọc ra "tấm giấy kết thúc" chứ không phải "trang bị cắt đôi". */
-.band.split>.split-media{
-  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 84%,transparent 100%);
-  mask-image:linear-gradient(180deg,#000 0,#000 84%,transparent 100%)}
-.split-media{position:relative;min-height:clamp(520px,74vh,880px);
-  overflow:hidden;background:var(--ink-block)}
+/* ---- CÂU CHUYỆN: ảnh full-bleed · chữ nằm trên một BỨC TRANH CUỘN treo trong ảnh ----
+   Bản cũ chia band làm hai cột 1fr 1fr: nửa trái ảnh, nửa phải khối giấy kem.
+   Hỏng ở hai chỗ và cả hai đều là cùng một lỗi — cạnh cứng:
+   1. Đường dọc giữa hai nửa chạy trọn chiều cao mục. Đó là ranh giới sắc nhất
+      trang, mắt đọc ra "hai trang web dán cạnh nhau" chứ không phải một cảnh.
+   2. Mép trên khối kem cắt ngang đúng nửa bề ngang, thành một vạch sáng.
+   Không thể làm mờ khối kem — chữ đen nằm trên nó nên nó buộc phải đặc. Nên
+   đổi CÁCH ĐẶT thay vì đổi màu: ảnh trải hết bề ngang và tan vào nền ở cả hai
+   mép (không còn cạnh ngang nào), còn khối chữ thu lại thành một VẬT THỂ nằm
+   TRONG cảnh — bức tranh cuộn kakejiku: hai thanh gỗ trên dưới, tờ giấy ở giữa,
+   có bóng đổ xuống ảnh. Giấy vẫn đặc và chữ vẫn đọc rõ, nhưng giờ nó là đồ vật
+   treo trên tường chứ không phải một nửa trang bị sơn kem. */
+.band.split{position:relative;display:block;overflow:hidden;isolation:isolate;
+  padding:clamp(120px,14vw,190px) 0}
+/* Ảnh phủ kín band và TAN ở cả mép trên lẫn mép dưới. Đây là thứ xoá hẳn đường
+   kẻ: alpha về 0 ở hai đầu thì nền đen liên tục của trang chảy xuyên qua, không
+   còn chỗ nào để mắt bắt ranh giới. Cùng nhịp 14/86% đang dùng ở mục thực đơn. */
+.split-media{position:absolute;inset:0;z-index:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 86%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 86%,transparent 100%)}
 .split-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   filter:contrast(1.02) var(--img-cool)}
-/* đảo bên: ảnh sang phải */
-.band.split.reverse .split-media{order:2}
+/* Dìm sâu nửa bên treo tranh để giấy sáng bật ra và chữ quanh đó không bị ảnh
+   cạnh tranh. Gradient ngang nên nó không tạo thêm cạnh nào. */
+.split-media::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(90deg,rgba(9,9,11,.30) 0%,rgba(9,9,11,.52) 46%,rgba(9,9,11,.74) 100%)}
+.split-wrap{position:relative;z-index:2;display:flex;justify-content:flex-end}
+/* đảo bên: tranh treo sang trái */
+.band.split.reverse .split-wrap{justify-content:flex-start}
 
-/* justify-content:center — .split-inner bị chặn max-width:560px nên trong nửa
-   panel rộng 609px nó dính sát lề trái, chừa 49px lệch sang phải. Canh giữa để
-   khối chữ nằm đúng tâm quang học của nửa panel. */
-.split-panel{position:relative;background:var(--cream);color:var(--ink);
-  display:flex;align-items:center;justify-content:center;
-  padding:clamp(52px,6.6vw,116px) clamp(30px,5vw,88px)}
+/* ---- KAKEJIKU (掛軸) — tranh cuộn treo ---- */
+.kakejiku{position:relative;width:min(560px,100%)}
+/* Hai thanh gỗ trên/dưới. Thò ra 16px mỗi bên đúng như thanh treo thật, và
+   chính chỗ thò ra đó nói cho mắt biết đây là VẬT nằm trong ảnh chứ không phải
+   một ô chữ nhật cắt ra từ nền. */
+.kj-rod{position:absolute;left:-16px;right:-16px;height:11px;border-radius:6px;z-index:2;
+  background:linear-gradient(180deg,#5A452F 0%,#2E2318 52%,#150F0A 100%);
+  box-shadow:0 8px 22px rgba(0,0,0,.6),inset 0 1px 0 rgba(216,176,106,.32)}
+.kj-rod--top{top:-11px}
+.kj-rod--bot{bottom:-11px}
+/* Nền giấy KHÔNG phải một mảng kem phẳng: thêm một vệt ấm rất nhạt chảy từ góc
+   trên-trái xuống. Trong ảnh phía sau, đèn washi nằm bên phải và tường hắt vàng
+   sang trái — một tờ giấy thật treo ở đó phải bắt được chút ánh sáng ấy. Kem
+   nguyên chất đọc ra hơi lạnh và phẳng, tức là vẫn còn mùi "khối UI dán lên ảnh"
+   đúng cái vừa bỏ đi. Biên độ giữ ở .09 thôi: đủ để mắt thấy giấy có ánh sáng,
+   chưa đủ để chữ đen mất tương phản. */
+.kj-paper{position:relative;z-index:1;color:var(--ink);
+  background:linear-gradient(158deg,rgba(214,170,104,.09) 0%,rgba(214,170,104,0) 46%),var(--cream);
+  padding:clamp(40px,4.6vw,68px) clamp(28px,3.6vw,56px);
+  /* bóng đổ dài và mềm: tờ giấy phải có khoảng cách với tường ảnh phía sau,
+     nếu không nó lại bẹt về đúng cái "mảng dán vào" vừa bỏ đi */
+  box-shadow:0 34px 72px -24px rgba(0,0,0,.8),0 6px 18px rgba(0,0,0,.4)}
 /* lớp chất giấy phủ toàn panel. multiply để thớ giấy ĂN vào màu nền thay vì
    nằm đè lên như một tấm film xám; hai background-size lệch nhau (340 / 220)
    nên hai lớp không bao giờ lặp trùng chu kỳ — mắt không thấy ô vuông tile.
    Thêm quầng tối rất nhẹ ở mép để tờ giấy có độ cong, không bẹt như sơn. */
-.split-panel::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+.kj-paper::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:var(--paper-fiber),var(--paper-grain),
     radial-gradient(120% 100% at 50% 42%, transparent 54%, rgba(150,128,88,.13) 100%);
   background-size:340px 340px,220px 220px,100% 100%;
   /* nhiễu là xám vô sắc: multiply nặng tay sẽ HẠ độ ấm của giấy xuống xám.
      .42 là mức còn thấy chất mà chưa ăn mất sắc ngà. */
   mix-blend-mode:multiply;opacity:.42}
-.split-inner{position:relative;z-index:1}
-/* cột trái = kanji dọc làm dấu; cột phải = nội dung */
-.split-inner{width:100%;max-width:560px;display:grid;
+/* cột trái = kanji dọc làm dấu; cột phải = nội dung.
+   Bỏ max-width:560px của bản cũ: hồi đó .split-inner bơi trong nửa trang nên
+   cần chặn bề ngang, giờ chính tờ giấy đã bị chặn ở 560px rồi — chặn lần nữa
+   ở đây chỉ làm chữ co lại lệch trong tờ giấy. */
+.split-inner{position:relative;z-index:1;width:100%;display:grid;
   grid-template-columns:clamp(50px,4.8vw,76px) 1fr;gap:clamp(18px,2.8vw,44px);align-items:start}
 
 /* ---- DẤU KANJI dọc (良 / 食事 / 空間) ---- */
@@ -1066,19 +1090,19 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   letter-spacing:.16em;line-height:2;color:var(--gold-ink)}
 
 /* ---- chữ trong panel kem ---- */
-.split-panel h2{color:var(--ink)}
-.split-panel .eyebrow{color:var(--ink-soft)}
-.split-panel .eyebrow::before,.split-panel .eyebrow.center::after{background:var(--ink-soft);opacity:.5}
-.split-panel p{color:var(--ink-soft);font-size:14.5px;line-height:1.85;margin-bottom:15px;max-width:44ch}
-.split-panel p b{color:var(--ink);font-weight:600}
-.split-panel .h-sub{color:var(--gold-ink);font-style:italic;margin-bottom:26px}
-.split-panel h2+p,.split-panel .h-sub+p{margin-top:0}
-.split-panel .h-md{margin-bottom:22px}
+.kj-paper h2{color:var(--ink)}
+.kj-paper .eyebrow{color:var(--ink-soft)}
+.kj-paper .eyebrow::before,.kj-paper .eyebrow.center::after{background:var(--ink-soft);opacity:.5}
+.kj-paper p{color:var(--ink-soft);font-size:14.5px;line-height:1.85;margin-bottom:15px;max-width:44ch}
+.kj-paper p b{color:var(--ink);font-weight:600}
+.kj-paper .h-sub{color:var(--gold-ink);font-style:italic;margin-bottom:26px}
+.kj-paper h2+p,.kj-paper .h-sub+p{margin-top:0}
+.kj-paper .h-md{margin-bottom:22px}
 /* nút trên nền kem — đảo tông so với bản nền tối */
-.split-panel .btn,.split-panel .btn.ghost-light{border-color:rgba(22,19,14,.38);color:var(--ink)}
-.split-panel .btn::before,.split-panel .btn.ghost-light::before{background:var(--ink)}
-.split-panel .btn:hover,.split-panel .btn.ghost-light:hover{color:var(--cream)}
-.split-panel .btn{margin-top:14px}
+.kj-paper .btn,.kj-paper .btn.ghost-light{border-color:rgba(22,19,14,.38);color:var(--ink)}
+.kj-paper .btn::before,.kj-paper .btn.ghost-light::before{background:var(--ink)}
+.kj-paper .btn:hover,.kj-paper .btn.ghost-light:hover{color:var(--cream)}
+.kj-paper .btn{margin-top:14px}
 
 /* ---- NÉT SÓNG VÀNG (nami) — dải phân cách thay diềm ngói ---- */
 /* Sóng chạy repeat-x nên nó cắt NGANG hết bề rộng trang — đó là đường kẻ đậm
@@ -1108,11 +1132,22 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
 .cine-inner .cine-sub{font-style:italic;color:#E4D7BC}
 
 @media (max-width:900px){
-  .band.split{grid-template-columns:1fr}
-  .band.split.reverse .split-media{order:0}
-  .split-media{min-height:clamp(320px,50vh,460px)}
-  .split-panel{padding:clamp(44px,8vw,64px) var(--gutter)}
-  .split-inner{max-width:none;grid-template-columns:1fr;gap:22px}
+  /* Hẹp thì tranh cuộn chiếm trọn bề ngang và nằm giữa: đẩy sang một bên chỉ có
+     nghĩa khi còn chỗ trống bên kia cho ảnh thở. Thanh gỗ thu độ thò còn 8px
+     để không đội ra ngoài gutter. */
+  .band.split{padding:clamp(76px,16vw,120px) 0}
+  /* Thêm lề trong cho riêng mục này: với gutter mặc định thì hai bên tranh cuộn
+     chỉ còn ~20px ảnh, mà 20px thì mắt không đọc ra "ảnh", chỉ đọc ra viền — và
+     thế là quay về đúng cái mảng kem chiếm trọn trang vừa bỏ đi. Nới ra để còn
+     một dải ảnh thật ở hai bên, đủ để tranh cuộn vẫn là VẬT treo trong cảnh. */
+  .split-wrap,.band.split.reverse .split-wrap{justify-content:center;
+    padding-inline:clamp(30px,9vw,58px)}
+  .kakejiku{width:100%}
+  .kj-rod{left:-8px;right:-8px}
+  /* nghiêng scrim về giữa vì tranh không còn nằm lệch phải nữa */
+  .split-media::after{background:linear-gradient(180deg,rgba(9,9,11,.42) 0%,rgba(9,9,11,.66) 100%)}
+  .kj-paper{padding:clamp(38px,7vw,58px) clamp(22px,5vw,34px)}
+  .split-inner{grid-template-columns:1fr;gap:22px}
   /* kanji chuyển sang nằm ngang trên đầu khối chữ */
   .kanji-mark{display:flex;align-items:baseline;gap:16px;text-align:left;padding-top:0}
   .km-note{margin-top:0;line-height:1.7}
@@ -1208,12 +1243,12 @@ body::before{
    Tâm quầng chỉnh được từng ảnh qua --spot-x/--spot-y (mặc định
    50%/46% — hơi cao hơn tâm hình vì chủ thể thường nằm trên).
    ============================================================ */
-.s3-media::before,.split-media::before,.sig-photo::before,.cine-photo::before{
+.s3-media::before,.sig-photo::before,.cine-photo::before{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   mix-blend-mode:soft-light;
   background:radial-gradient(58% 54% at var(--spot-x,50%) var(--spot-y,46%),
     rgba(255,251,243,.92) 0%,rgba(255,251,243,.38) 40%,transparent 72%)}
-.s3-media::after,.split-media::after,.sig-photo::after,.cine-photo::after{
+.s3-media::after,.sig-photo::after,.cine-photo::after{
   content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   background:radial-gradient(80% 74% at var(--spot-x,50%) var(--spot-y,46%),
     transparent 40%,rgba(8,8,10,.30) 76%,rgba(8,8,10,.58) 100%)}

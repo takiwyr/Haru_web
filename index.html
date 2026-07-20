@@ -17,7 +17,7 @@
      unicode-range chỉ phủ CJK nên không bao giờ chạm vào chữ Việt. -->
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Yuji+Syuku&text=%E3%82%8A%E4%BA%88%E4%BA%8B%E4%BE%BF%E5%91%B3%E5%AD%97%E5%B1%B1%E6%98%A5%E6%B8%8B%E6%BC%A2%E7%89%A9%E7%A9%BA%E7%B0%A1%E7%B4%84%E7%B4%A0%E8%89%AF%E8%AA%9E%E9%96%93%E9%A3%9F%E9%A3%B2%E5%88%BA%E8%BA%AB%E5%AF%BF%E5%8F%B8%E5%A4%A9%E9%BA%A9%E7%BE%85%E9%8D%B0%E9%BA%BA%E9%A1%9E&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/graded/hero/concept-harumarch2-copy.webp" fetchpriority="high">
-<link rel="stylesheet" href="css/main.css?v=135">
+<link rel="stylesheet" href="css/main.css?v=140">
 </head>
 <body id="top">
 
@@ -70,7 +70,7 @@
     <span class="hero-roof__slab"></span>
     <span class="hero-roof__eave"></span>
   </div>
-  <div class="hero-photo" data-parallax-bg>
+  <div class="hero-photo" data-parallax-bg="6">
     <div class="hero-slides" data-hero-slides>
       <img class="hslide is-active" src="assets/graded/hero/concept-harumarch2-copy.webp" alt="Khay sushi Haru bày trên vườn thiền" fetchpriority="high">
       <img class="hslide" data-src="assets/graded/hero/concept-harumarch1-copy.webp" alt="Sashimi cá hồi tươi trên khay gỗ" loading="lazy">
@@ -92,25 +92,32 @@
   </a>
 </section>
 
-<!-- ===== STORY — khối chia đôi: ảnh tối · panel giấy kem (Ryo) ===== -->
+<!-- ===== STORY — ảnh full-bleed, chữ nằm trên bức tranh cuộn treo trong cảnh ===== -->
 <section class="band split" id="story">
   <div class="split-media">
     <img src="assets/graded/space/ntp-a-69.webp" alt="Không gian ấm cúng bên khung cửa nguyệt tại Haru Sushi" loading="lazy">
   </div>
-  <div class="split-panel">
-    <div class="split-inner">
-      <div class="kanji-mark" aria-hidden="true">
-        <span class="km-char">春</span>
-        <span class="km-note">Haru<br>Mùa xuân</span>
+  <div class="wrap split-wrap">
+    <!-- kakejiku 掛軸: hai thanh gỗ trên/dưới + tờ giấy ở giữa -->
+    <article class="kakejiku">
+      <span class="kj-rod kj-rod--top" aria-hidden="true"></span>
+      <div class="kj-paper">
+        <div class="split-inner">
+          <div class="kanji-mark" aria-hidden="true">
+            <span class="km-char">春</span>
+            <span class="km-note">Haru<br>Mùa xuân</span>
+          </div>
+          <div class="split-body">
+            <h2 class="h-md" data-reveal>Câu chuyện Haru</h2>
+            <p class="h-sub" data-reveal>Mùa xuân Nhật Bản nở rộ giữa lòng Sài Gòn</p>
+            <p data-reveal>Trong tiếng Nhật, <b>Haru</b> nghĩa là <i>Mùa Xuân</i> — mùa của khởi đầu tươi mới, của trăm hoa đua nở, của nguồn thực phẩm dồi dào và tinh khôi nhất.</p>
+            <p data-reveal>Haru Sushi ra đời để trở thành một “Mùa Xuân” trong lòng thực khách — nơi khởi đầu cho những cuộc gặp gỡ và trải nghiệm ẩm thực trọn vẹn.</p>
+            <a href="#menu" class="btn" data-reveal>Khám phá thực đơn <span class="arw">→</span></a>
+          </div>
+        </div>
       </div>
-      <div class="split-body">
-        <h2 class="h-md" data-reveal>Câu chuyện Haru</h2>
-        <p class="h-sub" data-reveal>Mùa xuân Nhật Bản nở rộ giữa lòng Sài Gòn</p>
-        <p data-reveal>Trong tiếng Nhật, <b>Haru</b> nghĩa là <i>Mùa Xuân</i> — mùa của khởi đầu tươi mới, của trăm hoa đua nở, của nguồn thực phẩm dồi dào và tinh khôi nhất.</p>
-        <p data-reveal>Haru Sushi ra đời để trở thành một “Mùa Xuân” trong lòng thực khách — nơi khởi đầu cho những cuộc gặp gỡ và trải nghiệm ẩm thực trọn vẹn.</p>
-        <a href="#menu" class="btn" data-reveal>Khám phá thực đơn <span class="arw">→</span></a>
-      </div>
-    </div>
+      <span class="kj-rod kj-rod--bot" aria-hidden="true"></span>
+    </article>
   </div>
 </section>
 
@@ -359,6 +366,6 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=27"></script>
+<script src="js/main.js?v=28"></script>
 </body>
 </html>
