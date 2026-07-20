@@ -212,19 +212,6 @@
       gsap.from(r, { scaleX: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: r, start: 'top 90%' } });
     });
 
-    /* count-up */
-    gsap.utils.toArray('[data-count]').forEach(el => {
-      const target = +el.dataset.count, pad = +(el.dataset.pad || 0), suf = el.dataset.suffix || '';
-      const obj = { v: 0 };
-      ST.create({
-        trigger: el, start: 'top 90%', once: true,
-        onEnter: () => gsap.to(obj, {
-          v: target, duration: 1.6, ease: 'power2.out',
-          onUpdate: () => { const val = Math.round(obj.v); el.textContent = (pad ? String(val).padStart(pad, '0') : val) + suf; }
-        })
-      });
-    });
-
     /* watermark parallax */
     gsap.utils.toArray('[data-parallax]').forEach(el => {
       gsap.to(el, {
@@ -363,9 +350,6 @@
   } else {
     // reduced motion / no gsap: reveal everything, split not needed
     document.querySelectorAll('[data-hero-word]').forEach(e => e.style.transform = 'none');
-    document.querySelectorAll('[data-count]').forEach(el => {
-      const suf = el.dataset.suffix || ''; el.textContent = el.dataset.count + suf;
-    });
   }
 
   /* ============================================================
