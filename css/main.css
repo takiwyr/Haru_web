@@ -301,7 +301,12 @@ header.scrolled{padding:14px 0}
 .hero .wrap{width:100%;position:relative;z-index:3}
 .hero-media,.scroll-ind .dot{display:none}
 /* ảnh nền full-bleed + phóng nhẹ, đổ tối ám nâu để chữ đọc rõ */
-.hero-photo{position:absolute;inset:0;z-index:0;overflow:hidden}
+/* mép dưới hero cũng phải tan vào nền trang: scrim cũ chỉ tối 40% ở đáy nên ảnh
+   vẫn kết thúc bằng một đường ngang. Mask ~15% chiều cao cuối cho ảnh trôi hẳn
+   vào đen, hero nối liền vào mục kế tiếp thay vì "hết ảnh rồi tới nền". */
+.hero-photo{position:absolute;inset:0;z-index:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 85%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0,#000 85%,transparent 100%)}
 /* quầng sáng chủ thể cho ảnh hero — đặt hơi lệch phải theo object-position 66%
    của .hslide, tức đúng chỗ mâm đồ ăn (xem khối "ĐIỂM SÁNG TRONG ẢNH") */
 .hero-photo::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -745,8 +750,11 @@ html{scrollbar-color:#3a3a40 transparent;scrollbar-width:thin}
 .news-cta{text-align:center;margin-top:60px;position:relative;z-index:2}
 
 /* ---------- FOOTER ---------- */
-footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0 0;position:relative;
-  border-top:1px solid rgba(236,227,208,.1)}
+/* bỏ border-top: một hairline kem chạy hết bề ngang là đường kẻ cứng nhất ở
+   cuối trang. Thay bằng gradient tối dần từ trong suốt xuống nền footer — chân
+   trang chìm xuống thay vì bị đóng khung. */
+footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,var(--ink-block) 100%);
+  color:#F2F0EC;padding:clamp(76px,9vw,124px) 0 0;position:relative}
 .foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1.05fr;gap:clamp(40px,4.4vw,88px);
   position:relative;z-index:2}
 .foot-brand{display:flex;flex-direction:column;gap:22px}
@@ -806,10 +814,15 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 .fm-daebak{height:clamp(46px,5vw,66px)}
 
 /* thanh đáy — canh giữa, chấm đỏ ngăn cách */
-.foot-bottom{margin-top:clamp(60px,7vw,92px);border-top:1px solid rgba(236,227,208,.1);padding:24px 0;
+/* border-top cũ là hairline kem chạy hết bề ngang — đúng kiểu đường kẻ đang muốn
+   bỏ. Thay bằng ::before là một vệt gradient tắt dần về hai đầu: vẫn tách được
+   dòng bản quyền khỏi khối trên mà không kẻ hết trang. */
+.foot-bottom{margin-top:clamp(60px,7vw,92px);padding:24px 0;
   display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;
   color:#78756E;font-family:var(--util);font-size:11.5px;letter-spacing:.08em;
   position:relative;z-index:2}
+.foot-bottom::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0,rgba(236,227,208,.13) 38%,rgba(236,227,208,.13) 62%,transparent 100%)}
 .foot-bottom .fb-dot{width:4px;height:4px;border-radius:50%;background:var(--shu);flex:none}
 
 /* ============================================================
@@ -920,7 +933,27 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 
 /* ---- KHỐI CHIA ĐÔI: nửa ảnh tối full-bleed · nửa panel giấy kem ---- */
 .band.split{padding:0;display:grid;grid-template-columns:1fr 1fr;
-  align-items:stretch;background:var(--cream);overflow:hidden;isolation:isolate}
+  /* bỏ background:var(--cream) ở cấp band: .split-panel đã tự có nền kem rồi, còn
+     nền kem ở đây nằm SAU nửa ảnh — mask ở mép dưới .split-media sẽ để lộ đúng
+     dải kem đó thành một vệt sáng, chứ không phải nền đen của trang như ý đồ. */
+  align-items:stretch;overflow:visible;isolation:isolate;
+  /* Khối kem giáp nền đen là chỗ tương phản mạnh nhất trang, không thể "làm mờ"
+     mà không mất luôn ý đồ tấm giấy. Nhưng cạnh CỨNG là do nền đen hai bên phẳng
+     lì. Đổ một quầng sáng lớn tràn lên/xuống để vùng đen quanh khối được nâng
+     lên: mắt đọc ra một tấm giấy ĐANG ĐƯỢC RỌI SÁNG, không phải hình chữ nhật
+     dán vào. Không dùng border nên không thêm đường kẻ nào. */
+  box-shadow:0 -90px 150px -70px rgba(247,241,225,.30),
+             0  90px 150px -70px rgba(247,241,225,.30)}
+/* .split-media / .split-panel vẫn phải tự cắt ảnh và lớp giấy của mình, vì
+   overflow của band đã mở ra cho quầng sáng thoát */
+.band.split>.split-media,.band.split>.split-panel{overflow:hidden}
+/* Nguyên tắc chung của trang: KHÔNG một đường nào được chạy trọn bề ngang.
+   Khối kem buộc phải cắt thẳng (chữ đen nằm trên nó, không thể fade), nhưng
+   nửa trái là ảnh — cho ảnh tan vào đen ở mép dưới thì cạnh ngang chỉ còn dài
+   nửa trang, mắt đọc ra "tấm giấy kết thúc" chứ không phải "trang bị cắt đôi". */
+.band.split>.split-media{
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 84%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0,#000 84%,transparent 100%)}
 .split-media{position:relative;min-height:clamp(520px,74vh,880px);
   overflow:hidden;background:var(--ink-block)}
 .split-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
@@ -973,11 +1006,17 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 .split-panel .btn{margin-top:14px}
 
 /* ---- NÉT SÓNG VÀNG (nami) — dải phân cách thay diềm ngói ---- */
+/* Sóng chạy repeat-x nên nó cắt NGANG hết bề rộng trang — đó là đường kẻ đậm
+   nhất trên toàn site, và nó lặp lại ở 4 mục liên tiếp nên mắt đọc ra "các mục
+   bị chia ô". Mask cho hai đầu tan dần vào nền: dải sóng thành một nét hoa văn
+   ở giữa trang chứ không còn là vạch phân cách. */
 .nami{position:relative;height:clamp(34px,4vw,54px);pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%,#000 62%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 38%,#000 62%,transparent 100%);
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='54' viewBox='0 0 300 54'><g fill='none' stroke='%23D8B06A' stroke-width='1' stroke-linecap='round'><path d='M0 16 C 37.5 2, 112.5 2, 150 16 S 262.5 30, 300 16'/><path d='M0 28 C 37.5 14, 112.5 14, 150 28 S 262.5 42, 300 28' opacity='.72'/><path d='M0 40 C 37.5 26, 112.5 26, 150 40 S 262.5 54, 300 40' opacity='.45'/></g></svg>");
   background-repeat:repeat-x;background-position:center;background-size:auto 100%;
   /* .55 trên nền tối gần như tàng hình; .78 + quầng vàng mờ để dải sóng thành nhấn nhá thấy được */
-  opacity:.78;filter:drop-shadow(0 0 6px var(--gold-glow))}
+  opacity:.62;filter:drop-shadow(0 0 6px var(--gold-glow))}
 /* nét sóng đứng riêng giữa hai band tối */
 .band>.nami{margin-bottom:clamp(30px,4vw,54px)}
 
@@ -1122,9 +1161,13 @@ body::before{
   text-transform:none;color:var(--stone)}
 .s3-more:hover{color:var(--sumi);border-bottom-color:var(--sumi)}
 /* dải số cuối Our Story — 3 cột đều nhau, vạch vàng mảnh ngăn giữa, canh giữa trang */
-.band.story3 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);
-  margin-top:clamp(48px,5.5vw,88px);padding-top:clamp(34px,4vw,52px);
-  border-top:1px solid var(--gold-line)}
+/* vạch vàng đặc .62 chạy trọn bề ngang container là đường kẻ đậm thứ hai của
+   trang. Cùng một hệ với .nami và .foot-bottom: giữ nét nhưng cho hai đầu tan
+   vào nền, dải số vẫn tách khỏi phần trên mà không đóng khung mục. */
+.band.story3 .stat-row{position:relative;display:grid;grid-template-columns:repeat(3,1fr);
+  margin-top:clamp(48px,5.5vw,88px);padding-top:clamp(34px,4vw,52px)}
+.band.story3 .stat-row::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0,var(--gold-line) 30%,var(--gold-line) 70%,transparent 100%)}
 .band.story3 .stat{position:relative;text-align:center;padding:4px clamp(12px,2vw,28px)}
 .band.story3 .stat+.stat::before{content:"";position:absolute;left:0;top:6px;bottom:6px;
   width:1px;background:var(--gold-line)}
@@ -1199,12 +1242,30 @@ body::before{
 .band.menu-wall{position:relative;overflow:hidden;isolation:isolate}
 /* ảnh nền là KHÔNG GIAN quán, không phải món ăn: nó chỉ làm phông sân khấu
    nên phải dìm sâu, để mắt dồn hết vào dãy bảng phía trước */
+/* mask dọc: ảnh phông TAN vào nền trang ở mép trên và mép dưới thay vì cắt cụt.
+   Trước đây mép ảnh là một đường ngang sắc lẹm — bên trên là nền trang có quầng
+   sáng (xám ~#232326), bên dưới là ảnh đã dìm gần đen, nên chỗ giáp ranh hiện ra
+   như một vết cắt. Cho alpha về 0 ở hai mép thì nền đen liên tục của trang chảy
+   xuyên qua, không còn ranh giới nào để mắt bắt. */
 .mw-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
-  filter:brightness(.34) contrast(1.06) var(--img-cool)}
+  filter:brightness(.34) contrast(1.06) var(--img-cool);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%)}
+/* mask lo phần hoà mép rồi nên hai vệt tối ở đầu/cuối chỉ cần rất nhẹ; để .9 như
+   cũ sẽ thành hai dải đen đè lên vùng ảnh đã trong suốt, tức là dựng lại đúng
+   cái đường kẻ vừa xoá. */
+/* ::before cũng phải tan mép: radial-gradient đo từ tâm (50% 46%) nên ngay tại
+   mép trên của band bán kính đã vượt stop 78%, tức là rgba(0,0,0,.62) đè xuống
+   NGAY từ pixel đầu tiên. Ảnh đã được mask cho trong suốt ở đó rồi, nhưng lớp
+   tối này vẽ đè lên đúng chỗ vừa xoá — nên đường kẻ vẫn còn. Mask lớp tối theo
+   cùng một nhịp với ảnh thì cả hai cùng tan, phần tối giữa mục vẫn nguyên để
+   chữ đọc được. */
 .band.menu-wall::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
   background:
     radial-gradient(88% 70% at 50% 46%, transparent 30%, rgba(0,0,0,.62) 78%, rgba(0,0,0,.86) 100%),
-    linear-gradient(180deg, rgba(0,0,0,.9) 0%, transparent 26%, transparent 74%, rgba(0,0,0,.92) 100%)}
+    linear-gradient(180deg, rgba(0,0,0,.34) 0%, transparent 22%, transparent 78%, rgba(0,0,0,.36) 100%)}
 .band.menu-wall>.wrap{position:relative;z-index:2}
 
 /* ---- dãy bảng ---- */
