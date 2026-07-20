@@ -39,7 +39,12 @@
   /* TITLE — Raleway: geometric mảnh, thanh; đã verify có subset vietnamese đầy đủ
      (Google Fonts, OFL — dùng thương mại hợp pháp). Cormorant Garamond giữ làm fallback. */
   --display:"Raleway","Cormorant Garamond",Georgia,serif;
-  --mincho:"Noto Serif Display",Georgia,serif;         /* fallback an toàn (đã bỏ font Nhật) */
+  /* FONT NHẬT — CHỈ dùng cho element chứa thuần kanji (.band-kanji, .km-char,
+     .kanji-side, .sig-kanji, .cine-kanji). TUYỆT ĐỐI không đặt lên chữ Việt:
+     các font này thiếu codepoint tiếng Việt (ề U+1EC1) nên browser sẽ fallback
+     từng glyph và làm vỡ dấu — đúng lỗi đã gặp trước đây. */
+  --mincho:"Shippori Mincho B1","Noto Serif JP","Noto Serif Display",serif;  /* mincho cổ điển — hoa văn kanji */
+  --brush-jp:"Yuji Syuku","Shippori Mincho B1","Noto Serif JP",serif;        /* thư pháp — kanji cỡ lớn */
   --sans:"Be Vietnam Pro",system-ui,-apple-system,sans-serif;
   --util:system-ui,"Be Vietnam Pro",sans-serif;       /* meta/nav/caption */
   --brush:"Cormorant Garamond","Noto Serif Display",Georgia,serif;  /* tiêu đề serif cổ điển kiểu Trajan (ảnh anh gửi) — đủ dấu Việt */
@@ -436,7 +441,7 @@ header.scrolled{padding:14px 0}
     radial-gradient(120% 90% at 80% 60%, transparent 40%, rgba(11,9,6,.55) 100%)}
 /* kanji thư pháp vẽ nét bằng clip-path khi cuộn */
 .sig-kanji{position:absolute;z-index:2;right:clamp(-14px,-1vw,-6px);bottom:clamp(-40px,-4vw,-20px);
-  font-family:var(--brush);line-height:.72;color:var(--shu);
+  font-family:var(--brush-jp);line-height:.72;color:var(--shu);
   font-size:clamp(240px,40vw,620px);opacity:.16;pointer-events:none;
   -webkit-text-stroke:1px rgba(201,161,92,.28);text-shadow:0 0 80px rgba(161,123,54,.4);
   clip-path:inset(0 100% 0 0);will-change:clip-path}
@@ -484,7 +489,7 @@ header.scrolled{padding:14px 0}
     linear-gradient(100deg, rgba(11,9,6,.93) 0%, rgba(11,9,6,.82) 26%, rgba(11,9,6,.44) 52%, rgba(11,9,6,.12) 74%, rgba(11,9,6,.5) 100%),
     radial-gradient(120% 90% at 78% 60%, transparent 42%, rgba(11,9,6,.52) 100%)}
 .cine-kanji{position:absolute;z-index:2;right:clamp(-14px,-1vw,-6px);bottom:clamp(-40px,-4vw,-20px);
-  font-family:var(--brush);line-height:.72;color:var(--shu);
+  font-family:var(--brush-jp);line-height:.72;color:var(--shu);
   font-size:clamp(240px,40vw,620px);opacity:.16;pointer-events:none;
   -webkit-text-stroke:1px rgba(201,161,92,.28);text-shadow:0 0 80px rgba(161,123,54,.4);
   clip-path:inset(0 100% 0 0);will-change:clip-path}
@@ -860,8 +865,8 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 
 /* ---- DẤU KANJI dọc (良 / 食事 / 空間) ---- */
 .kanji-mark{text-align:center;padding-top:.2em;user-select:none}
-.km-char{display:block;font-family:var(--mincho);line-height:1.05;
-  font-size:clamp(30px,3.4vw,46px);color:var(--ink)}
+.km-char{display:block;font-family:var(--mincho);font-weight:700;line-height:1.15;
+  font-size:clamp(34px,3.8vw,52px);color:var(--ink)}
 .km-note{display:block;margin-top:16px;font-family:var(--util);font-size:9.5px;
   letter-spacing:.16em;line-height:2;color:var(--gold-ink)}
 
@@ -910,8 +915,9 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 /* ---- kanji dọc mờ làm hoa văn cho các band NỀN TỐI ---- */
 .band-kanji{position:absolute;z-index:0;top:clamp(48px,7vw,96px);
   right:clamp(10px,2.6vw,44px);writing-mode:vertical-rl;text-orientation:upright;
-  font-family:var(--mincho);font-size:clamp(46px,6vw,92px);line-height:1.1;letter-spacing:.12em;
-  color:var(--shu);opacity:.15;pointer-events:none;user-select:none}
+  /* thư pháp Yuji Syuku — nét bút, hợp vai trò hoa văn mờ cỡ lớn */
+  font-family:var(--brush-jp);font-size:clamp(52px,6.6vw,104px);line-height:1.14;letter-spacing:.1em;
+  color:var(--shu);opacity:.17;pointer-events:none;user-select:none}
 
 /* ---- cine (Triết lý) — hoà theo tông vàng ---- */
 .cine-inner .eyebrow{color:var(--shu)}
