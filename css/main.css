@@ -10,9 +10,9 @@
      đọc ra "vàng ấm". Nay các mặt phẳng nền về xám trung tính gần như vô sắc;
      hơi ấm chỉ còn giữ lại ở CHI TIẾT vàng đồng (--shu) để làm nhấn nhá.
      Bậc sắc độ vẫn nới rộng như cũ để trang không phẳng lì. */
-  --paper:#141416;          /* nền chính — đen trung tính (card/hover) */
-  --paper-2:#1C1C1F;        /* band xen kẽ */
-  --paper-3:#26262A;        /* card / khối nhấn nhẹ */
+  --paper:#0D0D0E;          /* nền chính — đen (card/hover) */
+  --paper-2:#141416;        /* band xen kẽ */
+  --paper-3:#1E1E21;        /* card / khối nhấn nhẹ */
   --sumi:#F2F1ED;           /* chữ — trắng ngà trung tính */
   --sumi-soft:#CFCEC9;      /* heading phụ */
   /* ACCENT — VÀNG ĐỒNG (kiểu Ryo): dùng cho nét kẻ mảnh, số, kanji, chi tiết.
@@ -294,7 +294,9 @@ header.scrolled{padding:14px 0}
 .hero-slides{position:absolute;inset:0}
 /* ảnh đã grade sẵn (tối/ấm/vignette) → CSS chỉ cần phóng nhẹ, không hạ sáng nhiều */
 .hero-slides .hslide{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;object-position:66% 52%;
-  filter:brightness(1.04) contrast(1.1) var(--img-cool);opacity:0;transform:scale(1.04);
+  /* hero giữ NGUYÊN tông ảnh gốc — không áp --img-cool: đây là mảng màu duy nhất
+     được phép rực, làm điểm nhấn mở đầu trên toàn bộ phần còn lại đen tuyền */
+  filter:brightness(1.04) contrast(1.08);opacity:0;transform:scale(1.04);
   transition:opacity 1.5s var(--e-out);will-change:opacity,transform}
 .hero-slides .hslide.is-active{opacity:1;transform:scale(1.1);
   transition:opacity 1.5s var(--e-out),transform 8s linear}
@@ -989,7 +991,7 @@ header.scrolled::before{
    Gradient để dạng rgba() nên lớp noise phía dưới vẫn ánh lên.
    ============================================================ */
 :root{
-  --bg-dark:#0A0A0C;                 /* 1. Dark Background — đen trung tính */
+  --bg-dark:#000000;                 /* 1. Dark Background — đen tuyền */
   /* Glow là nguồn "điểm sáng" duy nhất của nền — vẫn cần mạnh để trang không
      phẳng, nhưng hai quầng vàng đồng cũ (.26/.20) chính là thứ nhuộm vàng cả
      trang. Nay: một quầng vàng NHẸ giữ chất ấm sang trọng + một quầng trắng
@@ -1019,7 +1021,7 @@ body::before{
        Màu đổi từ nâu (46,35,22) sang xám trung tính — đây là lớp phủ toàn trang
        nên hue của nó quyết định tông tổng thể. */
     radial-gradient(126% 86% at 50% 0%,
-      rgba(42,42,47,.62) 0%, rgba(22,22,25,.70) 52%, rgba(9,9,11,.88) 100%);
+      rgba(26,26,29,.60) 0%, rgba(11,11,13,.74) 50%, rgba(0,0,0,.94) 100%);
   background-repeat:no-repeat;
   animation:bgGlowDrift 34s ease-in-out infinite alternate;
   will-change:background-position;
