@@ -1191,9 +1191,15 @@ body::before{
 .mwp-label{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;
   justify-content:flex-start;gap:clamp(10px,1.2vw,16px);
   padding:clamp(14px,1.8vw,26px) 8px clamp(18px,2vw,28px);text-align:center}
+/* Dùng --brush-jp (Yuji Syuku) chứ KHÔNG dùng --mincho ở đây. Shippori Mincho
+   là font Nhật thật, nhưng minchō và Minh thể Trung Hoa chung một gốc chữ khắc
+   nên ở cỡ nhỏ mắt người Việt đọc ra "chữ Tàu". Yuji Syuku là nét bút lông viết
+   tay kiểu Nhật — không thể lẫn, lại đang được tải sẵn cho kanji cỡ lớn nên
+   không tốn thêm request nào. Bù lại nét bút mảnh hơn nét khắc: nới cỡ chữ và
+   giãn dòng cho khỏi bết. */
 .mwp-jp{writing-mode:vertical-rl;text-orientation:upright;
-  font-family:var(--mincho);font-weight:500;letter-spacing:.16em;line-height:1.12;
-  font-size:clamp(15px,1.5vw,22px);color:var(--sumi);opacity:.94}
+  font-family:var(--brush-jp);font-weight:400;letter-spacing:.14em;line-height:1.24;
+  font-size:clamp(17px,1.7vw,25px);color:var(--sumi);opacity:.92}
 .mwp-vi{font-family:var(--util);font-size:clamp(8.5px,.72vw,10.5px);letter-spacing:.24em;
   text-transform:uppercase;color:var(--shu);opacity:.9;
   /* đẩy xuống sát đáy bảng như dòng chữ Latin nhỏ trong ảnh mẫu */
