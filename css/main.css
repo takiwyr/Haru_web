@@ -592,9 +592,12 @@ header.scrolled{padding:14px 0}
 /* ---------- RESERVATION ---------- */
 /* ===== RESERVE — full-bleed điện ảnh, form kính nổi ===== */
 .reserve{position:relative;background:transparent}
+/* card form cao hơn cột chữ nên mép trên của nó chạm sát dải sóng .nami phía trên;
+   các band khác có .sec-head đệm sẵn, band này thì không — nên phải tự chừa khoảng thở */
 .reserve-grid{position:relative;z-index:2;display:grid;
   grid-template-columns:1fr clamp(400px,42%,520px);
-  gap:clamp(36px,5vw,84px);align-items:center}
+  gap:clamp(36px,5vw,84px);align-items:center;
+  margin-top:clamp(34px,5vw,72px)}
 /* cột trái — lời mời tối giản, thanh lịch */
 .rv-invite{max-width:640px}
 .rv-invite .eyebrow{color:var(--shu);margin-bottom:24px}
