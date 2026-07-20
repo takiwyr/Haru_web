@@ -277,6 +277,12 @@ header.scrolled{padding:14px 0}
 .hero-media,.scroll-ind .dot{display:none}
 /* ảnh nền full-bleed + phóng nhẹ, đổ tối ám nâu để chữ đọc rõ */
 .hero-photo{position:absolute;inset:0;z-index:0;overflow:hidden}
+/* quầng sáng chủ thể cho ảnh hero — đặt hơi lệch phải theo object-position 66%
+   của .hslide, tức đúng chỗ mâm đồ ăn (xem khối "ĐIỂM SÁNG TRONG ẢNH") */
+.hero-photo::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  mix-blend-mode:soft-light;
+  background:radial-gradient(52% 46% at 56% 52%,
+    rgba(255,240,210,.8) 0%,rgba(255,240,210,.3) 44%,transparent 74%)}
 /* SLIDESHOW ảnh chạy luân phiên (crossfade + Ken Burns nhẹ) kiểu Phổ Đình */
 .hero-slides{position:absolute;inset:0}
 /* ảnh đã grade sẵn (tối/ấm/vignette) → CSS chỉ cần phóng nhẹ, không hạ sáng nhiều */
@@ -557,7 +563,14 @@ header.scrolled{padding:14px 0}
 .spanel-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);
   filter:brightness(.8) contrast(1.06) saturate(1);
   transition:filter 1.1s var(--e-out),transform 1.5s var(--e-out)}
-.spanel::after{content:"";position:absolute;inset:0;z-index:1;
+/* quầng sáng chủ thể — chỉ bật ở panel đang mở, panel thu gọn giữ nguyên nền tối
+   để mắt đi thẳng vào panel chính (xem khối "ĐIỂM SÁNG TRONG ẢNH") */
+.spanel::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  mix-blend-mode:soft-light;opacity:0;transition:opacity .9s var(--e-out);
+  background:radial-gradient(56% 48% at 50% 42%,
+    rgba(255,240,210,.95) 0%,rgba(255,240,210,.4) 42%,transparent 74%)}
+.spanel.is-open::before{opacity:1}
+.spanel::after{content:"";position:absolute;inset:0;z-index:2;
   background:linear-gradient(to top,rgba(11,9,6,.82) 0%,rgba(11,9,6,.24) 46%,rgba(11,9,6,.46) 100%);
   transition:background .7s var(--e-out)}
 /* nhãn dọc khi thu gọn */
@@ -1021,6 +1034,30 @@ body::before{
 .s3-media img{width:100%;height:100%;object-fit:cover;
   /* ảnh là mảng sáng lớn nhất của band tối — không dìm nữa, chỉ tăng độ tương phản */
   filter:brightness(1.02) contrast(1.1) saturate(1.03)}
+/* ============================================================
+   ĐIỂM SÁNG TRONG ẢNH (spotlight)
+   Trước đây mỗi bức ảnh sáng đều một mức nên trên nền tối cả bức
+   chìm xuống như nhau, không đâu là chủ thể. Hai lớp phủ:
+     ::before  quầng sáng ấm ở tâm, mix-blend-mode:soft-light —
+               nâng midtone đúng vùng chủ thể mà không bệt màu
+     ::after   tối dần ra bốn mép — đẩy hậu cảnh lùi lại, chênh
+               sáng giữa tâm và mép chính là thứ làm chủ thể bật lên
+   Tâm quầng chỉnh được từng ảnh qua --spot-x/--spot-y (mặc định
+   50%/46% — hơi cao hơn tâm hình vì chủ thể thường nằm trên).
+   ============================================================ */
+.s3-media::before,.split-media::before,.sig-photo::before,.cine-photo::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  mix-blend-mode:soft-light;
+  background:radial-gradient(58% 54% at var(--spot-x,50%) var(--spot-y,46%),
+    rgba(255,240,210,.92) 0%,rgba(255,240,210,.38) 40%,transparent 72%)}
+.s3-media::after,.split-media::after,.sig-photo::after,.cine-photo::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(80% 74% at var(--spot-x,50%) var(--spot-y,46%),
+    transparent 40%,rgba(9,7,5,.30) 76%,rgba(9,7,5,.58) 100%)}
+/* sig/cine đã có màn phủ riêng (.sig-veil/.cine-veil z:1) lo phần tối cho chữ đọc rõ,
+   nên ở đây chỉ giữ lớp nâng sáng, bỏ vignette để không chồng tối hai lần */
+.sig-photo::after,.cine-photo::after{display:none}
+
 .s3-copy{max-width:460px}
 .s3-no{display:block;font-family:var(--util);font-size:11px;letter-spacing:.42em;
   color:var(--shu);margin-bottom:18px}
