@@ -160,6 +160,15 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
 .lead{color:var(--stone);font-size:clamp(15px,1.15vw,17px);font-weight:300}
 .shu{color:var(--shu)}
 
+/* ---------- FOCUS bàn phím ----------
+   Trang này không hề có vòng focus nào ngoài mấy ô input, nên người dùng bàn
+   phím bấm Tab là mất dấu hoàn toàn. Dùng :focus-visible (không phải :focus)
+   để chuột bấm vẫn sạch, chỉ bàn phím mới thấy vòng. Vàng --shu + viền tối
+   lót ngoài để vòng đọc được cả trên nền đen lẫn nền kem. */
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--shu);outline-offset:3px;border-radius:2px;
+  box-shadow:0 0 0 5px rgba(9,9,11,.55)}
+
 /* ---------- BUTTONS ---------- */
 .btn{position:relative;display:inline-flex;align-items:center;gap:11px;
   font-family:var(--util);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
@@ -179,9 +188,15 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
 .btn.ghost-light::before{background:var(--sumi)}
 .btn.ghost-light:hover{color:var(--paper)}
 /* nút Đặt bàn header — tinh, viền kem + chấm đỏ, đổ đầy đỏ sâu khi hover */
+/* Nút phải có NỀN RIÊNG, không được trong suốt: header chỉ có một dải scrim mờ
+   dần ở đỉnh, tới độ cao của nút thì scrim gần như hết. Khi cuộn qua khối nền
+   kem (#F7F1E1) thì chữ #F2F1ED nằm trên nền kem — tỉ lệ tương phản đo được
+   ~1.03:1, tức là nút biến mất hoàn toàn. Pill tối + blur giữ nút đọc được trên
+   MỌI phông phía sau mà không phải kẻ nguyên một thanh bar. */
 .btn.nav-book{gap:9px;padding:12px 24px;border-radius:999px;font-size:11px;letter-spacing:.22em;
-  border:1px solid rgba(236,227,208,.32);color:var(--sumi);background:transparent;
-  transition:color .5s var(--e-out),border-color .5s var(--e-out)}
+  border:1px solid rgba(236,227,208,.34);color:var(--sumi);
+  background:rgba(9,9,11,.52);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  transition:color .5s var(--e-out),border-color .5s var(--e-out),background .5s var(--e-out)}
 .btn.nav-book::before{background:var(--shu);border-radius:999px}
 .btn.nav-book .dot{width:6px;height:6px;border-radius:50%;background:var(--shu);flex:none;
   box-shadow:0 0 0 0 rgba(201,161,92,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
@@ -646,6 +661,10 @@ header.scrolled{padding:14px 0}
 .field input,.field select{height:46px}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--shu);
   background-color:rgba(236,227,208,.045)}
+/* outline:none ở trên đã bị bỏ cho mọi kiểu focus; trả lại vòng cho riêng bàn phím
+   (viền đổi màu thôi thì quá mờ để lần theo khi Tab qua 7 ô liên tiếp) */
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{
+  outline:2px solid var(--shu);outline-offset:2px}
 .field textarea{padding:11px 14px;resize:vertical}
 .field ::placeholder{color:var(--stone);opacity:1;font-weight:400}
 
