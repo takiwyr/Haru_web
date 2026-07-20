@@ -126,13 +126,15 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
 .h-xl{font-size:clamp(44px,8vw,120px);line-height:.98}
 /* RYO — tiêu đề mục = ALL-CAPS serif mảnh, giãn chữ rộng, cỡ vừa phải.
    Chữ hoa + tracking .16em nên phải hạ cỡ so với bản cũ, nếu không sẽ vỡ hàng. */
-.h-lg{font-family:var(--brush);font-weight:500;font-size:clamp(30px,3.7vw,52px);line-height:1.18;
-  letter-spacing:.16em;text-transform:uppercase}
-.h-md{font-family:var(--brush);font-weight:500;font-size:clamp(24px,2.7vw,38px);line-height:1.24;
-  letter-spacing:.18em;text-transform:uppercase}
+/* text-wrap:balance — khi không có dấu "|" chỉ định, trình duyệt tự cân độ dài các dòng
+   thay vì để một chữ lẻ rơi xuống dòng cuối (quan trọng nhất ở màn hình hẹp). */
+.h-lg{font-family:var(--brush);font-weight:500;font-size:clamp(28px,3.7vw,52px);line-height:1.18;
+  letter-spacing:.16em;text-transform:uppercase;text-wrap:balance}
+.h-md{font-family:var(--brush);font-weight:500;font-size:clamp(21px,2.7vw,38px);line-height:1.24;
+  letter-spacing:.18em;text-transform:uppercase;text-wrap:balance}
 /* tiêu đề phụ dạng câu (giữ chữ thường, nghiêng nhẹ) khi cần một dòng "thở" */
-.h-sub{font-family:var(--brush);font-weight:400;font-size:clamp(19px,2vw,27px);line-height:1.4;
-  letter-spacing:.01em;color:var(--sumi-soft)}
+.h-sub{font-family:var(--brush);font-weight:400;font-size:clamp(18px,2vw,27px);line-height:1.4;
+  letter-spacing:.01em;color:var(--sumi-soft);text-wrap:balance}
 .lead{color:var(--stone);font-size:clamp(15px,1.15vw,17px);font-weight:300}
 .shu{color:var(--shu)}
 
@@ -363,7 +365,9 @@ header.scrolled{padding:14px 0}
 .sec-head{max-width:720px;margin:0 auto clamp(64px,8vw,104px);text-align:center;position:relative;z-index:2}
 .sec-head .eyebrow{margin-bottom:28px}
 .sec-head .lead{margin-top:26px}
-.sec-head h2{margin:0 auto;max-width:14ch}
+/* bỏ giới hạn 14ch cũ — dòng nay do dấu "|" trong nội dung quyết định,
+   phần còn lại để text-wrap:balance lo, nên không cần bóp bề ngang nữa */
+.sec-head h2{margin:0 auto;max-width:none}
 /* hairline rule with a small shu knot */
 .rule{width:1px;height:56px;background:var(--line);margin:34px auto 0;position:relative;transform-origin:top}
 .rule::after{content:"";position:absolute;left:50%;bottom:-4px;width:6px;height:6px;border-radius:50%;
@@ -578,8 +582,9 @@ header.scrolled{padding:14px 0}
 /* cột trái — lời mời tối giản, thanh lịch */
 .rv-invite{max-width:640px}
 .rv-invite .eyebrow{color:var(--shu);margin-bottom:24px}
-.rv-invite h2{font-family:var(--display);font-weight:500;color:var(--sumi);
-  font-size:clamp(38px,4.6vw,62px);line-height:1.06}
+/* cùng serif Trajan-ish với các tiêu đề mục khác, cỡ vừa để 2 dòng <br> không bị vỡ tiếp */
+.rv-invite h2{font-family:var(--brush);font-weight:500;color:var(--sumi);
+  font-size:clamp(23px,2.5vw,34px);line-height:1.32;letter-spacing:.16em;text-wrap:balance}
 /* cột phải — form kính nổi trên ảnh */
 /* form = card nổi nhẹ trên nền giấy */
 .form{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
@@ -749,6 +754,14 @@ footer{background:var(--ink-block);color:#F2F0EC;padding:clamp(76px,9vw,124px) 0
 [data-reveal="down"]{transform:translateY(-40px)}
 [data-reveal="zoom"]{transform:scale(.94)}
 [data-sig-line]{opacity:0;transform:translateY(26px);will-change:transform,opacity}
+/* mỗi cụm nghĩa (phân tách bằng "|" trong nội dung) chiếm trọn một dòng */
+.reveal-line{display:block}
+/* màn hình hẹp: giãn chữ rộng làm cụm nghĩa dễ tràn sang dòng thứ hai — siết lại */
+@media (max-width:600px){
+  .h-lg{letter-spacing:.1em}
+  .h-md{letter-spacing:.11em}
+  .rv-invite h2{letter-spacing:.1em}
+}
 .reveal-word{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
 .reveal-word>span{display:inline-block;transform:translateY(110%)}
 .imgmask{position:relative;overflow:hidden}
@@ -997,7 +1010,22 @@ body::before{
 .s3-more small{font-family:var(--sans);font-size:11.5px;letter-spacing:.02em;
   text-transform:none;color:var(--stone)}
 .s3-more:hover{color:var(--sumi);border-bottom-color:var(--sumi)}
-.band.story3 .stat-row{margin-top:clamp(64px,8vw,120px)}
+/* dải số cuối Our Story — 3 cột đều nhau, vạch vàng mảnh ngăn giữa, canh giữa trang */
+.band.story3 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);
+  margin-top:clamp(64px,8vw,120px);padding-top:clamp(34px,4vw,52px);
+  border-top:1px solid var(--gold-line)}
+.band.story3 .stat{position:relative;text-align:center;padding:4px clamp(12px,2vw,28px)}
+.band.story3 .stat+.stat::before{content:"";position:absolute;left:0;top:6px;bottom:6px;
+  width:1px;background:var(--gold-line)}
+.band.story3 .stat .n{font-family:var(--brush);font-weight:500;color:var(--shu);
+  font-size:clamp(38px,4.6vw,62px);line-height:1;letter-spacing:.04em}
+.band.story3 .stat .l{font-family:var(--util);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--stone-2);margin-top:14px}
+@media (max-width:600px){
+  .band.story3 .stat-row{grid-template-columns:1fr;gap:0}
+  .band.story3 .stat{padding:22px 0}
+  .band.story3 .stat+.stat::before{left:18%;right:18%;top:0;bottom:auto;width:auto;height:1px}
+}
 @media (max-width:900px){
   .s3-item{grid-template-columns:1fr;gap:26px}
   .s3-item.reverse .s3-media{order:0}

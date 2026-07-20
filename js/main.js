@@ -179,10 +179,16 @@
       gsap.fromTo(el, from, to);
     });
 
-    /* split-text headings (word by word, preserves spaces) */
+    /* split-text headings (word by word, preserves spaces)
+       Dấu "|" trong nội dung = điểm xuống dòng do người viết chỉ định, để tiêu đề
+       luôn ngắt đúng cụm nghĩa thay vì để trình duyệt bẻ tuỳ bề rộng. Mỗi cụm thành
+       một .reveal-line (display:block); cụm nào vẫn dài quá thì mới tự wrap tiếp. */
     gsap.utils.toArray('[data-split]').forEach(h => {
-      const words = h.textContent.trim().split(/\s+/);
-      h.innerHTML = words.map(w => `<span class="reveal-word"><span>${w}</span></span>`).join(' ');
+      const lines = h.textContent.trim().split('|').map(s => s.trim()).filter(Boolean);
+      h.innerHTML = lines.map(line =>
+        `<span class="reveal-line">` +
+        line.split(/\s+/).map(w => `<span class="reveal-word"><span>${w}</span></span>`).join(' ') +
+        `</span>`).join('');
       // fromTo with explicit y:0 — gsap reads the CSS translateY(110%) as a px `y`
       // offset, so we must zero it out or yPercent stays additive on top of it
       gsap.fromTo(h.querySelectorAll('.reveal-word > span'),
