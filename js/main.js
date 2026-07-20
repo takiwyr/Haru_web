@@ -73,19 +73,40 @@
     });
   });
 
-  /* ---------- HEADER scrolled state ---------- */
+  /* ---------- HEADER: chỉ hiện ở hero, cuộn xuống thì ẩn, rê chuột lên mép trên gọi lại ----------
+     Thanh này trong suốt và nằm đè lên nội dung; qua khỏi hero thì nó chỉ còn
+     che chữ chứ không giúp gì, nên cho nó lui ra.
+     Gọi lại bằng mousemove chứ không bằng :hover trên chính header: khi đã
+     translateY(-100%) thì header nằm ngoài màn hình, không có gì để rê chuột
+     vào cả — phải nghe con trỏ tới gần MÉP TRÊN của viewport.
+     Ngưỡng ẩn lấy theo đáy hero (trừ 80px) chứ không phải một con số cứng, để
+     thanh biến mất đúng lúc rời mục 1 dù màn hình cao thấp khác nhau. */
   const header = document.getElementById('header');
-  const onScroll = () => header.classList.toggle('scrolled', scrollY > 40);
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const heroSec = document.getElementById('hero');
+  const HOVER_ZONE = 90;   // px tính từ mép trên viewport
+  let nearTop = false;
+  const syncHeader = () => {
+    const pastHero = scrollY > (heroSec ? heroSec.offsetHeight - 80 : 40);
+    header.classList.toggle('scrolled', scrollY > 40);
+    header.classList.toggle('is-hidden', pastHero && !nearTop && !drawer.classList.contains('open'));
+  };
+  addEventListener('scroll', syncHeader, { passive: true });
+  addEventListener('mousemove', (e) => {
+    const n = e.clientY <= HOVER_ZONE;
+    if (n !== nearTop) { nearTop = n; syncHeader(); }
+  }, { passive: true });
 
   /* ---------- MOBILE DRAWER ---------- */
   const burger = document.getElementById('burger');
   const drawer = document.getElementById('drawer');
-  function closeDrawer() { drawer.classList.remove('open'); burger.classList.remove('open'); }
+  // syncHeader đọc drawer nên chỉ chạy được từ đây trở đi
+  syncHeader();
+  function closeDrawer() { drawer.classList.remove('open'); burger.classList.remove('open'); syncHeader(); }
   burger.addEventListener('click', (e) => {
     e.stopPropagation();
     const open = drawer.classList.toggle('open');
     burger.classList.toggle('open', open);
+    syncHeader();
   });
   drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
   // dropdown: đóng khi bấm ra ngoài hoặc cuộn trang

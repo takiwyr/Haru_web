@@ -17,7 +17,7 @@
      unicode-range chỉ phủ CJK nên không bao giờ chạm vào chữ Việt. -->
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Yuji+Syuku&text=%E3%82%8A%E4%BA%88%E4%BA%8B%E4%BE%BF%E5%91%B3%E5%AD%97%E5%B1%B1%E6%98%A5%E6%B8%8B%E6%BC%A2%E7%89%A9%E7%A9%BA%E7%B0%A1%E7%B4%84%E7%B4%A0%E8%89%AF%E8%AA%9E%E9%96%93%E9%A3%9F%E9%A3%B2%E5%88%BA%E8%BA%AB%E5%AF%BF%E5%8F%B8%E5%A4%A9%E9%BA%A9%E7%BE%85%E9%8D%B0%E9%BA%BA%E9%A1%9E&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/graded/hero/concept-harumarch2-copy.webp" fetchpriority="high">
-<link rel="stylesheet" href="css/main.css?v=130">
+<link rel="stylesheet" href="css/main.css?v=134">
 </head>
 <body id="top">
 
@@ -84,7 +84,12 @@
   <!-- Bỏ dòng chào hiển thị để hero là ảnh thuần. Vẫn phải giữ MỘT h1 cho
        trang (SEO + trình đọc màn hình), nên chuyển thành h1 chỉ-đọc-không-thấy. -->
   <h1 class="sr-only">Haru Sushi — Mùa xuân Nhật Bản giữa lòng Sài Gòn</h1>
-  <div class="scroll-ind"><span>Cuộn</span></div>
+  <a href="#story" class="scroll-cue" aria-label="Cuộn xuống Câu chuyện Haru">
+    <svg viewBox="0 0 18 34" aria-hidden="true" focusable="false">
+      <path d="M4 4l10 8-10 8"/>
+      <path d="M4 14l10 8-10 8"/>
+    </svg>
+  </a>
 </section>
 
 <!-- ===== STORY — khối chia đôi: ảnh tối · panel giấy kem (Ryo) ===== -->
@@ -354,6 +359,6 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=26"></script>
+<script src="js/main.js?v=27"></script>
 </body>
 </html>
