@@ -116,6 +116,7 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;
+  scroll-padding-top:72px; /* anchor (#menu, #reserve…) dừng dưới header dính, không bị che */
   overflow-x:hidden; /* chặn tràn ngang do watermark 漢字 bleed ra mép — Lenis cuộn trên <html> */
   /* Nền trang: TRƯỚC là nâu ấm (#1a140e hue~30°) — cùng trục vàng với ảnh nên nó
      "đóng khung" cả trang bằng màu vàng. Nay kéo về gần đen vô sắc, chỉ chừa hơi
@@ -293,15 +294,13 @@ header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
   opacity:0;transition:opacity .5s}
 header.scrolled::before{opacity:1}
 header.scrolled{padding:14px 0}
-/* Qua khỏi hero thì thanh lui hẳn ra ngoài; rê chuột lên mép trên gọi lại (JS).
-   Chỉ áp cho thiết bị CÓ con trỏ: trên cảm ứng không có mousemove nào để gọi
-   thanh về, ẩn đi là mất luôn đường vào menu và nút Đặt bàn.
+/* Qua khỏi hero thì thanh lui hẳn ra ngoài; cuộn LÊN (hoặc rê chuột lên mép
+   trên trên desktop) gọi lại — JS quyết định bằng hướng cuộn nên chạy cả trên
+   CẢM ỨNG, không còn cảnh thanh dính đè chữ mà không có cách gọi về.
    translateY chứ không phải display/visibility để còn có đường trượt vào–ra;
    pointer-events:none cho lúc ẩn khỏi ăn cú click rơi vào vùng nó vừa rời. */
-@media (hover:hover) and (pointer:fine){
-  header{transition:padding .5s var(--e-out),transform .45s var(--e-out),opacity .35s var(--e-out)}
-  header.is-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
-}
+header{transition:padding .5s var(--e-out),transform .45s var(--e-out),opacity .35s var(--e-out)}
+header.is-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
 /* NAV 3 cột: chức năng trái · logo giữa · chức năng phải */
 .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
 .nav-side{display:flex;align-items:center;gap:18px}
@@ -1039,6 +1038,16 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
   .spanel-caption h3{white-space:normal}
 }
 @media (max-width:600px){
+  /* Header mobile: thấp lại (~58px thay vì ~90px) và — quan trọng — khi cuộn thì
+     KHÔNG để trong suốt nữa mà cho nền đặc + blur, để thanh dính không còn để
+     chữ đè xuyên qua. Ở đầu hero vẫn trong suốt (nằm trên ảnh), chỉ đặc khi
+     .scrolled. Best practice header dính trên mobile. */
+  header{padding:12px 0}
+  header.scrolled{padding:9px 0}
+  .brand img{height:44px}
+  header.scrolled::before{opacity:1;
+    background:linear-gradient(180deg, rgba(10,10,12,.94) 0%, rgba(10,10,12,.84) 66%, rgba(10,10,12,.5) 100%);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
   .nav-right .btn.nav-book{padding:10px 18px;font-size:10.5px;letter-spacing:.14em;white-space:nowrap}
   .nav-side{gap:12px}
   .brand .bt b{font-size:14px;letter-spacing:.26em}

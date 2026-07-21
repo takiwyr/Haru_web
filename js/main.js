@@ -73,22 +73,31 @@
     });
   });
 
-  /* ---------- HEADER: chỉ hiện ở hero, cuộn xuống thì ẩn, rê chuột lên mép trên gọi lại ----------
-     Thanh này trong suốt và nằm đè lên nội dung; qua khỏi hero thì nó chỉ còn
-     che chữ chứ không giúp gì, nên cho nó lui ra.
-     Gọi lại bằng mousemove chứ không bằng :hover trên chính header: khi đã
-     translateY(-100%) thì header nằm ngoài màn hình, không có gì để rê chuột
-     vào cả — phải nghe con trỏ tới gần MÉP TRÊN của viewport.
-     Ngưỡng ẩn lấy theo đáy hero (trừ 80px) chứ không phải một con số cứng, để
-     thanh biến mất đúng lúc rời mục 1 dù màn hình cao thấp khác nhau. */
+  /* ---------- HEADER: qua hero thì ẩn/hiện theo HƯỚNG CUỘN ----------
+     Chuẩn mobile: cuộn XUỐNG thì thanh lui ra nhường chỗ đọc; cuộn LÊN một chút
+     là thanh về ngay — chính cử chỉ cuộn lên là tín hiệu gọi lại (không cần
+     mousemove, nên chạy được cả trên cảm ứng: menu + Đặt bàn luôn gọi về được).
+     Trên desktop, rê chuột tới sát MÉP TRÊN cũng gọi thanh về (nearTop).
+     Ngưỡng ẩn lấy theo đáy hero (trừ 80px) để thanh chỉ bắt đầu giấu sau mục 1.
+     DIR_THRESHOLD chống rung: chỉ đổi trạng thái khi cuộn vượt ~8px. */
   const header = document.getElementById('header');
   const heroSec = document.getElementById('hero');
-  const HOVER_ZONE = 90;   // px tính từ mép trên viewport
+  const HOVER_ZONE = 90;     // px tính từ mép trên viewport (desktop)
+  const DIR_THRESHOLD = 8;   // px — lọc rung khi đổi hướng
   let nearTop = false;
+  let lastY = scrollY;
+  let hidden = false;        // trạng thái theo hướng cuộn
   const syncHeader = () => {
-    const pastHero = scrollY > (heroSec ? heroSec.offsetHeight - 80 : 40);
-    header.classList.toggle('scrolled', scrollY > 40);
-    header.classList.toggle('is-hidden', pastHero && !nearTop && !drawer.classList.contains('open'));
+    const y = scrollY;
+    header.classList.toggle('scrolled', y > 40);
+    const dy = y - lastY;
+    if (Math.abs(dy) > DIR_THRESHOLD) {
+      hidden = dy > 0;       // xuống → ẩn; lên → hiện
+      lastY = y;
+    }
+    const pastHero = y > (heroSec ? heroSec.offsetHeight - 80 : 40);
+    header.classList.toggle('is-hidden',
+      pastHero && hidden && !nearTop && !drawer.classList.contains('open'));
   };
   addEventListener('scroll', syncHeader, { passive: true });
   addEventListener('mousemove', (e) => {
