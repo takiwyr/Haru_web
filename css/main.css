@@ -727,20 +727,7 @@ header.scrolled{padding:14px 0}
 .chip:hover{border-color:var(--shu);color:var(--shu)}
 
 /* ---------- RESERVATION ---------- */
-/* ===== RESERVE — full-bleed điện ảnh, form kính nổi ===== */
-.reserve{position:relative;background:transparent;overflow:hidden}
-/* ẢNH MOODY full-bleed sau section: vườn đêm đèn lồng (lvs-a-45) — lấp trọn
-   khoảng trống nửa dưới thay vì nền đen phẳng; form nổi lên như một thẻ kính */
-.reserve::before{content:"";position:absolute;inset:0;z-index:0;
-  background:url("../assets/graded/space/lvs-a-45.webp") center/cover no-repeat}
-/* phủ tối để chữ + form nổi rõ: đậm bên TRÁI (nơi có tiêu đề) và ở mép trên/dưới,
-   nhạt dần sang phải để vẫn giữ chiều sâu ảnh phía sau thẻ kính */
-.reserve::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.82) 38%,rgba(8,8,10,.5) 100%),
-    linear-gradient(180deg,rgba(8,8,10,.9) 0%,rgba(8,8,10,.32) 26%,rgba(8,8,10,.32) 62%,rgba(8,8,10,.92) 100%)}
-/* nâng toàn bộ nội dung (nami + grid) lên trên hai lớp nền */
-.reserve>.wrap{position:relative;z-index:2}
+.reserve{position:relative;background:transparent}
 /* card form cao hơn cột chữ nên mép trên của nó chạm sát dải sóng .nami phía trên;
    các band khác có .sec-head đệm sẵn, band này thì không — nên phải tự chừa khoảng thở */
 .reserve-grid{position:relative;z-index:2;display:grid;
@@ -757,17 +744,35 @@ header.scrolled{padding:14px 0}
 /* cùng serif Trajan-ish với các tiêu đề mục khác, cỡ vừa để 2 dòng <br> không bị vỡ tiếp */
 .rv-invite h2{font-family:var(--brush);font-weight:500;color:var(--sumi);
   font-size:clamp(23px,2.5vw,34px);line-height:1.32;letter-spacing:.01em;text-wrap:balance}
-/* cột phải — form kính nổi trên ảnh */
-/* form = card nổi nhẹ trên nền giấy */
+/* câu mời ấm dưới tiêu đề — làm nhịp chuyển sang khối liên hệ */
+.rv-lead{margin-top:22px;max-width:38ch;font-family:var(--sans);font-weight:300;
+  font-size:15px;line-height:1.72;color:var(--stone)}
+/* khối liên hệ có icon dẫn (kiểu Phổ Đình): mỗi dòng = icon + nhãn nhỏ + giá trị */
+.rv-contact{list-style:none;margin:34px 0 0;padding:0;
+  display:flex;flex-direction:column;gap:20px}
+.rv-contact li{display:flex;align-items:flex-start;gap:16px}
+/* ô icon vuông bo nhẹ, đường hairline bạc như các viền khác trong trang */
+.rv-ico{flex:none;width:42px;height:42px;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:12px;color:var(--shu)}
+.rv-ico svg{width:19px;height:19px;stroke:currentColor}
+.rv-c-body{display:flex;flex-direction:column;gap:4px;padding-top:1px}
+.rv-c-label{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(236,237,238,.5)}
+.rv-c-val{font-family:var(--sans);font-size:16px;font-weight:400;color:var(--sumi);letter-spacing:.01em}
+.rv-c-val a{color:var(--sumi);transition:color .3s var(--e-out)}
+.rv-c-val a:hover{color:var(--shu)}
+.rv-sep{margin:0 9px;color:var(--stone);opacity:.6}
+/* social — vòng tròn hairline, đồng bộ với footer nhưng gọn hơn */
+.rv-socials{display:flex;gap:12px;margin-top:34px;padding-top:30px;
+  border-top:1px solid var(--line)}
+.rv-socials a{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;
+  border:1px solid var(--line);color:var(--stone);font-family:var(--util);font-size:14px;
+  transition:color .3s var(--e-out),border-color .3s var(--e-out)}
+.rv-socials a:hover{color:var(--shu);border-color:var(--shu)}
+/* cột phải — form = card nổi nhẹ trên nền giấy */
 .form{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
   padding:clamp(28px,3.2vw,44px);
   box-shadow:0 40px 90px -52px rgba(0,0,0,.85), inset 0 1px 0 rgba(236,237,238,.04)}
-/* trong section đặt bàn, form là THẺ KÍNH nổi trên ảnh: nền trong mờ + backdrop-blur.
-   Nền vẫn đủ tối (.58) để các ô nhập giữ tương phản như khi trên nền đặc */
-.reserve .form{background:rgba(16,16,20,.56);
-  backdrop-filter:blur(20px) saturate(1.15);-webkit-backdrop-filter:blur(20px) saturate(1.15);
-  border-color:rgba(242,241,237,.16);
-  box-shadow:0 50px 110px -44px rgba(0,0,0,.92), inset 0 1px 0 rgba(255,255,255,.07)}
 .form .field input,.form .field select,.form .field textarea{
   transition:background .3s var(--e-out),border-color .3s var(--e-out),box-shadow .3s var(--e-out)}
 .form .field input:focus,.form .field select:focus,.form .field textarea:focus{
