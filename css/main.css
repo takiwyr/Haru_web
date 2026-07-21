@@ -96,6 +96,13 @@
      ảnh sẽ mất luôn brightness/contrast đứng trước. saturate(1) là phép đồng
      nhất, không đổi gì cả. */
   --img-cool:saturate(1);
+  /* NÚM CHỈNH cho ẢNH KHÔNG GIAN/KIẾN TRÚC (tường, sân vườn, phông quán) — đây là
+     nơi tông tungsten hue~30° lan ra thành "cả trang ngã vàng". Chỉ hạ BÃO HOÀ
+     (không hue-rotate → không làm mái ngói thành teal / cá hồi ngả hồng như bản
+     thử cũ), cộng chút brightness bù lại độ tối do desaturate. KHÔNG áp lên ảnh
+     MÓN ĂN — món giữ nguyên độ tươi/ấm để còn thèm. Đặt cục bộ qua biến kế thừa:
+     element không gian nào set --img-cool:var(--img-cool-amb) là tự lạnh đi. */
+  --img-cool-amb:saturate(.6) brightness(1.04);
 
   --e-out:cubic-bezier(.16,1,.3,1);
   --e-io:cubic-bezier(.65,.05,.36,1);
@@ -110,10 +117,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;
   overflow-x:hidden; /* chặn tràn ngang do watermark 漢字 bleed ra mép — Lenis cuộn trên <html> */
-  /* giấy tối ám nâu ấm + vignette nhẹ — Phổ Đình */
+  /* Nền trang: TRƯỚC là nâu ấm (#1a140e hue~30°) — cùng trục vàng với ảnh nên nó
+     "đóng khung" cả trang bằng màu vàng. Nay kéo về gần đen vô sắc, chỉ chừa hơi
+     ấm cực nhẹ để không lạnh phòng thí nghiệm; vignette giữ nguyên độ sâu. */
   background:
-    radial-gradient(120% 80% at 50% 0%, #1a140e 0%, #120d09 55%, #0d0906 100%) fixed;
-  background-color:#0d0906}
+    radial-gradient(120% 80% at 50% 0%, #141316 0%, #0f0e11 55%, #0a0a0c 100%) fixed;
+  background-color:#0a0a0c}
 body{
   font-family:var(--sans); color:var(--sumi); background:transparent;
   line-height:1.72; font-weight:300; -webkit-font-smoothing:antialiased;
@@ -634,6 +643,7 @@ header.scrolled{padding:14px 0}
 .cine-pin{position:relative;height:100vh;min-height:660px;overflow:hidden;display:flex;align-items:center}
 .cine-photo{position:absolute;inset:0;z-index:0;overflow:hidden}
 .cine-photo img{width:100%;height:100%;object-fit:cover;object-position:center;
+  --img-cool:var(--img-cool-amb);   /* cảnh KHÔNG GIAN (tường bích hoạ, nội thất) — hạ ấm */
   transform:scale(1.18);will-change:transform;filter:contrast(1.02) var(--img-cool)}
 /* màn phủ: feather mép trên+dưới tan vào nền ink-block + tối trái cho chữ đọc rõ */
 .cine-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -685,6 +695,7 @@ header.scrolled{padding:14px 0}
   box-shadow:0 30px 60px -30px rgba(0,0,0,.7);
   transition:flex-grow .8s var(--e-out)}
 .spanel-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);
+  --img-cool:var(--img-cool-amb);   /* accordion KHÔNG GIAN (sân vườn, nội thất) — hạ ấm */
   filter:brightness(.8) contrast(1.06) var(--img-cool);
   transition:filter 1.1s var(--e-out),transform 1.5s var(--e-out)}
 /* quầng sáng chủ thể — chỉ bật ở panel đang mở, panel thu gọn giữ nguyên nền tối
@@ -861,7 +872,8 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 #reserve .foot-kanji{display:none}
 .fr-photo{position:absolute;inset:0;z-index:0;overflow:hidden}
 .fr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;
-  filter:brightness(1.02) contrast(1.06) saturate(1.02)}
+  /* sân vườn KHÔNG GIAN — hạ ấm cùng chuẩn ambient (trước là saturate(1.02) ngả vàng) */
+  filter:brightness(1.02) contrast(1.06) var(--img-cool-amb)}
 /* veil: tối mạnh bên TRÁI cho khối liên hệ đọc rõ, nhạt dần sang phải để giữ
    quầng đèn lồng; feather TRÊN + DƯỚI để ảnh tan vào nền ink-block (không cắt cứng,
    và chừa dải đáy tối cho dòng bản quyền). */
@@ -1475,6 +1487,7 @@ body::before{
    như một vết cắt. Cho alpha về 0 ở hai mép thì nền đen liên tục của trang chảy
    xuyên qua, không còn ranh giới nào để mắt bắt. */
 .mw-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  --img-cool:var(--img-cool-amb);   /* phông KHÔNG GIAN quán — hạ ấm; ảnh MÓN .mwp-photo giữ nguyên */
   filter:brightness(.34) contrast(1.06) var(--img-cool);
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%)}
