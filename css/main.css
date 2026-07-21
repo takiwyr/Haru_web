@@ -26,8 +26,14 @@
        sóng nami, border card, quầng sáng. Đây mới là phần chiếm diện tích lớn
        và lặp lại nhiều, để nó vô sắc thì vàng ở chữ mới nổi lên được.
      Tên biến giữ nguyên để không phải sửa 60 chỗ gọi. */
-  --shu:#D8B06A;            /* vàng đồng — CHỮ, số, kanji, CTA */
-  --shu-deep:#A08B60;       /* vàng sâu — hover / fill */
+  --shu:#C8A15E;            /* vàng đồng SÂU (antique) — CHỮ, số, kanji, CTA.
+                               Trước là #D8B06A ngả sáng/rực; hạ về đồng cổ trầm
+                               cho đúng tinh thần shibumi (渋味) — nhấn nhưng kiệm.
+                               Trên nền đen vẫn ~7.3:1, thừa chuẩn AA cho chữ nhỏ. */
+  --shu-deep:#9C8250;       /* vàng sâu — hover / fill */
+  --sakura:#C99AA0;         /* HỒNG TRO ANH ĐÀO — chỉ dùng RẤT hạn chế (~2%): một
+                               chấm sống nhỏ gợi mùa xuân. Không lên diện tích lớn,
+                               không thành tông; là dấu nhấn thứ hai sau vàng. */
   --gold-line:rgba(220,225,233,.42);  /* nét kẻ / viền — bạc trung tính */
   --gold-glow:rgba(220,225,233,.18);  /* quầng sáng quanh nét kẻ */
   --on-gold:#17120B;        /* chữ trên nền vàng đặc (không dùng #000) */
@@ -180,8 +186,13 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
    thay vì để một chữ lẻ rơi xuống dòng cuối (quan trọng nhất ở màn hình hẹp). */
 .h-lg{font-family:var(--brush);font-weight:500;font-size:clamp(28px,3.7vw,52px);line-height:1.18;
   letter-spacing:.16em;text-transform:uppercase;text-wrap:balance}
-.h-md{font-family:var(--brush);font-weight:500;font-size:clamp(21px,2.7vw,38px);line-height:1.24;
-  letter-spacing:.18em;text-transform:uppercase;text-wrap:balance}
+/* TIÊU ĐỀ MỤC — hạ MỘT bậc khỏi ALL-CAPS. Trước đây quá nhiều tầng in-hoa giãn
+   rộng (eyebrow, h-lg, h-md, số mục, nav, "xem thêm"…) khiến trang lúc nào cũng
+   như đang "nói to". Giữ eyebrow + h-lg in hoa làm nhịp trên; riêng tiêu đề mục
+   về chữ thường kiểu câu, tracking hẹp lại — serif Cormorant ở chữ thường đọc
+   thanh và "biên tập" hơn hẳn. Cỡ nhích nhẹ vì chữ thường trông nhỏ hơn chữ hoa. */
+.h-md{font-family:var(--brush);font-weight:500;font-size:clamp(23px,2.9vw,41px);line-height:1.22;
+  letter-spacing:.005em;text-transform:none;text-wrap:balance}
 /* tiêu đề phụ dạng câu (giữ chữ thường, nghiêng nhẹ) khi cần một dòng "thở" */
 .h-sub{font-family:var(--brush);font-weight:400;font-size:clamp(18px,2vw,27px);line-height:1.4;
   letter-spacing:.01em;color:var(--sumi-soft);text-wrap:balance}
@@ -192,8 +203,8 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
    Trang này không hề có vòng focus nào ngoài mấy ô input, nên người dùng bàn
    phím bấm Tab là mất dấu hoàn toàn. Dùng :focus-visible (không phải :focus)
    để chuột bấm vẫn sạch, chỉ bàn phím mới thấy vòng.
-   Vòng HAI LỚP, và KHÔNG được dùng var(--shu): accent là vàng đồng #D8B06A,
-   đặt lên khối kem #F0EFEB chỉ được ~1.9:1 — vòng gần như biến mất, đúng loại
+   Vòng HAI LỚP, và KHÔNG được dùng var(--shu): accent là vàng đồng #C8A15E,
+   đặt lên khối kem #F0EFEB còn thấp hơn ~1.9:1 — vòng gần như biến mất, đúng loại
    lỗi nút Đặt bàn đã sửa trước đây. Lớp trong sáng + lớp ngoài tối đặc:
    trên nền đen lớp sáng bắt mắt, trên nền kem lớp tối bắt mắt. Nền nào cũng
    còn ít nhất một lớp đọc được. */
@@ -231,8 +242,10 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
   background:rgba(9,9,11,.52);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   transition:color .5s var(--e-out),border-color .5s var(--e-out),background .5s var(--e-out)}
 .btn.nav-book::before{background:var(--shu);border-radius:999px}
-.btn.nav-book .dot{width:6px;height:6px;border-radius:50%;background:var(--shu);flex:none;
-  box-shadow:0 0 0 0 rgba(216,176,106,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
+/* chấm sống = SAKURA: dấu nhấn hồng anh đào duy nhất trên toàn trang, cỡ 6px —
+   đúng liều "rất hạn chế". Gợi mùa xuân (Haru) mà không phá kỷ luật đen-vàng. */
+.btn.nav-book .dot{width:6px;height:6px;border-radius:50%;background:var(--sakura);flex:none;
+  box-shadow:0 0 0 0 rgba(201,154,160,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
 .btn.nav-book:hover{color:var(--on-gold);border-color:var(--shu)}
 .btn.nav-book:hover .dot{background:var(--on-gold);box-shadow:0 0 0 4px rgba(22,17,12,.16)}
 /* Pill CTA (Đặt bàn header, gửi form) KHÔNG bỏ khung: đây là nút viên thuốc có
@@ -427,7 +440,7 @@ header.scrolled{padding:14px 0}
 .hero-plate{display:flex;align-items:center;gap:16px;margin-bottom:16px}
 .hero-plate .seal{flex:0 0 auto;width:44px;height:44px;display:grid;place-items:center;
   background:var(--shu);color:var(--on-gold);font-family:var(--mincho);font-size:22px;
-  box-shadow:0 8px 22px -8px rgba(216,176,106,.7);border-radius:3px}
+  box-shadow:0 8px 22px -8px rgba(200,161,94,.7);border-radius:3px}
 .hero .jp-greet{font-family:var(--mincho);font-size:clamp(15px,1.6vw,19px);
   color:var(--sumi-soft);letter-spacing:.3em;display:flex;align-items:center;gap:16px}
 .hero .jp-greet::before{content:"";width:44px;height:1px;background:var(--sumi-soft);opacity:.6}
@@ -731,7 +744,7 @@ header.scrolled{padding:14px 0}
 .rv-invite .eyebrow{color:var(--shu);margin-bottom:24px}
 /* cùng serif Trajan-ish với các tiêu đề mục khác, cỡ vừa để 2 dòng <br> không bị vỡ tiếp */
 .rv-invite h2{font-family:var(--brush);font-weight:500;color:var(--sumi);
-  font-size:clamp(23px,2.5vw,34px);line-height:1.32;letter-spacing:.16em;text-wrap:balance}
+  font-size:clamp(23px,2.5vw,34px);line-height:1.32;letter-spacing:.01em;text-wrap:balance}
 /* cột phải — form kính nổi trên ảnh */
 /* form = card nổi nhẹ trên nền giấy */
 .form{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
@@ -798,7 +811,7 @@ header.scrolled{padding:14px 0}
 .btn.book-submit{gap:10px;border-radius:999px;padding:16px 30px;
   border:1px solid var(--shu);color:var(--on-gold);background:var(--shu);
   overflow:hidden;isolation:isolate;font-size:11px;letter-spacing:.2em;
-  box-shadow:0 18px 40px -18px rgba(216,176,106,.8),0 0 30px -6px var(--gold-glow)}
+  box-shadow:0 18px 40px -18px rgba(200,161,94,.8),0 0 30px -6px var(--gold-glow)}
 .btn.book-submit::before{background:var(--shu-deep);border-radius:999px}
 .btn.book-submit:hover{color:var(--on-gold);border-color:var(--shu-deep)}
 .btn.book-submit .dot{width:6px;height:6px;border-radius:50%;background:var(--on-gold);flex:none;
@@ -827,7 +840,7 @@ html{scrollbar-color:#3a3a40 transparent;scrollbar-width:thin}
              0 24px 48px -20px rgba(0,0,0,.6);transition:box-shadow .6s var(--e-out)}
 .ncard:hover .ph{box-shadow:14px 14px 0 -1px var(--paper-3), 14px 14px 0 0 var(--shu-deep),
              0 30px 56px -20px rgba(0,0,0,.66)}
-.ncard .ph img{width:100%;height:100%;object-fit:cover;filter:contrast(1.02);
+.ncard .ph img{width:100%;height:100%;object-fit:cover;filter:contrast(1.02) var(--img-cool);
   transition:transform 1s var(--e-out),filter 1s var(--e-out)}
 .ncard:hover .ph img{transform:scale(1.05)}
 .ncard .body{padding:22px 2px 0}
@@ -849,7 +862,7 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
    một dải đen phẳng. Alpha thấp (~.12) nên là ÁNH SÁNG, không phải mảng vàng. */
 footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
   width:min(720px,88vw);height:min(720px,88vw);transform:translate(-50%,-30%);
-  background:radial-gradient(circle,rgba(216,176,106,.14) 0%,rgba(216,176,106,.05) 34%,transparent 66%);
+  background:radial-gradient(circle,rgba(200,161,94,.14) 0%,rgba(200,161,94,.05) 34%,transparent 66%);
   pointer-events:none;z-index:1}
 /* 春 (Haru = mùa xuân) — thủy ấn cực mờ, đồng ngôn ngữ với 物語 / 空間 ở các band
    khác. Đặt để CẢM thấy chứ không đọc; nằm dưới cùng mọi lớp. */
@@ -882,7 +895,7 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 .foot-hero::after{right:calc(-1 * clamp(24px,3.4vw,64px) / 2)}
 /* logo được đèn andon chiếu — một quầng ấm rất nhẹ ôm quanh để nó "phát sáng" */
 .foot-hero .fh-logo{width:auto;height:clamp(58px,5.6vw,74px);
-  filter:drop-shadow(0 6px 26px rgba(216,176,106,.14))}
+  filter:drop-shadow(0 6px 26px rgba(200,161,94,.14))}
 
 /* Ba dòng icon–giá trị: cột trái là icon (chi nhánh / giờ / hotline), cột phải là
    nội dung. Bỏ nhãn chữ để footer gọn và đọc bằng biểu tượng. align-items:start để
@@ -913,7 +926,7 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
   position:relative;transition:color .5s var(--e-out),border-color .5s var(--e-out),
   transform .5s var(--e-out),box-shadow .5s var(--e-out)}
 .socials a:hover{border-color:var(--shu);color:var(--shu);transform:translateY(-4px);
-  box-shadow:0 0 0 4px rgba(216,176,106,.06),0 12px 26px -12px rgba(216,176,106,.55)}
+  box-shadow:0 0 0 4px rgba(200,161,94,.06),0 12px 26px -12px rgba(200,161,94,.55)}
 
 /* thành viên của — nhãn trên, hai logo dưới thành một cụm.
    Opacity .62 trên nền đen là quá chìm để nhận ra thương hiệu; .78 vẫn giữ vai
@@ -957,8 +970,8 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 /* màn hình hẹp: giãn chữ rộng làm cụm nghĩa dễ tràn sang dòng thứ hai — siết lại */
 @media (max-width:600px){
   .h-lg{letter-spacing:.1em}
-  .h-md{letter-spacing:.11em}
-  .rv-invite h2{letter-spacing:.1em}
+  .h-md{letter-spacing:.005em}
+  .rv-invite h2{letter-spacing:.01em}
 }
 .reveal-word{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
 .reveal-word>span{display:inline-block;transform:translateY(110%)}
@@ -1098,7 +1111,7 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
    một ô chữ nhật cắt ra từ nền. */
 .kj-rod{position:absolute;left:-16px;right:-16px;height:11px;border-radius:6px;z-index:2;
   background:linear-gradient(180deg,#5A452F 0%,#2E2318 52%,#150F0A 100%);
-  box-shadow:0 8px 22px rgba(0,0,0,.6),inset 0 1px 0 rgba(216,176,106,.32)}
+  box-shadow:0 8px 22px rgba(0,0,0,.6),inset 0 1px 0 rgba(200,161,94,.32)}
 .kj-rod--top{top:-11px}
 .kj-rod--bot{bottom:-11px}
 /* Nền giấy KHÔNG phải một mảng kem phẳng: thêm một vệt ấm rất nhạt chảy từ góc
@@ -1224,7 +1237,7 @@ header.scrolled::before{
      phẳng, nhưng hai quầng vàng đồng cũ (.26/.20) chính là thứ nhuộm vàng cả
      trang. Nay: một quầng vàng NHẸ giữ chất ấm sang trọng + một quầng trắng
      trung tính lo phần "sáng", nên trang sáng lên mà không ám vàng. */
-  --glow-a:rgba(216,176,106,.13);    /* 4. Glow — vàng đồng, chỉ còn gợi ý */
+  --glow-a:rgba(200,161,94,.13);    /* 4. Glow — vàng đồng, chỉ còn gợi ý */
   --glow-b:rgba(226,228,236,.09);    /* quầng trắng trung tính — nâng sáng vô sắc */
 }
 
@@ -1350,6 +1363,16 @@ body::before{
 /* sig/cine đã có màn phủ riêng (.sig-veil/.cine-veil z:1) lo phần tối cho chữ đọc rõ,
    nên ở đây chỉ giữ lớp nâng sáng, bỏ vignette để không chồng tối hai lần */
 .sig-photo::after,.cine-photo::after{display:none}
+/* VEIL ẤM ĐỒNG BỘ CHO ẢNH NHỎ — ô menu + thẻ tin dùng CHUNG một lớp bloom ấm
+   (soft-light) rất nhạt, để cả kho ảnh đọc ra MỘT gia đình ánh sáng và trung
+   hoà nhẹ mấy sắc lạnh lẻ loi (mái ngói teal, đĩa gốm xanh). Nhạt hơn spotlight
+   story3 nhiều — đây là ảnh nhỏ, tuyệt đối không được làm bệt sáng món ăn.
+   Cần .imgmask/.mwp-photo position:relative (đã có) để phủ đúng khung. */
+.ncard .ph::before,.mwp-photo::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  mix-blend-mode:soft-light;
+  background:radial-gradient(74% 62% at 50% 42%,
+    rgba(255,243,226,.46) 0%,rgba(255,243,226,.13) 46%,transparent 76%)}
 
 .s3-copy{max-width:460px}
 .s3-no{display:block;font-family:var(--util);font-size:11px;letter-spacing:.42em;
@@ -1473,7 +1496,7 @@ body::before{
   /* tấm bảng CAO và HẸP là đặc điểm nhận dạng của bố cục này — khoá bằng
      aspect-ratio để tỉ lệ không đổi theo bề ngang màn hình */
   aspect-ratio:1/2.72;background:#050506;overflow:hidden;
-  border:1px solid rgba(216,176,106,.16);
+  border:1px solid rgba(200,161,94,.16);
   box-shadow:0 30px 60px -30px rgba(0,0,0,.9);
   transition:transform .7s var(--e-out),border-color .7s var(--e-out),box-shadow .7s var(--e-out)}
 .mw-panel:hover{transform:translateY(-10px);border-color:var(--gold-line);
