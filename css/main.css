@@ -961,16 +961,20 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 /* margin-top hạ từ clamp(60,7vw,92) xuống: hàng thông tin giờ chỉ còn ba dòng
    thay vì ba cột cao, giữ khoảng cách cũ thì dưới hotline hở ra một mảng đen
    rỗng gần bằng cả khối footer. */
+/* Thanh bản quyền nằm ĐÈ lên ảnh sân vườn tối → cho nó một bệ tối đặc (tan dần
+   từ trên xuống) để logo + chữ tách hẳn khỏi ảnh, không còn bị khuất. */
 .foot-bottom{margin-top:clamp(38px,4vw,58px);padding:24px 0;
   display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;
-  color:#78756E;font-family:var(--util);font-size:11.5px;letter-spacing:.08em;
-  position:relative;z-index:2}
+  color:#94908A;font-family:var(--util);font-size:11.5px;letter-spacing:.08em;
+  position:relative;z-index:2;
+  background:linear-gradient(180deg,transparent 0,rgba(8,8,10,.78) 40%,var(--ink-block) 100%)}
 .foot-bottom::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent 0,rgba(236,237,238,.13) 38%,rgba(236,237,238,.13) 62%,transparent 100%)}
 .foot-bottom .fb-dot{width:4px;height:4px;border-radius:50%;background:var(--shu);flex:none}
-/* logo Haru nhỏ mở đầu dòng bản quyền — giữ dấu ấn thương hiệu ở chân trang
-   sau khi bỏ logo lớn giữa footer cũ */
-.foot-bottom .fb-logo{height:24px;width:auto;opacity:.9;margin-right:4px}
+/* logo Haru mở đầu dòng bản quyền — giữ dấu ấn thương hiệu ở chân trang.
+   Phóng to + bỏ mờ + bóng đổ để không chìm vào ảnh sân vườn phía sau. */
+.foot-bottom .fb-logo{height:38px;width:auto;opacity:1;margin-right:10px;
+  filter:drop-shadow(0 2px 7px rgba(0,0,0,.85))}
 
 /* ============================================================
    REVEAL / MOTION primitives — trầm tĩnh, slide so le hai bên
