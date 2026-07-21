@@ -839,7 +839,7 @@ html{scrollbar-color:#3a3a40 transparent;scrollbar-width:thin}
    cuối trang. Thay bằng gradient tối dần từ trong suốt xuống nền footer — chân
    trang chìm xuống thay vì bị đóng khung. */
 footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,var(--ink-block) 100%);
-  color:#F2F0EC;padding:clamp(76px,9vw,124px) 0 0;position:relative;overflow:hidden}
+  color:#F2F0EC;padding:clamp(52px,6.5vw,88px) 0 0;position:relative;overflow:hidden}
 /* ANDON 行灯 — logo Haru là nguồn sáng của cả chân trang: một quầng ấm rất nhạt
    tụ quanh cột giữa, khiến footer như một góc sân đêm có đèn lồng chứ không phải
    một dải đen phẳng. Alpha thấp (~.12) nên là ÁNH SÁNG, không phải mảng vàng. */
@@ -852,39 +852,22 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 .foot-kanji{position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);
   font-family:var(--brush-jp);font-size:clamp(230px,33vw,440px);line-height:1;
   color:rgba(242,241,237,.03);pointer-events:none;user-select:none;z-index:0;white-space:nowrap}
-/* ---- KHU GỘP ĐẶT BÀN + LIÊN HỆ ----
-   Bố cục DỌC, không ép cân đều: HÀNG ĐẦU là lời mời chạy hết bề ngang, lấp
-   khoảng trống ở đỉnh footer; HÀNG DƯỚI mới chia hai cột liên hệ | form. */
-.foot-reserve{position:relative;z-index:2;
-  display:flex;flex-direction:column;gap:clamp(46px,6vw,84px)}
-
-/* HÀNG ĐẦU — tiêu đề lớn neo góc trên-trái, dùng chính khoảng trống đỉnh footer
-   thay vì để hai cột lửng lơ giữa trang. */
-.fr-head{max-width:min(680px,92%)}
-.fr-head .eyebrow{color:var(--shu);margin-bottom:clamp(16px,1.8vw,24px)}
-.fr-title{margin:0;font-family:var(--serif);font-weight:500;
-  font-size:clamp(40px,6vw,78px);line-height:1;letter-spacing:-.015em;
-  color:var(--sumi)}
-.fr-title em{font-style:italic;color:var(--shu)}
-.fr-lead{margin:clamp(18px,2vw,26px) 0 0;max-width:50ch;
-  color:var(--stone);font-family:var(--sans);font-weight:300;
-  font-size:15px;line-height:1.75}
-
-/* HÀNG DƯỚI — liên hệ (trái) + form (phải). Cùng tỉ lệ cột với section cũ nên
-   form giữ nguyên bề ngang. align-items:start: hai cột bám mép trên, không kéo dãn. */
-.fr-body{display:grid;grid-template-columns:1fr clamp(400px,42%,520px);
-  gap:clamp(40px,5vw,84px);align-items:start}
+/* ---- KHU GỘP ĐẶT BÀN + LIÊN HỆ (kiểu Phổ Đình) ----
+   TRÁI: liên hệ (nguồn thông tin duy nhất). PHẢI: form đặt bàn.
+   Giản lược, ít chữ — không thêm tiêu đề trang trí. Khắc phục mảng trống
+   ở đỉnh bằng BỐ CỤC chứ không bằng text: kéo khối lên (bớt padding trên)
+   và canh giữa theo chiều dọc để hai bên không lửng lơ lệch lên trên. */
+.foot-reserve{position:relative;z-index:2;display:grid;
+  grid-template-columns:1fr clamp(400px,42%,520px);
+  gap:clamp(40px,5vw,84px);align-items:center}
 .fr-aside{max-width:520px;display:flex;flex-direction:column}
-/* nhãn nhỏ dẫn khối liên hệ (khác eyebrow "Đặt bàn" ở hàng đầu) */
-.fr-label{font-family:var(--util);font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--stone);
-  margin-bottom:clamp(20px,2.4vw,30px)}
+.fr-aside .eyebrow{color:var(--shu);margin-bottom:clamp(24px,3vw,34px)}
 /* khối liên hệ: lưới icon | giá trị, giống foot-meta cũ nhưng thêm dòng email */
 .fr-contact{display:grid;grid-template-columns:max-content 1fr;
   column-gap:clamp(16px,1.8vw,26px);row-gap:18px;align-items:start}
-/* social + logo tập đoàn: đóng khối, ngăn bằng hairline tắt dần hai đầu.
-   margin-top:auto đẩy cụm này xuống đáy cột trái để bằng mép dưới form */
-.fr-foot{margin-top:auto;padding-top:clamp(30px,4vw,48px);
+/* social + logo tập đoàn: đóng khối liên hệ, ngăn bằng hairline tắt dần hai đầu.
+   Nằm ngay dưới khối liên hệ (bỏ ép giãn bám đáy) cho luồng tự nhiên, gọn. */
+.fr-foot{margin-top:clamp(34px,4vw,52px);padding-top:clamp(30px,4vw,48px);
   position:relative;display:flex;flex-wrap:wrap;align-items:center;
   justify-content:space-between;gap:clamp(22px,3vw,40px)}
 .fr-foot::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
@@ -983,8 +966,7 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
   .menu,.nav-right .lang{display:none}
   .burger{display:flex}.rail{display:none}
   .story-grid{grid-template-columns:1fr;gap:48px}
-  .fr-body{grid-template-columns:1fr;gap:40px}
-  .foot-reserve{gap:clamp(36px,7vw,52px)}
+  .foot-reserve{grid-template-columns:1fr;gap:clamp(36px,7vw,48px)}
   .reserve-visual{min-height:0;aspect-ratio:16/10;order:-1}
   .sig-pin{height:auto;min-height:100svh;padding:118px 0 76px}
   .sig-photo img{object-position:64% 44%}
