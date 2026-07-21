@@ -385,7 +385,9 @@
        Vùng giữa GIỮ opacity đầy (đọc rõ). Loại trừ hero & signature (đã có hiệu ứng pin riêng).
        Chỉ desktop (!isTouch) để mượt & tiết kiệm pin trên mobile. */
     if (!isTouch) {
-      gsap.utils.toArray('#menu, #spaces, #reserve, #news').forEach(sec => {
+      // #reserve giờ là footer (phần tử cuối trang) — bỏ khỏi danh sách cross-fade
+      // để chân trang không bị mờ đi khi cuộn đến đáy (không còn nội dung phía dưới)
+      gsap.utils.toArray('#menu, #spaces, #news').forEach(sec => {
         const tl = gsap.timeline({
           scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true }
         });

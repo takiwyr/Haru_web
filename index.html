@@ -17,7 +17,7 @@
      unicode-range chỉ phủ CJK nên không bao giờ chạm vào chữ Việt. -->
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Yuji+Syuku&text=%E3%82%8A%E4%BA%88%E4%BA%8B%E4%BE%BF%E5%91%B3%E5%AD%97%E5%B1%B1%E6%98%A5%E6%B8%8B%E6%BC%A2%E7%89%A9%E7%A9%BA%E7%B0%A1%E7%B4%84%E7%B4%A0%E8%89%AF%E8%AA%9E%E9%96%93%E9%A3%9F%E9%A3%B2%E5%88%BA%E8%BA%AB%E5%AF%BF%E5%8F%B8%E5%A4%A9%E9%BA%A9%E7%BE%85%E9%8D%B0%E9%BA%BA%E9%A1%9E&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/graded/hero/concept-harumarch2-copy.webp" fetchpriority="high">
-<link rel="stylesheet" href="css/main.css?v=155">
+<link rel="stylesheet" href="css/main.css?v=156">
 </head>
 <body id="top">
 
@@ -224,42 +224,90 @@
   </div>
 </section>
 <!-- ===== RESERVATION ===== -->
-<section class="band reserve" id="reserve">
-  <span class="band-kanji" aria-hidden="true">予約</span>
+<!-- ===== NEWS (washi) ===== -->
+<section class="band news" id="news">
+  <span class="band-kanji" aria-hidden="true">便り</span>
   <div class="wrap"><div class="nami" aria-hidden="true"></div>
-    <div class="reserve-grid">
-      <div class="rv-invite" data-reveal="left">
+    <div class="sec-head">
+      <span class="eyebrow center" data-reveal>Tin tức &amp; bài viết</span>
+      <h2 class="h-md" data-split>Có gì mới | tại Haru</h2>
+    </div>
+    <div class="news-cards">
+      <article class="ncard" data-reveal data-cursor>
+        <div class="ph imgmask"><img src="assets/graded/hero/concept-harumarch1-copy.webp" alt="Bàn tiệc Nhật với sashimi, tempura và lẩu bày trọn bàn tại Haru" loading="lazy" data-mask-img></div>
+        <div class="body"><div class="date">25.07.2025</div><h3>Bàn tiệc mùa hè — trọn vị Nhật Bản</h3><span class="more">Xem thêm</span></div>
+      </article>
+      <article class="ncard" data-reveal data-cursor>
+        <div class="ph imgmask"><img src="assets/graded/menu/dish-s09.webp" alt="Sashimi cá ngừ đại dương lát dày bày trên đá lạnh" loading="lazy" data-mask-img></div>
+        <div class="body"><div class="date">10.06.2025</div><h3>Bộ sưu tập sashimi mùa hè — tinh hoa biển khơi</h3><span class="more">Xem thêm</span></div>
+      </article>
+      <article class="ncard" data-reveal data-cursor>
+        <!-- ảnh lẩu Nabe THẬT (nồi gang + khay rau + cá lát nhúng) thay cho tô mì cũ:
+             tiêu đề nói "lẩu Dashi" thì ảnh phải là lẩu. Dùng bản graded cho đồng
+             tông với cả trang. Menu wall cũng dùng ảnh này ở ô Lẩu Nabe — hai mục
+             cách xa nhau nên chấp nhận trùng, đúng chủ đề quan trọng hơn. -->
+        <div class="ph imgmask"><img src="assets/graded/menu/dish-sushi-haru-34446-copy-2.webp" alt="Lẩu Nabe nồi gang cùng khay rau củ và cá lát tại Haru" loading="lazy" data-mask-img></div>
+        <div class="body"><div class="date">18.05.2025</div><h3>Lẩu Dashi trứ danh — hương vị ấm nồng của Haru</h3><span class="more">Xem thêm</span></div>
+      </article>
+    </div>
+    <div class="news-cta" data-reveal><a href="#news" class="btn ghost-light" data-cursor>Xem tất cả bài viết <span class="arw">→</span></a></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER + ĐẶT BÀN (gộp làm một khu cuối trang) ===== -->
+<!-- Trước đây giờ mở cửa / hotline xuất hiện HAI lần (section Đặt bàn và footer).
+     Nay gộp: form đặt bàn nằm luôn ở chân trang, cạnh khối liên hệ — thông tin
+     chỉ còn MỘT nguồn duy nhất bên trái, form bên phải (bố cục kiểu Phổ Đình). -->
+<footer id="reserve">
+  <span class="foot-kanji" aria-hidden="true">予約</span>
+  <div class="wrap">
+    <div class="foot-reserve">
+      <!-- TRÁI — lời mời + liên hệ (nguồn thông tin duy nhất) -->
+      <div class="fr-aside" data-reveal="left">
         <span class="eyebrow">Đặt bàn</span>
-        <h2 class="h-md">Lưu một buổi tối<br>cho riêng bạn</h2>
-        <p class="rv-lead">Để lại vài dòng, đội ngũ Haru sẽ giữ chỗ và chuẩn bị một buổi tối trọn vẹn cho bạn. Cần gấp, gọi trực tiếp — chúng tôi luôn sẵn lòng.</p>
-        <!-- Khối liên hệ kiểu Phổ Đình: mỗi dòng một icon dẫn — giờ mở cửa, hotline, email -->
-        <ul class="rv-contact">
-          <li>
-            <span class="rv-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3.2 1.9"/></svg>
-            </span>
-            <span class="rv-c-body"><span class="rv-c-label">Giờ mở cửa</span><span class="rv-c-val">10:30 – 13:30 &nbsp;·&nbsp; 16:00 – 21:30</span></span>
-          </li>
-          <li>
-            <span class="rv-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 3.5 9.1 3l1.6 4.1-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 4.1 1.6-.5 2.5a1.8 1.8 0 0 1-1.9 1.4A14.6 14.6 0 0 1 5.2 5.4 1.8 1.8 0 0 1 6.6 3.5Z"/></svg>
-            </span>
-            <span class="rv-c-body"><span class="rv-c-label">Hotline đặt bàn</span><span class="rv-c-val"><a href="tel:1900555506">1900 555 506</a><span class="rv-sep" aria-hidden="true">·</span><a href="tel:0907087779">0907 087 779</a></span></span>
-          </li>
-          <li>
-            <span class="rv-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
-            </span>
-            <span class="rv-c-body"><span class="rv-c-label">Email</span><span class="rv-c-val"><a href="mailto:datban@harusushi.vn">datban@harusushi.vn</a></span></span>
-          </li>
-        </ul>
-        <div class="rv-socials" aria-label="Mạng xã hội Haru">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="Zalo OA">OA</a>
-          <a href="#" aria-label="TikTok">♪</a>
-          <a href="#" aria-label="Instagram">◎</a>
+        <h2 class="fr-title">Lưu một buổi tối<br>cho riêng bạn</h2>
+        <p class="fr-lead">Để lại vài dòng, đội ngũ Haru sẽ giữ chỗ và chuẩn bị một buổi tối trọn vẹn cho bạn. Cần gấp, gọi trực tiếp — chúng tôi luôn sẵn lòng.</p>
+        <!-- Nhãn chữ thay bằng icon: ghim (chi nhánh), đồng hồ (giờ), điện thoại, phong bì -->
+        <div class="fr-contact">
+          <span class="fc-ico" role="img" aria-label="Chi nhánh">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.4 7-12a7 7 0 1 0-14 0c0 5.6 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+          </span>
+          <div id="footBranches"></div>
+          <span class="fc-ico" role="img" aria-label="Giờ mở cửa">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3.2 1.9"/></svg>
+          </span>
+          <span class="fc-val">10:30 – 13:30 &nbsp;·&nbsp; 16:00 – 21:30</span>
+          <span class="fc-ico" role="img" aria-label="Hotline">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5 9.1 3l1.6 4.1-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 4.1 1.6-.5 2.5a1.8 1.8 0 0 1-1.9 1.4A14.6 14.6 0 0 1 5.2 5.4 1.8 1.8 0 0 1 6.6 3.5Z"/></svg>
+          </span>
+          <span class="fc-val">
+            <a href="tel:1900555506" class="fh-num">1900 555 506</a>
+            <span class="fm-sep" aria-hidden="true">·</span>
+            <a href="tel:0907087779" class="fh-num">0907 087 779</a>
+          </span>
+          <span class="fc-ico" role="img" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          </span>
+          <span class="fc-val"><a href="mailto:datban@harusushi.vn" class="fh-num">datban@harusushi.vn</a></span>
+        </div>
+        <!-- social + logo tập đoàn: đóng khối liên hệ, ngăn bằng một hairline -->
+        <div class="fr-foot">
+          <div class="socials">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="Zalo OA">OA</a>
+            <a href="#" aria-label="TikTok">♪</a>
+            <a href="#" aria-label="Instagram">◎</a>
+          </div>
+          <div class="fm-logos">
+            <span class="fm-label">A member of</span>
+            <div class="fm-logos__row">
+              <img src="assets/logo/member-dg.webp" alt="DG Group" class="fm-logo fm-dg">
+              <img src="assets/logo/member-daebak.webp" alt="Daebak — Taste of Korea" class="fm-logo fm-daebak">
+            </div>
+          </div>
         </div>
       </div>
+      <!-- PHẢI — form đặt bàn hai bước (giữ nguyên id để JS chạy như cũ) -->
       <form class="form" id="bookingForm" data-reveal="right" novalidate>
 
         <!-- BƯỚC 1 — tìm bàn -->
@@ -307,84 +355,9 @@
       </form>
     </div>
   </div>
-</section>
-
-<!-- ===== NEWS (washi) ===== -->
-<section class="band news" id="news">
-  <span class="band-kanji" aria-hidden="true">便り</span>
-  <div class="wrap"><div class="nami" aria-hidden="true"></div>
-    <div class="sec-head">
-      <span class="eyebrow center" data-reveal>Tin tức &amp; bài viết</span>
-      <h2 class="h-md" data-split>Có gì mới | tại Haru</h2>
-    </div>
-    <div class="news-cards">
-      <article class="ncard" data-reveal data-cursor>
-        <div class="ph imgmask"><img src="assets/graded/hero/concept-harumarch1-copy.webp" alt="Bàn tiệc Nhật với sashimi, tempura và lẩu bày trọn bàn tại Haru" loading="lazy" data-mask-img></div>
-        <div class="body"><div class="date">25.07.2025</div><h3>Bàn tiệc mùa hè — trọn vị Nhật Bản</h3><span class="more">Xem thêm</span></div>
-      </article>
-      <article class="ncard" data-reveal data-cursor>
-        <div class="ph imgmask"><img src="assets/graded/menu/dish-s09.webp" alt="Sashimi cá ngừ đại dương lát dày bày trên đá lạnh" loading="lazy" data-mask-img></div>
-        <div class="body"><div class="date">10.06.2025</div><h3>Bộ sưu tập sashimi mùa hè — tinh hoa biển khơi</h3><span class="more">Xem thêm</span></div>
-      </article>
-      <article class="ncard" data-reveal data-cursor>
-        <!-- ảnh lẩu Nabe THẬT (nồi gang + khay rau + cá lát nhúng) thay cho tô mì cũ:
-             tiêu đề nói "lẩu Dashi" thì ảnh phải là lẩu. Dùng bản graded cho đồng
-             tông với cả trang. Menu wall cũng dùng ảnh này ở ô Lẩu Nabe — hai mục
-             cách xa nhau nên chấp nhận trùng, đúng chủ đề quan trọng hơn. -->
-        <div class="ph imgmask"><img src="assets/graded/menu/dish-sushi-haru-34446-copy-2.webp" alt="Lẩu Nabe nồi gang cùng khay rau củ và cá lát tại Haru" loading="lazy" data-mask-img></div>
-        <div class="body"><div class="date">18.05.2025</div><h3>Lẩu Dashi trứ danh — hương vị ấm nồng của Haru</h3><span class="more">Xem thêm</span></div>
-      </article>
-    </div>
-    <div class="news-cta" data-reveal><a href="#news" class="btn ghost-light" data-cursor>Xem tất cả bài viết <span class="arw">→</span></a></div>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer>
-  <span class="foot-kanji" aria-hidden="true">春</span>
-  <div class="wrap">
-    <!-- Ba cột kề nhau, logo Haru là trục giữa: cụm logo tập đoàn nằm bên TRÁI,
-         dữ liệu tra cứu nằm bên PHẢI, logo + social đứng chính giữa.
-         Logo ở giữa nên nó cân hai khối hai bên như cán cân. -->
-    <div class="foot-cols">
-      <div class="fm-logos foot-cols__side" data-reveal>
-        <span class="fm-label">A member of</span>
-        <div class="fm-logos__row">
-          <img src="assets/logo/member-dg.webp" alt="DG Group" class="fm-logo fm-dg">
-          <img src="assets/logo/member-daebak.webp" alt="Daebak — Taste of Korea" class="fm-logo fm-daebak">
-        </div>
-      </div>
-      <div class="foot-hero" data-reveal>
-        <img class="fh-logo" src="assets/logo/haru-lockup-white.webp" alt="Haru Sushi" width="150" height="76">
-        <div class="socials">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="Zalo OA">OA</a>
-          <a href="#" aria-label="TikTok">♪</a>
-          <a href="#" aria-label="Instagram">◎</a>
-        </div>
-      </div>
-      <div class="foot-meta foot-cols__side" data-reveal>
-        <!-- Nhãn chữ thay bằng icon: ghim (chi nhánh), đồng hồ (giờ mở cửa), điện thoại (hotline) -->
-        <span class="fc-ico" role="img" aria-label="Chi nhánh">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.4 7-12a7 7 0 1 0-14 0c0 5.6 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg>
-        </span>
-        <div id="footBranches"></div>
-        <span class="fc-ico" role="img" aria-label="Giờ mở cửa">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3.2 1.9"/></svg>
-        </span>
-        <span class="fc-val">10:30 – 13:30 &nbsp;·&nbsp; 16:00 – 21:30</span>
-        <span class="fc-ico" role="img" aria-label="Hotline">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5 9.1 3l1.6 4.1-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 4.1 1.6-.5 2.5a1.8 1.8 0 0 1-1.9 1.4A14.6 14.6 0 0 1 5.2 5.4 1.8 1.8 0 0 1 6.6 3.5Z"/></svg>
-        </span>
-        <span class="fc-val">
-          <a href="tel:1900555506" class="fh-num">1900 555 506</a>
-          <span class="fm-sep" aria-hidden="true">·</span>
-          <a href="tel:0907087779" class="fh-num">0907 087 779</a>
-        </span>
-      </div>
-    </div>
-  </div>
   <div class="foot-bottom">
+    <img class="fb-logo" src="assets/logo/haru-lockup-white.webp" alt="Haru Sushi" height="26">
+    <span class="fb-dot" aria-hidden="true"></span>
     <span>© 2026 Haru Sushi. All Rights Reserved.</span>
     <span class="fb-dot" aria-hidden="true"></span>
     <a href="#">Chính sách bảo mật</a>
@@ -398,6 +371,6 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=29"></script>
+<script src="js/main.js?v=30"></script>
 </body>
 </html>
