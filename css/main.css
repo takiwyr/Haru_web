@@ -202,31 +202,24 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
   box-shadow:0 0 0 5px rgba(9,9,11,.9)}
 
 /* ---------- BUTTONS ---------- */
-.btn{position:relative;display:inline-flex;align-items:center;gap:11px;
+/* MỌI nút khung chữ nhật = chữ in hoa + GẠCH DƯỚI, KHÔNG viền bao quanh.
+   Bỏ hẳn khung; chỉ còn một gạch chân dưới chữ (rộng đúng bằng chữ vì nút co
+   vừa nội dung). Hover: chữ + gạch chuyển vàng. */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;
   font-family:var(--util);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
-  padding:15px 30px 20px;border:1px solid rgba(242,241,237,.26);color:var(--sumi);border-radius:0;
-  background:transparent;overflow:hidden;transition:color .55s var(--e-out),border-color .55s var(--e-out);isolation:isolate}
-.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--sumi);
-  transform:translateY(101%);transition:transform .55s var(--e-out)}
-/* GẠCH CHÂN ACCENT — chi tiết chung của MỌI nút theo mẫu "VIEW MENU": khung mờ,
-   một gạch ngang sáng hơn ngay dưới chữ làm điểm nhấn. Nở nhẹ khi hover cho sống. */
-.btn::after{content:"";position:absolute;left:50%;bottom:11px;transform:translateX(-50%);
-  width:38px;height:1.5px;background:var(--sumi);
-  transition:background .55s var(--e-out),width .55s var(--e-out)}
-.btn:hover{color:var(--paper);border-color:var(--sumi)}
-.btn:hover::before{transform:translateY(0)}
-.btn:hover::after{background:var(--paper);width:54px}
+  padding:4px 1px 11px;border:0;color:var(--sumi);border-radius:0;
+  background:transparent;transition:color .5s var(--e-out)}
+.btn::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;
+  background:var(--sumi);transition:background .5s var(--e-out)}
+.btn:hover{color:var(--shu)}
+.btn:hover::after{background:var(--shu)}
 .btn .arw{transition:transform .45s var(--e-out)}
 .btn:hover .arw{transform:translateX(5px)}
-/* nút vàng đặc = điểm sáng mạnh nhất của band tối, cho thêm quầng để nó "phát" ra khỏi nền */
-.btn.solid{background:var(--shu);border-color:var(--shu);color:var(--on-gold);
-  box-shadow:0 0 34px -8px var(--gold-glow)}
-.btn.solid::before{background:var(--shu-deep)}
-.btn.solid:hover{color:var(--on-gold)}
-.btn.solid::after,.btn.solid:hover::after{background:var(--on-gold)}
-.btn.ghost-light{border-color:var(--sumi);color:var(--sumi)}
-.btn.ghost-light::before{background:var(--sumi)}
-.btn.ghost-light:hover{color:var(--paper)}
+/* nút vàng đặc (nếu dùng) — cũng bỏ khung, chỉ còn chữ + gạch vàng */
+.btn.solid{color:var(--shu)}
+.btn.solid::after{background:var(--shu)}
+.btn.solid:hover{color:var(--shu-deep)}
+.btn.solid:hover::after{background:var(--shu-deep)}
 /* nút Đặt bàn header — tinh, viền kem + chấm đỏ, đổ đầy đỏ sâu khi hover */
 /* Nút phải có NỀN RIÊNG, không được trong suốt: header chỉ có một dải scrim mờ
    dần ở đỉnh, tới độ cao của nút thì scrim gần như hết. Khi cuộn qua khối nền
@@ -234,7 +227,7 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
    ~1.03:1, tức là nút biến mất hoàn toàn. Pill tối + blur giữ nút đọc được trên
    MỌI phông phía sau mà không phải kẻ nguyên một thanh bar. */
 .btn.nav-book{gap:9px;padding:12px 24px;border-radius:999px;font-size:11px;letter-spacing:.22em;
-  border:1px solid rgba(236,237,238,.34);color:var(--sumi);
+  border:1px solid rgba(236,237,238,.34);color:var(--sumi);overflow:hidden;isolation:isolate;
   background:rgba(9,9,11,.52);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   transition:color .5s var(--e-out),border-color .5s var(--e-out),background .5s var(--e-out)}
 .btn.nav-book::before{background:var(--shu);border-radius:999px}
@@ -242,8 +235,12 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;letter-spac
   box-shadow:0 0 0 0 rgba(216,176,106,.55);transition:background .5s var(--e-out),box-shadow .6s var(--e-out)}
 .btn.nav-book:hover{color:var(--on-gold);border-color:var(--shu)}
 .btn.nav-book:hover .dot{background:var(--on-gold);box-shadow:0 0 0 4px rgba(22,17,12,.16)}
-/* Pill CTA (Đặt bàn header, gửi form) giữ hình viên thuốc + chấm — KHÔNG gạch chân,
-   vì gạch chân là ngôn ngữ của nút khung chữ nhật; ép lên pill sẽ rối. */
+/* Pill CTA (Đặt bàn header, gửi form) KHÔNG bỏ khung: đây là nút viên thuốc có
+   nền riêng để đọc được trên mọi phông (xem ghi chú tương phản ở trên). Chúng tự
+   dựng lớp đổ đầy ::before (base không còn ::before nữa) và TẮT gạch chân. */
+.btn.nav-book::before,.btn.book-submit::before{content:"";position:absolute;inset:0;z-index:-1;
+  transform:translateY(101%);transition:transform .55s var(--e-out)}
+.btn.nav-book:hover::before,.btn.book-submit:hover::before{transform:translateY(0)}
 .btn.nav-book::after,.btn.book-submit::after{display:none}
 
 
@@ -800,7 +797,7 @@ header.scrolled{padding:14px 0}
 /* nút Xác nhận — đỏ đặc, CTA dứt khoát; đậm màu hơn khi hover */
 .btn.book-submit{gap:10px;border-radius:999px;padding:16px 30px;
   border:1px solid var(--shu);color:var(--on-gold);background:var(--shu);
-  font-size:11px;letter-spacing:.2em;
+  overflow:hidden;isolation:isolate;font-size:11px;letter-spacing:.2em;
   box-shadow:0 18px 40px -18px rgba(216,176,106,.8),0 0 30px -6px var(--gold-glow)}
 .btn.book-submit::before{background:var(--shu-deep);border-radius:999px}
 .btn.book-submit:hover{color:var(--on-gold);border-color:var(--shu-deep)}
@@ -1150,12 +1147,11 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 .kj-paper .h-sub{color:var(--gold-ink);font-style:italic;margin-bottom:26px}
 .kj-paper h2+p,.kj-paper .h-sub+p{margin-top:0}
 .kj-paper .h-md{margin-bottom:22px}
-/* nút trên nền kem — đảo tông so với bản nền tối */
-.kj-paper .btn,.kj-paper .btn.ghost-light{border-color:rgba(22,19,14,.38);color:var(--ink)}
-.kj-paper .btn::before,.kj-paper .btn.ghost-light::before{background:var(--ink)}
-.kj-paper .btn::after{background:var(--ink)}
-.kj-paper .btn:hover,.kj-paper .btn.ghost-light:hover{color:var(--cream)}
-.kj-paper .btn:hover::after{background:var(--cream)}
+/* nút trên nền kem — chữ mực + gạch mực, hover chuyển vàng sâu (đọc rõ trên kem) */
+.kj-paper .btn,.kj-paper .btn.ghost-light{color:var(--ink)}
+.kj-paper .btn::after,.kj-paper .btn.ghost-light::after{background:var(--ink)}
+.kj-paper .btn:hover,.kj-paper .btn.ghost-light:hover{color:var(--shu-deep)}
+.kj-paper .btn:hover::after,.kj-paper .btn.ghost-light:hover::after{background:var(--shu-deep)}
 .kj-paper .btn{margin-top:14px}
 
 /* ---- NÉT SÓNG VÀNG (nami) — dải phân cách thay diềm ngói ---- */
