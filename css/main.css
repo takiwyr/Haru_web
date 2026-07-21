@@ -1299,11 +1299,34 @@ body::before{
    — khoảng trắng hai bên chữ phình ra rất rõ. Khung ngang hơn vừa rút ~130px
    chiều cao vừa hợp tông điện ảnh của trang. Cùng với margin giữa các khối và
    dải số cuối mục, tổng cắt ~250px mà không bỏ bớt nội dung nào. */
-.s3-media{position:relative;overflow:hidden;border-radius:2px;background:var(--ink-block);
+.s3-media{position:relative;overflow:hidden;background:var(--ink-block);
   aspect-ratio:3/2}
 .s3-media img{width:100%;height:100%;object-fit:cover;
   /* ảnh là mảng sáng lớn nhất của band tối — không dìm nữa, chỉ tăng độ tương phản */
   filter:contrast(1.02) var(--img-cool)}
+/* ------------------------------------------------------------------
+   TAN MÉP: xoá viền chữ nhật cứng để ảnh hoà thẳng vào nền tối.
+   Mask = giao (intersect) của hai gradient:
+     · dọc: mờ dần mép TRÊN và DƯỚI
+     · ngang: chỉ mờ mép TRONG (phía chữ) — GIỮ NGUYÊN mép tràn ra lề màn
+       (mép đó nằm ngay biên màn hình nên vốn không lộ viền).
+   --f-v mép trên/dưới · --f-in mép trong. Đảo hướng ngang cho khối .reverse. */
+.s3-media{
+  --f-v:15%;--f-in:26%;
+  -webkit-mask-image:
+    linear-gradient(to bottom,transparent 0,#000 var(--f-v),#000 calc(100% - var(--f-v)),transparent 100%),
+    linear-gradient(to right,#000 calc(100% - var(--f-in)),transparent 100%);
+  mask-image:
+    linear-gradient(to bottom,transparent 0,#000 var(--f-v),#000 calc(100% - var(--f-v)),transparent 100%),
+    linear-gradient(to right,#000 calc(100% - var(--f-in)),transparent 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect}
+.s3-item.reverse .s3-media{
+  -webkit-mask-image:
+    linear-gradient(to bottom,transparent 0,#000 var(--f-v),#000 calc(100% - var(--f-v)),transparent 100%),
+    linear-gradient(to right,transparent 0,#000 var(--f-in));
+  mask-image:
+    linear-gradient(to bottom,transparent 0,#000 var(--f-v),#000 calc(100% - var(--f-v)),transparent 100%),
+    linear-gradient(to right,transparent 0,#000 var(--f-in))}
 /* ============================================================
    ĐIỂM SÁNG TRONG ẢNH (spotlight)
    Trước đây mỗi bức ảnh sáng đều một mức nên trên nền tối cả bức
@@ -1351,7 +1374,14 @@ body::before{
   .s3-item.reverse .s3-media{order:0}
   .s3-item.reverse .s3-copy{order:0}
   .s3-copy{max-width:none}
-  .s3-media{aspect-ratio:4/3}
+  /* mobile không tràn viền -> tan đều CẢ BỐN mép cho hết viền hai bên */
+  .s3-media,.s3-item.reverse .s3-media{aspect-ratio:4/3;
+    -webkit-mask-image:
+      linear-gradient(to bottom,transparent 0,#000 var(--f-v),#000 calc(100% - var(--f-v)),transparent 100%),
+      linear-gradient(to right,transparent 0,#000 var(--f-in),#000 calc(100% - var(--f-in)),transparent 100%);
+    mask-image:
+      linear-gradient(to bottom,transparent 0,#000 var(--f-v),#000 calc(100% - var(--f-v)),transparent 100%),
+      linear-gradient(to right,transparent 0,#000 var(--f-in),#000 calc(100% - var(--f-in)),transparent 100%)}
 }
 
 /* ============================================================
