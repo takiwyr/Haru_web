@@ -1267,11 +1267,33 @@ body::before{
    OUR STORY — 3 khối ảnh so le đánh số (theo web.pdf)
    ============================================================ */
 /* bỏ override padding: .band đã về đúng nhịp 150 chung cho cả trang */
+/* ------------------------------------------------------------------
+   BẤT ĐỐI XỨNG: mỗi khối tràn ảnh ra SÁT MÉP màn hình, so le trái/phải.
+   Khối 01 ảnh dính lề trái, chữ dồn sang phải; 02 đảo lại; 03 như 01.
+   Kỹ thuật tràn viền: margin-inline âm calc(50% - 50vw) trên con của .wrap
+   (vốn margin:0 auto) kéo mép ra đúng x=0 của màn, dùng width tự nhiên của
+   block nên KHÔNG dính lỗi tràn ngang do thanh cuộn như width:100vw.
+   --edge = mép nội dung .wrap tới mép màn, để CHỮ vẫn thẳng hàng cột .wrap.
+   Ảnh trượt vào từ mép + chữ trôi cùng chiều: do JS (scrub) đảm nhiệm. */
+.story3{--edge:max(var(--gutter),calc((100vw - var(--maxw))/2 + var(--gutter)))}
 .s3-item{
-  display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
-  gap:clamp(28px,5vw,88px);margin-top:clamp(44px,5vw,80px);
+  margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+  display:grid;grid-template-columns:minmax(0,46vw) minmax(0,1fr);align-items:center;
+  gap:clamp(30px,4vw,76px);padding-right:var(--edge);
+  margin-top:clamp(64px,8vw,120px);
+}
+.s3-item.reverse{
+  grid-template-columns:minmax(0,1fr) minmax(0,46vw);
+  padding-left:var(--edge);padding-right:0;
 }
 .s3-item.reverse .s3-media{order:2}
+.s3-item.reverse .s3-copy{order:1}
+/* ẩn trước cho hiệu ứng trượt — chỉ desktop có hover mới chạy JS; các trường hợp
+   JS bỏ qua (mobile <900, cảm ứng, giảm chuyển động) thì hiện sẵn để không mất chữ */
+.s3-media,.s3-copy{opacity:0}
+@media (max-width:900px),(hover:none),(prefers-reduced-motion:reduce){
+  .s3-media,.s3-copy{opacity:1!important}
+}
 /* 3/2 chứ không phải 4/3: Our Story đo được 2267px, gần gấp đôi mọi mục khác
    (menu 1361 · news 1204 · drinks 1003) trong khi lượng chữ mỗi khối chỉ ~3 dòng
    — khoảng trắng hai bên chữ phình ra rất rõ. Khung ngang hơn vừa rút ~130px
@@ -1321,9 +1343,15 @@ body::before{
   text-transform:none;color:var(--stone)}
 .s3-more:hover{color:var(--sumi);border-bottom-color:var(--sumi)}
 @media (max-width:900px){
-  .s3-item{grid-template-columns:1fr;gap:26px}
+  /* mobile: gỡ tràn viền, về một cột trong .wrap cho an toàn/gọn */
+  .s3-item{grid-template-columns:1fr;gap:26px;
+    margin-left:0;margin-right:0;padding-left:0;padding-right:0;
+    margin-top:clamp(48px,10vw,72px)}
+  .s3-item.reverse{grid-template-columns:1fr;padding-left:0;padding-right:0}
   .s3-item.reverse .s3-media{order:0}
+  .s3-item.reverse .s3-copy{order:0}
   .s3-copy{max-width:none}
+  .s3-media{aspect-ratio:4/3}
 }
 
 /* ============================================================

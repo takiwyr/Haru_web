@@ -228,6 +228,31 @@
         .to(img, { scale: 1, duration: 1.5, ease: 'power3.out' }, 0);
     });
 
+    /* ---- BA ĐIỀU (Our Story): trượt bất đối xứng theo cuộn ----
+       Ảnh tràn mép trượt vào từ phía mép của nó, chữ trôi CÙNG chiều rồi lắng lại
+       (ảnh đi xa hơn chữ → sinh chiều sâu). Khối .reverse đảo hướng. Chỉ desktop;
+       mobile/cảm ứng/giảm-chuyển-động đã được CSS hiện sẵn (opacity:1). */
+    if (!isTouch) {
+      gsap.utils.toArray('.story3 .s3-item').forEach(item => {
+        const media = item.querySelector('.s3-media');
+        const img   = media && media.querySelector('img');
+        const copy  = item.querySelector('.s3-copy');
+        const rev   = item.classList.contains('reverse');
+        if (media) gsap.fromTo(media,
+          { xPercent: rev ? 18 : -18, opacity: 0 },
+          { xPercent: 0, opacity: 1, ease: 'none',
+            scrollTrigger: { trigger: item, start: 'top 90%', end: 'top 46%', scrub: 0.6 } });
+        if (img) gsap.fromTo(img,
+          { scale: 1.12 },
+          { scale: 1, ease: 'none',
+            scrollTrigger: { trigger: item, start: 'top 90%', end: 'top 30%', scrub: 0.6 } });
+        if (copy) gsap.fromTo(copy,
+          { x: rev ? 64 : -64, opacity: 0 },
+          { x: 0, opacity: 1, ease: 'none',
+            scrollTrigger: { trigger: item, start: 'top 84%', end: 'top 50%', scrub: 0.6 } });
+      });
+    }
+
     /* rule scale */
     gsap.utils.toArray('.rule').forEach(r => {
       gsap.from(r, { scaleX: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: r, start: 'top 90%' } });
