@@ -728,7 +728,19 @@ header.scrolled{padding:14px 0}
 
 /* ---------- RESERVATION ---------- */
 /* ===== RESERVE — full-bleed điện ảnh, form kính nổi ===== */
-.reserve{position:relative;background:transparent}
+.reserve{position:relative;background:transparent;overflow:hidden}
+/* ẢNH MOODY full-bleed sau section: vườn đêm đèn lồng (lvs-a-45) — lấp trọn
+   khoảng trống nửa dưới thay vì nền đen phẳng; form nổi lên như một thẻ kính */
+.reserve::before{content:"";position:absolute;inset:0;z-index:0;
+  background:url("../assets/graded/space/lvs-a-45.webp") center/cover no-repeat}
+/* phủ tối để chữ + form nổi rõ: đậm bên TRÁI (nơi có tiêu đề) và ở mép trên/dưới,
+   nhạt dần sang phải để vẫn giữ chiều sâu ảnh phía sau thẻ kính */
+.reserve::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.82) 38%,rgba(8,8,10,.5) 100%),
+    linear-gradient(180deg,rgba(8,8,10,.9) 0%,rgba(8,8,10,.32) 26%,rgba(8,8,10,.32) 62%,rgba(8,8,10,.92) 100%)}
+/* nâng toàn bộ nội dung (nami + grid) lên trên hai lớp nền */
+.reserve>.wrap{position:relative;z-index:2}
 /* card form cao hơn cột chữ nên mép trên của nó chạm sát dải sóng .nami phía trên;
    các band khác có .sec-head đệm sẵn, band này thì không — nên phải tự chừa khoảng thở */
 .reserve-grid{position:relative;z-index:2;display:grid;
@@ -750,6 +762,12 @@ header.scrolled{padding:14px 0}
 .form{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
   padding:clamp(28px,3.2vw,44px);
   box-shadow:0 40px 90px -52px rgba(0,0,0,.85), inset 0 1px 0 rgba(236,237,238,.04)}
+/* trong section đặt bàn, form là THẺ KÍNH nổi trên ảnh: nền trong mờ + backdrop-blur.
+   Nền vẫn đủ tối (.58) để các ô nhập giữ tương phản như khi trên nền đặc */
+.reserve .form{background:rgba(16,16,20,.56);
+  backdrop-filter:blur(20px) saturate(1.15);-webkit-backdrop-filter:blur(20px) saturate(1.15);
+  border-color:rgba(242,241,237,.16);
+  box-shadow:0 50px 110px -44px rgba(0,0,0,.92), inset 0 1px 0 rgba(255,255,255,.07)}
 .form .field input,.form .field select,.form .field textarea{
   transition:background .3s var(--e-out),border-color .3s var(--e-out),box-shadow .3s var(--e-out)}
 .form .field input:focus,.form .field select:focus,.form .field textarea:focus{
