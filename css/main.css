@@ -852,17 +852,33 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 .foot-kanji{position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);
   font-family:var(--brush-jp);font-size:clamp(230px,33vw,440px);line-height:1;
   color:rgba(242,241,237,.03);pointer-events:none;user-select:none;z-index:0;white-space:nowrap}
-/* ---- KHU GỘP ĐẶT BÀN + LIÊN HỆ (kiểu Phổ Đình) ----
-   TRÁI: lời mời + liên hệ (nguồn thông tin duy nhất). PHẢI: form đặt bàn.
-   Cùng tỉ lệ cột với section Đặt bàn cũ để form giữ nguyên bề ngang. */
-.foot-reserve{position:relative;z-index:2;display:grid;
-  grid-template-columns:1fr clamp(400px,42%,520px);
-  gap:clamp(40px,5vw,84px);align-items:stretch}
-/* cột trái là flex dọc để đẩy social/logo bám ĐÁY, khớp mép dưới form bên phải */
+/* ---- KHU GỘP ĐẶT BÀN + LIÊN HỆ ----
+   Bố cục DỌC, không ép cân đều: HÀNG ĐẦU là lời mời chạy hết bề ngang, lấp
+   khoảng trống ở đỉnh footer; HÀNG DƯỚI mới chia hai cột liên hệ | form. */
+.foot-reserve{position:relative;z-index:2;
+  display:flex;flex-direction:column;gap:clamp(46px,6vw,84px)}
+
+/* HÀNG ĐẦU — tiêu đề lớn neo góc trên-trái, dùng chính khoảng trống đỉnh footer
+   thay vì để hai cột lửng lơ giữa trang. */
+.fr-head{max-width:min(680px,92%)}
+.fr-head .eyebrow{color:var(--shu);margin-bottom:clamp(16px,1.8vw,24px)}
+.fr-title{margin:0;font-family:var(--serif);font-weight:500;
+  font-size:clamp(40px,6vw,78px);line-height:1;letter-spacing:-.015em;
+  color:var(--sumi)}
+.fr-title em{font-style:italic;color:var(--shu)}
+.fr-lead{margin:clamp(18px,2vw,26px) 0 0;max-width:50ch;
+  color:var(--stone);font-family:var(--sans);font-weight:300;
+  font-size:15px;line-height:1.75}
+
+/* HÀNG DƯỚI — liên hệ (trái) + form (phải). Cùng tỉ lệ cột với section cũ nên
+   form giữ nguyên bề ngang. align-items:start: hai cột bám mép trên, không kéo dãn. */
+.fr-body{display:grid;grid-template-columns:1fr clamp(400px,42%,520px);
+  gap:clamp(40px,5vw,84px);align-items:start}
 .fr-aside{max-width:520px;display:flex;flex-direction:column}
-/* Bỏ tiêu đề brush + đoạn mô tả (trang trí, chiếm chỗ) — cột trái nay là khối
-   liên hệ gọn: một nhãn nhỏ dẫn, rồi lưới icon | giá trị. */
-.fr-aside .eyebrow{color:var(--shu);margin-bottom:clamp(24px,3vw,34px)}
+/* nhãn nhỏ dẫn khối liên hệ (khác eyebrow "Đặt bàn" ở hàng đầu) */
+.fr-label{font-family:var(--util);font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--stone);
+  margin-bottom:clamp(20px,2.4vw,30px)}
 /* khối liên hệ: lưới icon | giá trị, giống foot-meta cũ nhưng thêm dòng email */
 .fr-contact{display:grid;grid-template-columns:max-content 1fr;
   column-gap:clamp(16px,1.8vw,26px);row-gap:18px;align-items:start}
@@ -966,8 +982,9 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 @media (max-width:900px){
   .menu,.nav-right .lang{display:none}
   .burger{display:flex}.rail{display:none}
-  .story-grid,.foot-reserve{grid-template-columns:1fr;gap:48px}
-  .foot-reserve{gap:40px}
+  .story-grid{grid-template-columns:1fr;gap:48px}
+  .fr-body{grid-template-columns:1fr;gap:40px}
+  .foot-reserve{gap:clamp(36px,7vw,52px)}
   .reserve-visual{min-height:0;aspect-ratio:16/10;order:-1}
   .sig-pin{height:auto;min-height:100svh;padding:118px 0 76px}
   .sig-photo img{object-position:64% 44%}
