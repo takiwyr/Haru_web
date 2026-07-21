@@ -836,40 +836,31 @@ html{scrollbar-color:#3a3a40 transparent;scrollbar-width:thin}
    trang chìm xuống thay vì bị đóng khung. */
 footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,var(--ink-block) 100%);
   color:#F2F0EC;padding:clamp(76px,9vw,124px) 0 0;position:relative}
-/* ---- KHỐI THƯƠNG HIỆU CANH GIỮA ----
-   Bản cũ là lưới ba cột 1.7fr/1fr/1.05fr, logo nằm góc trên-trái cùng ô với
-   tagline, social và cụm logo tập đoàn — bốn thứ khác vai xếp chồng trong một
-   cột, nên cột trái nặng gấp đôi hai cột kia và cả footer đổ về một bên.
-   Tách ra: danh tính (logo + tagline + social) lên giữa, dữ liệu tra cứu xuống
-   dưới. Logo là thứ DUY NHẤT ở trục giữa nên nó tự thành điểm neo. */
+/* ---- FOOTER BA CỘT, LOGO LÀ TRỤC GIỮA ----
+   grid-template-columns:1fr auto 1fr — cột giữa ôm sát logo, hai cột 1fr hai bên
+   chia đều phần còn lại nên logo luôn nằm ĐÚNG chính giữa .wrap bất kể hai khối
+   hai bên rộng hẹp khác nhau. align-items:center để cụm logo tập đoàn (trái) và
+   khối thông tin (phải) cân theo logo như hai đĩa cân. */
+.foot-cols{position:relative;z-index:2;display:grid;
+  grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:clamp(24px,3.4vw,64px)}
+/* khối trái ép sát mép trái, khối phải ép sát mép phải — "nằm bên trái và bên
+   phải của logo" đúng nghĩa, không dồn cả hai về giữa cạnh logo */
+.foot-cols>.fm-logos{justify-self:start}
+.foot-cols>.foot-meta{justify-self:end}
+
 .foot-hero{display:flex;flex-direction:column;align-items:center;text-align:center;
-  gap:18px;position:relative;z-index:2}
-.foot-hero .fh-logo{width:auto;height:clamp(60px,6vw,78px)}
-.foot-hero .fh-tag{color:#A19E96;font-size:14px;line-height:1.7;max-width:420px;
+  gap:16px}
+.foot-hero .fh-logo{width:auto;height:clamp(58px,5.6vw,74px)}
+.foot-hero .fh-tag{color:#A19E96;font-size:13.5px;line-height:1.7;max-width:280px;
   font-family:var(--sans);font-weight:300;margin:0}
 
-/* ---- HÀNG THÔNG TIN ----
-   Vạch ngăn là gradient tắt dần về hai đầu chứ không phải hairline chạy hết bề
-   ngang — cùng cách đã dùng ở .foot-bottom, và cùng lý do: tách được hai khối
-   mà không kẻ một đường thẳng qua trang. */
-.foot-info{position:relative;z-index:2;display:flex;align-items:flex-start;
-  justify-content:space-between;gap:clamp(32px,5vw,90px);flex-wrap:wrap;
-  margin-top:clamp(44px,4.8vw,68px);padding-top:clamp(40px,4.4vw,60px)}
-.foot-info::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent 0,rgba(236,237,238,.12) 30%,rgba(236,237,238,.12) 70%,transparent 100%)}
-
 /* Ba dòng nhãn–giá trị dùng CHUNG một cột nhãn: mắt bám vào một mép trái duy
-   nhất rồi quét ngang, gọn hơn hẳn ba khối rời phải nhảy qua nhảy lại. */
-/* flex-basis phải là 0, KHÔNG phải auto. Flexbox quyết định xuống dòng dựa trên
-   basis chứ không dựa trên kích thước sau khi co: với basis auto thì bề ngang tự
-   nhiên của dòng chi nhánh (760px) cộng cụm logo (336) cộng gap (72) = 1168 >
-   1096 của .wrap, thế là cả khối meta bị đẩy xuống hàng dưới và chừa một mảng đen
-   rỗng giữa footer — co lại không cứu được vì lúc đó đã wrap rồi. Basis 0 thì nó
-   nhận phần còn thừa, dòng chi nhánh tự xuống hàng bên trong. */
-.fm-logos{flex:none}
-.foot-meta{flex:1 1 0;min-width:0;max-width:760px;
+   nhất rồi quét ngang. max-width để dòng chi nhánh dài tự xuống hai hàng thay vì
+   kéo cả khối phải rộng ra, đẩy logo lệch trái. */
+.foot-meta{max-width:440px;
   display:grid;grid-template-columns:max-content 1fr;
-  column-gap:clamp(20px,2.6vw,44px);row-gap:14px;align-items:baseline}
+  column-gap:clamp(18px,2vw,36px);row-gap:13px;align-items:baseline}
 .fc-label{display:block;font-family:var(--util);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:#78756E;margin-bottom:8px}
 .foot-meta .fc-label{margin-bottom:0;line-height:1.6}
@@ -895,15 +886,11 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   transition:.45s var(--e-out)}
 .socials a:hover{border-color:var(--shu);color:var(--on-gold);background:var(--shu);transform:translateY(-4px)}
 
-/* thành viên của — dải logo hệ thống, kiểu Phổ Đình */
-/* gap 60px giữa hai logo đo ra rộng hơn cả bề ngang một logo — hai dấu hiệu thuộc
-   CÙNG một tập đoàn mà bị tách ra như hai mục rời. Siết lại còn ~36px cho chúng
-   đọc thành một cụm. Opacity .62 trên nền đen là quá chìm để nhận ra thương hiệu;
-   .78 vẫn giữ vai trò phụ mà không mờ tịt. */
-/* row-gap:0 — .fm-label là flex item width:100% nên nó tự xuống dòng riêng, và
-   gap của flex áp cho CẢ khe dọc: nhãn bị đẩy cách cụm logo thêm đúng bằng gap
-   ngang (đo được ~60px). Khoảng cách nhãn→logo để margin-bottom của .fm-label lo. */
-.fm-logos{display:flex;align-items:center;column-gap:clamp(22px,2.4vw,36px);row-gap:0;flex-wrap:wrap}
+/* thành viên của — nhãn trên, hai logo dưới thành một cụm.
+   Opacity .62 trên nền đen là quá chìm để nhận ra thương hiệu; .78 vẫn giữ vai
+   trò phụ mà không mờ tịt. */
+.fm-logos{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.fm-logos__row{display:flex;align-items:center;column-gap:clamp(18px,2vw,32px)}
 .fm-logo{width:auto;opacity:.78;transition:opacity .45s var(--e-out),transform .45s var(--e-out)}
 .fm-logo:hover{opacity:1;transform:translateY(-3px)}
 /* DG là công ty mẹ, Daebak là thương hiệu anh em — trước đây Daebak lại cao hơn
@@ -996,13 +983,15 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   .fgrid{grid-template-columns:1fr}
   .frow-3{grid-template-columns:1fr 1fr}
   .frow-3 .field:first-child{grid-column:1/-1}
-  /* Hẹp thì hàng thông tin dựng đứng và canh giữa theo khối logo phía trên —
-     để lệch trái một mình giữa màn hẹp thì nó đọc ra như bị rơi ra khỏi bố cục.
-     Cột nhãn bỏ luôn: 'Chi nhánh' + năm cái tên trên một dòng ngang 400px là
-     không đủ chỗ, nên nhãn về lại nằm trên giá trị. */
-  .foot-info{flex-direction:column;align-items:center;text-align:center;gap:34px}
-  .fm-logos{justify-content:center}
-  .foot-meta{grid-template-columns:1fr;row-gap:6px;justify-items:center}
+  /* Hẹp thì ba cột không đủ chỗ đứng cạnh nhau — dựng đứng lại: logo lên đầu
+     (order -1), rồi cụm logo tập đoàn, rồi thông tin, tất cả canh giữa. Cột nhãn
+     bỏ luôn: 'Chi nhánh' + năm cái tên trên một dòng ngang 400px là không đủ
+     chỗ, nên nhãn về lại nằm trên giá trị. */
+  .foot-cols{grid-template-columns:1fr;justify-items:center;gap:38px}
+  .foot-cols>.fm-logos,.foot-cols>.foot-meta{justify-self:center}
+  .foot-hero{order:-1}
+  .fm-logos{align-items:center}
+  .foot-meta{max-width:none;grid-template-columns:1fr;row-gap:6px;justify-items:center;text-align:center}
   .foot-meta .fc-label{margin-top:14px}
   .foot-meta .fc-label:first-child{margin-top:0}
   #footBranches{justify-content:center}
@@ -1343,8 +1332,8 @@ body::before{
 .bk-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
 
 /* footer: nhãn "A member of" + link chính sách ở dải đáy */
-.fm-label{display:block;width:100%;font-family:var(--util);font-size:9.5px;
-  letter-spacing:.3em;text-transform:uppercase;color:var(--stone-2);margin-bottom:12px}
+.fm-label{display:block;font-family:var(--util);font-size:9.5px;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--stone-2)}
 .foot-bottom a{color:inherit;border-bottom:1px solid transparent;transition:.3s var(--e-out)}
 .foot-bottom a:hover{color:var(--shu);border-bottom-color:var(--gold-line)}
 
