@@ -850,34 +850,29 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
 .foot-cols>.foot-meta{justify-self:end}
 
 .foot-hero{display:flex;flex-direction:column;align-items:center;text-align:center;
-  gap:16px}
+  gap:18px}
 .foot-hero .fh-logo{width:auto;height:clamp(58px,5.6vw,74px)}
-.foot-hero .fh-tag{color:#A19E96;font-size:13.5px;line-height:1.7;max-width:280px;
-  font-family:var(--sans);font-weight:300;margin:0}
 
-/* Ba dòng nhãn–giá trị dùng CHUNG một cột nhãn: mắt bám vào một mép trái duy
-   nhất rồi quét ngang. max-width để dòng chi nhánh dài tự xuống hai hàng thay vì
-   kéo cả khối phải rộng ra, đẩy logo lệch trái. */
+/* Ba dòng icon–giá trị: cột trái là icon (chi nhánh / giờ / hotline), cột phải là
+   nội dung. Bỏ nhãn chữ để footer gọn và đọc bằng biểu tượng. align-items:start để
+   icon bám dòng đầu của khối chi nhánh nhiều hàng. */
 .foot-meta{max-width:440px;
   display:grid;grid-template-columns:max-content 1fr;
-  column-gap:clamp(18px,2vw,36px);row-gap:13px;align-items:baseline}
-.fc-label{display:block;font-family:var(--util);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:#78756E;margin-bottom:8px}
-.foot-meta .fc-label{margin-bottom:0;line-height:1.6}
+  column-gap:clamp(16px,1.8vw,28px);row-gap:15px;align-items:start}
+.fc-ico{display:flex;align-items:center;height:22px;color:#8C887F}
+.fc-ico svg{width:17px;height:17px;stroke:currentColor}
 .fc-val{color:#D5D2CB;font-size:14px;font-family:var(--sans);font-weight:300;line-height:1.6}
 .fm-sep{color:#5A574F;margin:0 8px}
 .fh-num{color:var(--shu);text-decoration:none;transition:opacity .3s}
 .fh-num:hover{opacity:.78}
 
-/* Chi nhánh xếp ngang, ngăn bằng chấm — năm cái tên ngắn xếp dọc chiếm năm dòng
-   cho một thứ tra trong một giây. Chấm gắn vào ::after của link ĐỨNG TRƯỚC chứ
-   không phải ::before của link đứng sau: nếu để ::before thì khi hàng xuống dòng,
-   chấm đi theo tên mới và mở đầu dòng hai bằng "· Nguyễn Thái Học". */
-#footBranches{display:flex;flex-wrap:wrap;align-items:baseline}
+/* Chi nhánh xếp thành lưới hai cột đều nhau — năm tên căn thẳng mép trái theo cột,
+   đọc gọn và cân, thay cho kiểu chấm-ngăn tự xuống dòng lệch 2/1/2 trước đây. */
+#footBranches{display:grid;grid-template-columns:1fr 1fr;
+  column-gap:clamp(16px,1.6vw,28px);row-gap:8px}
 #footBranches a{color:#D5D2CB;font-size:14px;font-family:var(--sans);font-weight:300;
-  line-height:1.6;text-decoration:none;transition:color .3s var(--e-out)}
-#footBranches a:not(:last-child)::after{content:"·";color:#5A574F;margin:0 8px}
-#footBranches a:hover{color:var(--sumi)}
+  line-height:1.5;text-decoration:none;transition:color .3s var(--e-out)}
+#footBranches a:hover{color:var(--shu)}
 
 /* socials — vòng viền kem mảnh, hover đổ đỏ */
 .socials{display:flex;gap:11px}
@@ -992,9 +987,9 @@ footer{background:linear-gradient(180deg,transparent 0,var(--ink-block) 140px,va
   .foot-hero{order:-1}
   .fm-logos{align-items:center}
   .foot-meta{max-width:none;grid-template-columns:1fr;row-gap:6px;justify-items:center;text-align:center}
-  .foot-meta .fc-label{margin-top:14px}
-  .foot-meta .fc-label:first-child{margin-top:0}
-  #footBranches{justify-content:center}
+  .foot-meta .fc-ico{margin-top:16px}
+  .foot-meta .fc-ico:first-child{margin-top:0}
+  #footBranches{justify-items:center;column-gap:26px}
   .story-photo .kanji-side{left:auto;right:-14px;top:-22px;writing-mode:horizontal-tb}
   .spanel{height:clamp(200px,40vh,260px)}
 }
