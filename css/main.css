@@ -869,7 +869,11 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 /* ảnh nền + veil của #reserve; andon glow & thủy ấn tắt vì ảnh đã tự có quầng ấm */
 #reserve::before{display:none}
 #reserve .foot-kanji{display:none}
-.fr-photo{position:absolute;inset:0;z-index:0;overflow:hidden}
+/* mép TRÊN ảnh feather về trong suốt để không còn cạnh cứng đập vào nền xám của
+   section phía trên — chỗ giáp ranh tan dần thay vì một đường kẻ. */
+.fr-photo{position:absolute;inset:0;z-index:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 clamp(110px,14vw,180px));
+  mask-image:linear-gradient(180deg,transparent 0,#000 clamp(110px,14vw,180px))}
 .fr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;
   /* sân vườn KHÔNG GIAN — hạ ấm cùng chuẩn ambient (trước là saturate(1.02) ngả vàng) */
   filter:brightness(1.02) contrast(1.06) var(--img-cool-amb)}
@@ -878,7 +882,7 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
    và chừa dải đáy tối cho dòng bản quyền). */
 .fr-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
-    linear-gradient(180deg, var(--ink-block) 0%, rgba(8,8,10,.82) 8%, rgba(8,8,10,.32) 22%, rgba(8,8,10,.28) 60%, rgba(8,8,10,.78) 86%, var(--ink-block) 100%),
+    linear-gradient(180deg, transparent 0%, rgba(8,8,10,.26) 11%, rgba(8,8,10,.30) 24%, rgba(8,8,10,.28) 60%, rgba(8,8,10,.78) 86%, var(--ink-block) 100%),
     linear-gradient(96deg, rgba(8,8,10,.94) 0%, rgba(8,8,10,.86) 24%, rgba(8,8,10,.5) 48%, rgba(8,8,10,.2) 70%, rgba(8,8,10,.46) 100%),
     radial-gradient(120% 92% at 82% 58%, transparent 42%, rgba(8,8,10,.6) 100%)}
 
