@@ -872,8 +872,8 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
 /* mép TRÊN ảnh feather về trong suốt để không còn cạnh cứng đập vào nền xám của
    section phía trên — chỗ giáp ranh tan dần thay vì một đường kẻ. */
 .fr-photo{position:absolute;inset:0;z-index:0;overflow:hidden;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 clamp(110px,14vw,180px));
-  mask-image:linear-gradient(180deg,transparent 0,#000 clamp(110px,14vw,180px))}
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 clamp(150px,17vw,220px));
+  mask-image:linear-gradient(180deg,transparent 0,#000 clamp(150px,17vw,220px))}
 .fr-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;
   /* sân vườn KHÔNG GIAN — hạ ấm cùng chuẩn ambient (trước là saturate(1.02) ngả vàng) */
   filter:brightness(1.02) contrast(1.06) var(--img-cool-amb)}
@@ -881,6 +881,11 @@ footer::before{content:"";position:absolute;left:50%;top:clamp(96px,15vw,210px);
    quầng đèn lồng; feather TRÊN + DƯỚI để ảnh tan vào nền ink-block (không cắt cứng,
    và chừa dải đáy tối cho dòng bản quyền). */
 .fr-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
+  /* feather CẢ veil ở mép trên (giống .fr-photo): nếu chỉ lớp dọc trong suốt mà
+     lớp ngang .94 bên trái vẫn phủ tới sát đỉnh thì nó tạo bậc tối ngay đường
+     giáp ranh. Mask cho TOÀN BỘ 3 lớp cùng tan ở đỉnh → footer hiện lên đồng đều. */
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 clamp(150px,17vw,220px));
+  mask-image:linear-gradient(180deg,transparent 0,#000 clamp(150px,17vw,220px));
   background:
     linear-gradient(180deg, transparent 0%, rgba(8,8,10,.26) 11%, rgba(8,8,10,.30) 24%, rgba(8,8,10,.28) 60%, rgba(8,8,10,.78) 86%, var(--ink-block) 100%),
     linear-gradient(96deg, rgba(8,8,10,.94) 0%, rgba(8,8,10,.86) 24%, rgba(8,8,10,.5) 48%, rgba(8,8,10,.2) 70%, rgba(8,8,10,.46) 100%),
